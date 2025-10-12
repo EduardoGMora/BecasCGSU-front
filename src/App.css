@@ -1,8 +1,6 @@
 #root {
-  max-width: 1280px;
+  /* max-width: 1280px; */
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
 }
 
 .logo {
@@ -33,10 +31,34 @@
   }
 }
 
-.card {
-  padding: 2em;
+header {
+	background-color: var(--card-background);
+	border-bottom: 1px solid var(--border-color);
+	padding: 1rem 0;
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	padding: 1.5rem;
+}
+.header-container{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 90%;
+	max-width: 1200px;
+	margin: 0 auto;
 }
 
-.read-the-docs {
-  color: #888;
+.nav{
+	display: flex;
+	align-items: center;
+	gap: var(--spacing-md);
+}
+.nav a{
+	padding: .5rem 1rem;
+}
+.nav-link:hover{
+  color: var(--primary-color);
+  background-color: var(--light-gray-hover);
+  border-radius: var(--border-radius);
 }
