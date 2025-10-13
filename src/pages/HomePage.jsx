@@ -1,8 +1,9 @@
 import { StatCard } from '../components/StatCard';
 import { ScholarshipCard } from '../components/ScholarshipCard';
+import { Link } from 'react-router-dom';
 
 // HomePage
-export function HomePage({ setCurrentPage, onApply }){
+export function HomePage({ onApply }){
   const featuredScholarships = [
     {
       id: 1,
@@ -65,12 +66,15 @@ export function HomePage({ setCurrentPage, onApply }){
       <section>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-3xl font-bold text-blue-900">Becas Destacadas</h2>
-          <button
-            onClick={() => setCurrentPage('scholarships')}
+          <Link to="/becas" className="text-blue-600 hover:underline">
+            Ver Todas
+          </Link>
+          {/* <button
+            
             className="px-5 py-2 bg-blue-900 text-white rounded-lg font-semibold hover:bg-blue-800 transition-all"
           >
             Ver Todas
-          </button>
+          </button> */}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredScholarships.map(scholarship => (
