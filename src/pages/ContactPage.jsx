@@ -1,5 +1,3 @@
-import {} from "react";
-
 // Componente ContactPage
 export function ContactPage() {
   return (

@@ -1,5 +1,3 @@
-import {} from 'react';
-
 // Componente Footer
 export function Footer() {
     const date = new Date();

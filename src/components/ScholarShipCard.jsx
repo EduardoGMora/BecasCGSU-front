@@ -1,5 +1,3 @@
-import {} from 'react';
-
 // Componente ScholarshipCard
 export const ScholarshipCard = ({ scholarship, onApply }) => {
   return (

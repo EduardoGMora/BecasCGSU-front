@@ -1,5 +1,3 @@
-import {} from 'react';
-
 // Modal de Aplicación
 export const ApplicationModal = ({ isOpen, onClose, scholarship }) => {
   if (!isOpen || !scholarship) return null;
