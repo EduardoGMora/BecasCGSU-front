@@ -16,7 +16,7 @@ import { ApplicationModal } from './components/ApplicationModal';
 
 // Componente principal de la App
 export function App() {
-    const isAdmin = false; // cambiar a false para usuario normal
+    const isAdmin = true; // cambiar a false para usuario normal
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedScholarship, setSelectedScholarship] = useState(null);
 
