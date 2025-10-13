@@ -1,4 +1,3 @@
-import {} from 'react';
 import { StatCard } from '../components/StatCard';
 
 // Componente ApplicationsPage
