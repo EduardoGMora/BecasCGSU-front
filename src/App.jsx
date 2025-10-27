@@ -13,6 +13,7 @@ import { ApplicationsPage } from './pages/RequestsPage';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { ApplicationModal } from './components/ApplicationModal';
+import { ChatBot } from './components/Chatbot';
 
 // Componente principal de la App
 export function App() {
@@ -30,22 +31,30 @@ export function App() {
             <div className="min-h-screen bg-gray-50">
                 <Header isAdmin={isAdmin} />
 
-                <main className="max-w-7xl mx-auto px-6 pb-12">
+                <main className="max-w-7xl mx-auto px-4 sm:px-6 pb-12">
                     <Routes>
                         <Route path="/" element={<HomePage onApply={handleApply} />} />
                         <Route path="/becas" element={<ScholarshipsPage onApply={handleApply} />} />
                         <Route path="/mis-solicitudes" element={<ApplicationsPage />} />
                         <Route path="/contacto" element={<ContactPage />} />
                         <Route path="/admin" element={<AdminPanel />} />
-                        <Route path="*" element={<div className="pt-20">Página no encontrada</div>} />
+                        <Route path="*" element={
+                            <div className="pt-20 text-center">
+                                <h1 className="text-4xl font-bold text-blue-900 mb-4">404</h1>
+                                <p className="text-gray-600">Página no encontrada</p>
+                            </div>
+                        } />
                     </Routes>
                 </main>
 
                 <ApplicationModal 
-                isOpen={modalOpen} 
-                onClose={() => setModalOpen(false)} 
-                scholarship={selectedScholarship}
+                    isOpen={modalOpen} 
+                    onClose={() => setModalOpen(false)} 
+                    scholarship={selectedScholarship}
                 />
+
+                {/* ChatBot Component */}
+                <ChatBot />
 
                 <Footer />
             </div>

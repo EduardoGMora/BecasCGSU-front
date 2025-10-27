@@ -1,5 +1,5 @@
 import { StatCard } from '../components/StatCard';
-import { ScholarshipCard } from '../components/ScholarshipCard';
+import { ScholarshipCard } from '../components/ScholarShipCard';
 import { Link } from 'react-router-dom';
 
 // HomePage
