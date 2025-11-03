@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css'
-
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+import {LoginPage} from "./pages/LoginPage";
 // pages
 import { HomePage } from './pages/HomePage';
 import { ContactPage } from './pages/ContactPage';
@@ -27,37 +29,27 @@ export function App() {
     };
 
     return (
-        <Router>
-            <div className="min-h-screen bg-gray-50">
-                <Header isAdmin={isAdmin} />
+        <AuthProvider>
+            <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route
+                path="/admin"
+                element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                    <AdminPanel />
+                </ProtectedRoute>
+                }
+            />
 
-                <main className="max-w-7xl mx-auto px-4 sm:px-6 pb-12">
-                    <Routes>
-                        <Route path="/" element={<HomePage onApply={handleApply} />} />
-                        <Route path="/becas" element={<ScholarshipsPage onApply={handleApply} />} />
-                        <Route path="/mis-solicitudes" element={<ApplicationsPage />} />
-                        <Route path="/contacto" element={<ContactPage />} />
-                        <Route path="/admin" element={<AdminPanel />} />
-                        <Route path="*" element={
-                            <div className="pt-20 text-center">
-                                <h1 className="text-4xl font-bold text-blue-900 mb-4">404</h1>
-                                <p className="text-gray-600">Página no encontrada</p>
-                            </div>
-                        } />
-                    </Routes>
-                </main>
-
-                <ApplicationModal 
-                    isOpen={modalOpen} 
-                    onClose={() => setModalOpen(false)} 
-                    scholarship={selectedScholarship}
-                />
-
-                {/* ChatBot Component */}
-                <ChatBot />
-
-                <Footer />
-            </div>
-        </Router>
+            <Route
+                path="/user"
+                element={
+                <ProtectedRoute allowedRoles={["student"]}>
+                    <HomePage />
+                </ProtectedRoute>
+                }
+            />
+            </Routes>
+        </AuthProvider>
     );
 }
