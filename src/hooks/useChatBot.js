@@ -234,3 +234,12 @@ export const useChatBotEvent = (eventName, callback) => {
     const handler = (event) => {
       callback(event.detail);
     };
+
+    const fullEventName = `chatbot:${eventName}`;
+    window.addEventListener(fullEventName, handler);
+
+    return () => {
+      window.removeEventListener(fullEventName, handler);
+    };
+  }, [eventName, callback]);
+};
