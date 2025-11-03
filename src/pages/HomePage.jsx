@@ -39,12 +39,12 @@ export function HomePage({ onApply }){
 
   return (
     <div className="pt-20">
-      <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg p-16 mb-8 text-center">
+      <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg py-16 px-8 md:px-16 mb-8 text-center">
         <h1 className="text-5xl font-bold mb-4">Portal de Becas Universitarias</h1>
         <p className="text-xl mb-6 opacity-90">
           Descubre oportunidades de financiamiento educativo de la Universidad de Guadalajara y instituciones colaboradoras
         </p>
-        <div className="flex gap-4 max-w-2xl mx-auto mt-6">
+        <div className="flex gap-4 max-w-2xl mx-auto mt-6 flex-col md:flex-row ">
           <input
             type="text"
             placeholder="Buscar por palabra clave, carrera, institución..."
