@@ -44,7 +44,7 @@ export function HomePage({ onApply }){
         <p className="text-xl mb-6 opacity-90">
           Descubre oportunidades de financiamiento educativo de la Universidad de Guadalajara y instituciones colaboradoras
         </p>
-        <div className="flex gap-4 max-w-2xl mx-auto mt-6 flex-col md:flex-row ">
+        <div className="flex gap-4 max-w-2xl mx-auto mt-6 flex-col md:flex-row">
           <input
             type="text"
             placeholder="Buscar por palabra clave, carrera, institución..."
