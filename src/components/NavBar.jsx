@@ -20,7 +20,7 @@ export const NavBar = ({ isAdmin, onLinkClick, mobile }) => {
     console.log('Current pathname:', location.pathname);
 
     return (
-        <nav className={mobile ? 'flex flex-col gap-2 pb-4' : 'hidden md:flex items-center gap-4 lg:gap-6 items-center gap-6'}>
+        <nav className={mobile ? 'flex flex-col gap-2 pb-4' : 'hidden md:flex items-center gap-4 lg:gap-6'}>
             {links.map(link => {
                 if (link.adminOnly && !isAdmin) return null;
 
