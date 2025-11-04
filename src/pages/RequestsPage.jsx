@@ -30,7 +30,7 @@ export function ApplicationsPage() {
 
     return (
         <div className="pt-20">
-        <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg p-16 mb-8 text-center">
+        <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg px-8 py-16 md:px-16 mb-8 text-center">
             <h1 className="text-5xl font-bold mb-4">Mis Solicitudes</h1>
             <p className="text-xl opacity-90">Administra y da seguimiento a tus aplicaciones de beca</p>
         </section>
@@ -64,7 +64,7 @@ export function ApplicationsPage() {
                     <td className="px-6 py-4">{app.scholarship}</td>
                     <td className="px-6 py-4">{app.institution}</td>
                     <td className="px-6 py-4">{app.date}</td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusStyle(app.status)}`}>
                         {getStatusText(app.status)}
                         </span>
