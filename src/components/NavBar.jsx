@@ -17,7 +17,6 @@ export const NavBar = ({ isAdmin, onLinkClick, mobile }) => {
     const location = useLocation();
 
     // Debug: Check what pathname we're getting
-    console.log('Current pathname:', location.pathname);
 
     return (
         <nav className={mobile ? 'flex flex-col gap-2 pb-4' : 'hidden md:flex items-center gap-4 lg:gap-6 items-center gap-6'}>
