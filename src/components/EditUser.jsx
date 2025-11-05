@@ -205,7 +205,6 @@ export const EditUser = ({ user, onClose, onSave }) => {
                       <input
                         type="checkbox"
                         checked={permission.granted}
-                        onChange={() => handlePermissionChange(index)}
                         className="w-4 h-4"
                       />
                       <span>{permission.name}</span>
