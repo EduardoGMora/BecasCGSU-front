@@ -9,7 +9,7 @@ import LoginPage from "../pages/LoginPage";
 export const AppRoutes = ({ user }) => {
   return (
     <Routes>
-      {/* Pública */}
+        {/* Pública */}
         <Route path="/login" element={<LoginPage />} />
 
         {/* Protegidas */}
@@ -20,14 +20,14 @@ export const AppRoutes = ({ user }) => {
             }
         />
 
-      <Route element={<ProtectedRoute allowedRoles={["student", "admin"]} user={user} />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/requests" element={<RequestsPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-      </Route>
+        <Route element={<ProtectedRoute allowedRoles={["student", "admin"]} user={user} />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/requests" element={<RequestsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Route>
 
-      {/* Fallback */}
-      <Route path="*" element={<h1>404 - Página no encontrada</h1>} />
+        {/* Fallback */}
+        <Route path="*" element={<h1>404 - Página no encontrada</h1>} />
     </Routes>
   );
 };
