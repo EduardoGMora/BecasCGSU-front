@@ -1,7 +1,12 @@
 import { StatCard } from '../components/StatCard';
+import { ApplicationDetails } from '../components/ApplicationDetails';
+import { EditApplication } from '../components/EditApplication';
+import { useState } from 'react';
 
 // Componente ApplicationsPage
 export function ApplicationsPage() {
+    const [selectedApplication, setSelectedApplication] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
     const applications = [
         { id: 1, scholarship: 'Beca de Excelencia Académica', institution: 'Universidad de Guadalajara', date: '15 Nov 2025', status: 'approved', amount: '$50,000' },
         { id: 2, scholarship: 'Programa de Apoyo Socioeconómico', institution: 'Fundación Telmex', date: '20 Nov 2025', status: 'pending', amount: '$25,000' },
@@ -72,12 +77,19 @@ export function ApplicationsPage() {
                     <td className="px-6 py-4 font-semibold">{app.amount}</td>
                     <td className="px-6 py-4">
                         <div className="flex gap-2">
-                        <button className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold hover:bg-yellow-600 transition-all">
+                        <button 
+                            onClick={() => setSelectedApplication(app)}
+                            className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold hover:bg-yellow-600 transition-all">
                             Ver
                         </button>
                         {app.status === 'pending' && (
-                            <button className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold hover:bg-blue-600 transition-all">
-                            Editar
+                            <button 
+                                onClick={() => {
+                                    setSelectedApplication(app);
+                                    setIsEditing(true);
+                                }}
+                                className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold hover:bg-blue-600 transition-all">
+                                Editar
                             </button>
                         )}
                         </div>
@@ -88,6 +100,31 @@ export function ApplicationsPage() {
             </table>
             </div>
         </section>
+
+        {/* Modal de detalles */}
+        {selectedApplication && !isEditing && (
+            <ApplicationDetails
+                application={selectedApplication}
+                onClose={() => setSelectedApplication(null)}
+            />
+        )}
+
+        {/* Modal de edición */}
+        {selectedApplication && isEditing && (
+            <EditApplication
+                application={selectedApplication}
+                onClose={() => {
+                    setSelectedApplication(null);
+                    setIsEditing(false);
+                }}
+                onSave={(updatedApplication) => {
+                    // Aquí implementarías la lógica para guardar los cambios
+                    console.log('Aplicación actualizada:', updatedApplication);
+                    setSelectedApplication(null);
+                    setIsEditing(false);
+                }}
+            />
+        )}
         </div>
     );
 };

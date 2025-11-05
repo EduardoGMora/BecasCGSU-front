@@ -1,8 +1,54 @@
 import { useState } from 'react';
 import { StatCard } from '../components/StatCard';
+import { CreateScholarship } from '../components/CreateScholarship';
+import { EditScholarship } from '../components/EditScholarship';
+import { ScholarshipDetails } from '../components/ScholarshipDetails';
+import { ViewApplication } from '../components/ViewApplication';
+import { EvaluateApplication } from '../components/EvaluateApplication';
+import { CreateUser } from '../components/CreateUser';
+import { EditUser } from '../components/EditUser';
+import { ViewUser } from '../components/ViewUser';
 
 // Componente AdminPanel
 export function AdminPanel() {
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [selectedScholarship, setSelectedScholarship] = useState(null);
+  const [editScholarship, setEditScholarship] = useState(null);
+
+  const handleCreateScholarship = (scholarship) => {
+    // TODO: Implementar la lógica para crear una beca
+    console.log('Crear beca:', scholarship);
+  };
+
+  const handleUpdateScholarship = (scholarship) => {
+    // TODO: Implementar la lógica para actualizar una beca
+    console.log('Actualizar beca:', scholarship);
+  };
+
+  // Estados para la gestión de solicitudes
+  const [selectedApplication, setSelectedApplication] = useState(null);
+  const [evaluatingApplication, setEvaluatingApplication] = useState(null);
+
+  const handleEvaluateApplication = (evaluation) => {
+    // TODO: Implementar la lógica para guardar la evaluación
+    console.log('Guardar evaluación:', evaluation);
+  };
+
+  // Estados para la gestión de usuarios
+  const [showCreateUserModal, setShowCreateUserModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [editUser, setEditUser] = useState(null);
+
+  const handleCreateUser = (user) => {
+    // TODO: Implementar la lógica para crear un usuario
+    console.log('Crear usuario:', user);
+  };
+
+  const handleUpdateUser = (user) => {
+    // TODO: Implementar la lógica para actualizar un usuario
+    console.log('Actualizar usuario:', user);
+  };
+
   const [activeSection, setActiveSection] = useState('overview');
 
   return (
@@ -134,7 +180,9 @@ export function AdminPanel() {
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
             <h3 className="text-xl font-bold">Gestión de Becas</h3>
-            <button className="px-4 py-2 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition-all">
+            <button 
+              onClick={() => setShowCreateModal(true)}
+              className="px-4 py-2 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition-all">
               <i className="fas fa-plus mr-2"></i>Nueva Beca
             </button>
           </div>
@@ -163,32 +211,96 @@ export function AdminPanel() {
                   <td className="px-6 py-4">234</td>
                   <td className="px-6 py-4">
                     <div className="flex gap-2">
-                      <button className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
-                      <button className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Editar</button>
-                      <button className="px-3 py-1 bg-red-500 text-white rounded text-sm font-semibold">Eliminar</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr className="border-b border-gray-200 hover:bg-gray-50">
-                  <td className="px-6 py-4">Programa de Apoyo Socioeconómico</td>
-                  <td className="px-6 py-4">Fundación Telmex</td>
-                  <td className="px-6 py-4">Socioeconómica</td>
-                  <td className="px-6 py-4">$25,000</td>
-                  <td className="px-6 py-4">
-                    <span className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-semibold">Activa</span>
-                  </td>
-                  <td className="px-6 py-4">567</td>
-                  <td className="px-6 py-4">
-                    <div className="flex gap-2">
-                      <button className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
-                      <button className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Editar</button>
-                      <button className="px-3 py-1 bg-red-500 text-white rounded text-sm font-semibold">Eliminar</button>
+                      <button 
+                        onClick={() => setSelectedScholarship({
+                          name: 'Beca de Excelencia Académica 2025',
+                          institution: 'Universidad de Guadalajara',
+                          type: 'Excelencia',
+                          amount: '$50,000',
+                          status: 'active',
+                          requirements: [
+                            'Promedio mínimo de 9.0',
+                            'Ser alumno regular',
+                            'No tener materias reprobadas'
+                          ],
+                          requiredDocuments: [
+                            'Kardex actualizado',
+                            'Identificación oficial',
+                            'Comprobante de domicilio'
+                          ],
+                          startDate: '2025-01-01',
+                          endDate: '2025-12-31',
+                          resultsDate: '2026-01-15'
+                        })}
+                        className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold"
+                      >
+                        Ver
+                      </button>
+                      <button 
+                        onClick={() => setEditScholarship({
+                          name: 'Beca de Excelencia Académica 2025',
+                          institution: 'Universidad de Guadalajara',
+                          type: 'academic',
+                          amount: '50000',
+                          status: 'active',
+                          requirements: [
+                            'Promedio mínimo de 9.0',
+                            'Ser alumno regular',
+                            'No tener materias reprobadas'
+                          ],
+                          requiredDocuments: [
+                            'Kardex actualizado',
+                            'Identificación oficial',
+                            'Comprobante de domicilio'
+                          ],
+                          startDate: '2025-01-01',
+                          endDate: '2025-12-31',
+                          resultsDate: '2026-01-15'
+                        })}
+                        className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold"
+                      >
+                        Editar
+                      </button>
+                      <button 
+                        onClick={() => {
+                          if (window.confirm('¿Estás seguro de que deseas eliminar esta beca?')) {
+                            // TODO: Implementar la lógica para eliminar la beca
+                            console.log('Eliminar beca');
+                          }
+                        }}
+                        className="px-3 py-1 bg-red-500 text-white rounded text-sm font-semibold"
+                      >
+                        Eliminar
+                      </button>
                     </div>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
+
+          {/* Modales */}
+          {showCreateModal && (
+            <CreateScholarship
+              onClose={() => setShowCreateModal(false)}
+              onSave={handleCreateScholarship}
+            />
+          )}
+
+          {selectedScholarship && (
+            <ScholarshipDetails
+              scholarship={selectedScholarship}
+              onClose={() => setSelectedScholarship(null)}
+            />
+          )}
+
+          {editScholarship && (
+            <EditScholarship
+              scholarship={editScholarship}
+              onClose={() => setEditScholarship(null)}
+              onSave={handleUpdateScholarship}
+            />
+          )}
         </div>
       )}
 
@@ -229,14 +341,68 @@ export function AdminPanel() {
                   <td className="px-6 py-4">95/100</td>
                   <td className="px-6 py-4">
                     <div className="flex gap-2">
-                      <button className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
-                      <button className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Evaluar</button>
+                      <button 
+                        onClick={() => setSelectedApplication({
+                          name: 'Juan Pérez García',
+                          email: 'juan.perez@alumnos.udg.mx',
+                          studentId: '215784362',
+                          major: 'Ingeniería en Computación',
+                          scholarship: 'Beca de Excelencia Académica',
+                          type: 'Excelencia',
+                          amount: '$50,000',
+                          date: '15 Nov 2025',
+                          status: 'approved',
+                          score: '95',
+                          documents: [
+                            { name: 'Kardex actualizado' },
+                            { name: 'Identificación oficial' },
+                            { name: 'Comprobante de domicilio' }
+                          ],
+                          evaluations: [
+                            {
+                              evaluator: 'Dr. Roberto Mendoza',
+                              date: '14 Nov 2025',
+                              score: 95,
+                              comments: 'Excelente expediente académico. Cumple con todos los requisitos.'
+                            }
+                          ]
+                        })}
+                        className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold"
+                      >
+                        Ver
+                      </button>
+                      <button 
+                        onClick={() => setEvaluatingApplication({
+                          id: '1',
+                          name: 'Juan Pérez García',
+                          scholarship: 'Beca de Excelencia Académica'
+                        })}
+                        className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold"
+                      >
+                        Evaluar
+                      </button>
                     </div>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
+
+          {/* Modales de Solicitudes */}
+          {selectedApplication && (
+            <ViewApplication
+              application={selectedApplication}
+              onClose={() => setSelectedApplication(null)}
+            />
+          )}
+
+          {evaluatingApplication && (
+            <EvaluateApplication
+              application={evaluatingApplication}
+              onClose={() => setEvaluatingApplication(null)}
+              onSave={handleEvaluateApplication}
+            />
+          )}
         </div>
       )}
 
@@ -244,7 +410,9 @@ export function AdminPanel() {
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
             <h3 className="text-xl font-bold">Gestión de Usuarios</h3>
-            <button className="px-4 py-2 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition-all">
+            <button 
+              onClick={() => setShowCreateUserModal(true)}
+              className="px-4 py-2 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition-all">
               <i className="fas fa-plus mr-2"></i>Nuevo Usuario
             </button>
           </div>
@@ -274,14 +442,90 @@ export function AdminPanel() {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex gap-2">
-                      <button className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
-                      <button className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Editar</button>
+                      <button 
+                        onClick={() => setSelectedUser({
+                          name: 'Dr. Roberto Mendoza',
+                          position: 'Coordinador de Becas',
+                          email: 'r.mendoza@udg.mx',
+                          phone: '33-1234-5678',
+                          username: 'rmendoza',
+                          role: 'admin',
+                          status: 'active',
+                          createdAt: '01 Oct 2025',
+                          permissions: [
+                            { name: 'Gestionar becas', granted: true },
+                            { name: 'Evaluar solicitudes', granted: true },
+                            { name: 'Gestionar usuarios', granted: true },
+                            { name: 'Ver reportes', granted: true }
+                          ],
+                          recentActivity: [
+                            {
+                              icon: 'fa-solid fa-check-circle',
+                              color: 'green-500',
+                              action: 'Aprobó una solicitud',
+                              date: '4 Nov 2025'
+                            },
+                            {
+                              icon: 'fa-solid fa-edit',
+                              color: 'blue-500',
+                              action: 'Modificó una beca',
+                              date: '3 Nov 2025'
+                            }
+                          ]
+                        })}
+                        className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold"
+                      >
+                        Ver
+                      </button>
+                      <button 
+                        onClick={() => setEditUser({
+                          name: 'Dr. Roberto Mendoza',
+                          position: 'Coordinador de Becas',
+                          email: 'r.mendoza@udg.mx',
+                          phone: '33-1234-5678',
+                          username: 'rmendoza',
+                          role: 'admin',
+                          status: 'active',
+                          permissions: [
+                            { name: 'Gestionar becas', granted: true },
+                            { name: 'Evaluar solicitudes', granted: true },
+                            { name: 'Gestionar usuarios', granted: true },
+                            { name: 'Ver reportes', granted: true }
+                          ]
+                        })}
+                        className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold"
+                      >
+                        Editar
+                      </button>
                     </div>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
+
+          {/* Modales de Usuarios */}
+          {showCreateUserModal && (
+            <CreateUser
+              onClose={() => setShowCreateUserModal(false)}
+              onSave={handleCreateUser}
+            />
+          )}
+
+          {selectedUser && (
+            <ViewUser
+              user={selectedUser}
+              onClose={() => setSelectedUser(null)}
+            />
+          )}
+
+          {editUser && (
+            <EditUser
+              user={editUser}
+              onClose={() => setEditUser(null)}
+              onSave={handleUpdateUser}
+            />
+          )}
         </div>
       )}
     </div>

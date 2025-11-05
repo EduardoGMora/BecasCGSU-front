@@ -1,9 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from 'react';
+import { ScholarshipDetail } from './ScholarshipDetail';
 
 export const ScholarshipCard = ({ scholarship, onApply }) => {
+  const [showDetail, setShowDetail] = useState(false);
+  
   return (
+    <>
     <div 
-      className={`bg-white p-4 sm:p-6 rounded-lg shadow-sm hover:shadow-md transition-all border-l-4 ${
+      onClick={() => setShowDetail(true)}
+      className={`bg-white p-4 sm:p-6 rounded-lg shadow-sm hover:shadow-md transition-all border-l-4 cursor-pointer ${
         scholarship.status === 'open' ? 'border-blue-900' : 'border-red-500 opacity-70'
       }`}
     >
@@ -77,5 +83,16 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
         </button>
       </div>
     </div>
+    {showDetail && (
+      <ScholarshipDetail
+        scholarship={scholarship}
+        onClose={() => setShowDetail(false)}
+        onApply={(scholarship) => {
+          setShowDetail(false);
+          onApply(scholarship);
+        }}
+      />
+    )}
+    </>
   );
 };
