@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node scripts/verify-components.js && npm run lint && npm run build && node scripts/verify-build.js",
+    "test:verify": "node scripts/verify-components.js && npm run lint && npm run build && node scripts/verify-build.js",
+    "test:unit": "echo 'Unit tests will be added when business logic is implemented'",
+    "test:all": "npm run test:unit && npm run test:verify"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
