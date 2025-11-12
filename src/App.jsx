@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { LoginPage } from "./pages/LoginPage";
+import LoginPage from "./pages/auth/LoginPage";
 
 // pages
 import { HomePage } from "./pages/HomePage";
 import { ContactPage } from "./pages/ContactPage";
-import { AdminPanel } from "./pages/admin/AdminPage";
+import AdminPage from "./pages/admin/AdminPage";
 import { SubAdminPanel } from "./pages/subAdminPage";
 import { ScholarshipsPage } from "./pages/ScholarshipsPage";
 import { ApplicationsPage } from "./pages/RequestsPage";
@@ -57,7 +57,7 @@ export function App() {
               path="admin"
               element={
                 <ProtectedRoute allowedRoles={["admin"]}>
-                  <AdminPanel />
+                  <AdminPage />
                 </ProtectedRoute>
               }
             />

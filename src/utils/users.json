@@ -1,5 +1,6 @@
 [
   { "email": "81253368", "password": "admin123", "role": "admin" },
   { "email": "217471988", "password": "admin123", "role": "student" },
-  { "email": "253251588", "password": "user123", "role": "subadmin" }
+  { "email": "253251588", "password": "user123", "role": "subadmin" },
+  { "email": "218547104", "password": "password", "role": "student" }
 ]

@@ -4,13 +4,14 @@ import AdminPage from "../pages/admin/AdminPage";
 import RequestsPage from "../pages/RequestsPage";
 import ContactPage from "../pages/ContactPage";
 import { ProtectedRoute } from "./ProtectedRoute";
-import LoginPage from "../pages/LoginPage";
+import LoginPage from "../pages/auth/LoginPage";
 
 export const AppRoutes = ({ user }) => {
   return (
     <Routes>
         {/* Pública */}
         <Route path="/login" element={<LoginPage />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
 
         {/* Protegidas */}
         <Route path="/admin" element={

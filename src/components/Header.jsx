@@ -10,6 +10,8 @@ library.add(fas);
 export function Header({ role }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    const isAdmin = role === 'admin' || role === 'subadmin';
+
     if (window.location.pathname === '/login' || window.location.pathname === '/register') {
         return null;
     }
