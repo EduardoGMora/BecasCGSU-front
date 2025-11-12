@@ -6,7 +6,7 @@ import { LoginPage } from "./pages/LoginPage";
 // pages
 import { HomePage } from "./pages/HomePage";
 import { ContactPage } from "./pages/ContactPage";
-import { AdminPanel } from "./pages/AdminPage";
+import { AdminPanel } from "./pages/admin/AdminPage";
 import { SubAdminPanel } from "./pages/subAdminPage";
 import { ScholarshipsPage } from "./pages/ScholarshipsPage";
 import { ApplicationsPage } from "./pages/RequestsPage";
