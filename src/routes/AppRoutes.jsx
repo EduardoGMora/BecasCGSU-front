@@ -78,7 +78,7 @@ export default function AppRoutes() {
             <div className="text-center">
               <h1 className="text-4xl font-bold text-red-600 mb-4">403</h1>
               <p className="text-gray-700 mb-6">No tienes permiso para acceder a esta página.</p>
-              <a href="/login" className="text-blue-600 underline">
+              <a href="/" className="text-blue-600 underline">
                 Volver al inicio de sesión
               </a>
             </div>
