@@ -7,7 +7,7 @@ import { NavBar } from './NavBar';
 
 library.add(fas);
 
-export function Header({ isAdmin }) {
+export function Header({ role }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     if (window.location.pathname === '/login' || window.location.pathname === '/register') {
@@ -63,5 +63,53 @@ export function Header({ isAdmin }) {
                 </div>
             </div>
         </header>
+    );
+}
+
+function NavLinks({ role, onLinkClick, mobile = false }) {
+    const links = [
+        { to: '/', label: 'Inicio', icon: 'fa-solid fa-home',userOnly:true },
+        { to: '/becas', label: 'Becas', icon: 'fa-solid fa-award',userOnly:true },
+        { to: '/mis-solicitudes', label: 'Solicitudes', icon: 'fa-solid fa-file-alt', userOnly:true },
+        { to: '/contacto', label: 'Contacto', icon: 'fa-solid fa-envelope', userOnly:true},
+        { to: '/admin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true },
+        { to: '/subadmin', label: 'Admin', icon: 'fa-solid fa-cog', subadminOnly: true }
+        
+    ];
+
+    return (
+        <>
+            {links.map(link => {
+                if (link.adminOnly && role != "admin") return null;
+                if (link.userOnly && role != "student") return null;
+                if (link.subadminOnly && role != "subadmin") return null;
+                
+                const isActive = window.location.pathname === link.to;
+                
+                return (
+                    <Link 
+                        key={link.to} 
+                        to={link.to}
+                        onClick={onLinkClick}
+                        className={`${
+                            mobile 
+                                ? 'flex items-center gap-3 px-4 py-3 rounded-lg transition-all' 
+                                : 'px-3 lg:px-4 py-2 rounded-lg font-semibold transition-all'
+                        } ${
+                            isActive 
+                                ? 'bg-blue-900 text-white' 
+                                : 'text-gray-600 hover:bg-gray-100 hover:text-blue-900'
+                        }`}
+                    >
+                        {mobile && (
+                            <FontAwesomeIcon icon={link.icon} className="w-5" />
+                        )}
+                        <span className={mobile ? 'font-semibold' : ''}>
+                            {link.label}
+                        </span>
+                    </Link>
+                );
+            })}
+        </>
     );
 }

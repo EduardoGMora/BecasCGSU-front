@@ -1,5 +1,5 @@
 [
-  { "email": "juan@academicos.udg.com", "password": "admin123", "role": "admin" },
-  { "email": "adrian@alumnos.udg.com", "password": "admin123", "role": "student" },
-  { "email": "juliana@alumnos.com", "password": "user123", "role": "subadmin" }
+  { "email": "81253368", "password": "admin123", "role": "admin" },
+  { "email": "217471988", "password": "admin123", "role": "student" },
+  { "email": "253251588", "password": "user123", "role": "subadmin" }
 ]
