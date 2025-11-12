@@ -1,9 +1,10 @@
 import { StatCard } from '../components/StatCard';
 import { ScholarshipCard } from '../components/ScholarShipCard';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 
 // HomePage
-export function HomePage({ onApply }){
+export function HomePage(){
+  const { handleApply } = useOutletContext();
   const featuredScholarships = [
     {
       id: 1,
@@ -69,11 +70,10 @@ export function HomePage({ onApply }){
           <Link to="/becas" className="text-blue-600 hover:underline">
             Ver Todas
           </Link>
-          
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredScholarships.map(scholarship => (
-            <ScholarshipCard key={scholarship.id} scholarship={scholarship} onApply={onApply} />
+            <ScholarshipCard key={scholarship.id} scholarship={scholarship} onApply={handleApply} />
           ))}
         </div>
       </section>

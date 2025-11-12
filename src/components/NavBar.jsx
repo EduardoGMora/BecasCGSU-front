@@ -6,10 +6,10 @@ import { Link, useLocation } from 'react-router-dom'
 library.add(fas);
 
 const links = [
-    { to: '/', label: 'Inicio', icon: 'fa-solid fa-home' },
-    { to: '/becas', label: 'Becas', icon: 'fa-solid fa-award' },
-    { to: '/mis-solicitudes', label: 'Solicitudes', icon: 'fa-solid fa-file-alt' },
-    { to: '/contacto', label: 'Contacto', icon: 'fa-solid fa-envelope' },
+    { to: '/', label: 'Inicio', icon: 'fa-solid fa-home',adminOnly:false },
+    { to: '/becas', label: 'Becas', icon: 'fa-solid fa-award',adminOnly:false },
+    { to: '/mis-solicitudes', label: 'Solicitudes', icon: 'fa-solid fa-file-alt',adminOnly:false },
+    { to: '/contacto', label: 'Contacto', icon: 'fa-solid fa-envelope',adminOnly:false },
     { to: '/admin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true }
 ];
 
@@ -22,7 +22,7 @@ export const NavBar = ({ isAdmin, onLinkClick, mobile }) => {
         <nav className={mobile ? 'flex flex-col gap-2 pb-4' : 'hidden md:flex items-center gap-4 lg:gap-6'}>
             {links.map(link => {
                 if (link.adminOnly && !isAdmin) return null;
-
+                if (!link.adminOnly && isAdmin) return null;
                 const isActive = location.pathname === link.to;
                 // console.log(`Link ${link.to} is active:`, isActive);
 
