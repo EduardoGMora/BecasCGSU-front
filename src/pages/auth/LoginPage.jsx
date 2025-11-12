@@ -21,12 +21,7 @@ export default function LoginPage() {
       setError(result.message);
     }
   };
-  const GraduationCap = (props) => (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={props.className || "w-6 h-6"}>
-      <path d="M22 10v6M14 10L2 6v6l12 4 10-4v-6l-10 4z" />
-      <path d="M2 14v4l12 4 10-4v-4" />
-    </svg>
-  );
+
 
   return (
         <div className="min-h-screen flex flex-col justify-center items-center bg-slate-50 p-4 font-sans antialiased">

@@ -5,30 +5,71 @@ import RequestsPage from "../pages/RequestsPage";
 import ContactPage from "../pages/ContactPage";
 import { ProtectedRoute } from "./ProtectedRoute";
 import LoginPage from "../pages/auth/LoginPage";
+import { AuthProvider } from "../context/AuthContext";
 
-export const AppRoutes = ({ user }) => {
+export default function AppRoutes( user ) {
   return (
-    <Routes>
-        {/* Pública */}
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="*" element={<Navigate to="/login" replace />} />
+    <AuthProvider>
+      <Routes>
+          {/* Pública */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
 
-        {/* Protegidas */}
-        <Route path="/admin" element={
-            <ProtectedRoute allowedRoles={["admin"]}>
-                <AdminPage />
-            </ProtectedRoute>
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute allowedRoles={["student"]}>
+                <HomePage />
+              </ProtectedRoute>
             }
-        />
+          />
+          {/* Rutas exclusivas de STUDENT */}
+          <Route
+            path="mis-solicitudes"
+            element={
+              <ProtectedRoute allowedRoles={["student"]}>
+                <ApplicationsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="contacto"
+            element={
+              <ProtectedRoute allowedRoles={["student"]}>
+                <ContactPage />
+              </ProtectedRoute> 
+            }
+          />
 
-        <Route element={<ProtectedRoute allowedRoles={["student", "admin"]} user={user} />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/requests" element={<RequestsPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-        </Route>
+            {/* Ruta exclusiva de ADMIN */}
+          <Route
+            path="admin"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <AdminPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="subadmin"
+            element={
+              <ProtectedRoute allowedRoles={["subadmin"]}>
+                <SubAdminPanel />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* Fallback */}
-        <Route path="*" element={<h1>404 - Página no encontrada</h1>} />
-    </Routes>
+            {/* Página no encontrada */}
+          <Route
+            path="*"
+            element={
+              <div className="pt-20 text-center">
+                <h1 className="text-4xl font-bold text-blue-900 mb-4">404</h1>
+                <p className="text-gray-600">Página no encontrada</p>
+              </div>
+            }
+          />
+      </Routes>
+    </AuthProvider>
   );
 };
