@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { ScholarshipCard } from '../components/ScholarShipCard';
 
 // ScholarshipsPage
 export function ScholarshipsPage({ onApply }) {
+  const { handleApply } = useOutletContext();
   const [viewType, setViewType] = useState('grid');
   
   const scholarships = [
@@ -162,7 +164,7 @@ export function ScholarshipsPage({ onApply }) {
         : 'space-y-4'
       }>
         {scholarships.map(scholarship => (
-          <ScholarshipCard key={scholarship.id} scholarship={scholarship} onApply={onApply} />
+          <ScholarshipCard key={scholarship.id} scholarship={scholarship} onApply={handleApply} />
         ))}
       </div>
     </div>

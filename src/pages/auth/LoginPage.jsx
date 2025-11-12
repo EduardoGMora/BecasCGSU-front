@@ -27,10 +27,10 @@ export default function LoginPage() {
         <div className="min-h-screen flex flex-col justify-center items-center bg-slate-50 p-4 font-sans antialiased">
       {/* Container for the portal logo and tagline */}
       <div className="text-center mb-8">
-        <div className="flex items-center justify-center text-indigo-600 mb-3">
+        <div className="flex items-center justify-center text-blue-900 mb-3">
           <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-school"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" /><path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" /></svg>
         </div>
-        <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
+        <h1 className="text-4xl font-extrabold text-blue-900 tracking-tight">
           Portal de becas UDG
         </h1>
         <p className="mt-2 text-md text-gray-500 max-w-xs md:max-w-md">
@@ -62,7 +62,7 @@ export default function LoginPage() {
               name="email"
               autoComplete="email"
               required
-              className="appearance-none block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150"
+              className="appearance-none block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-900 focus:border-blue-900 sm:text-sm transition duration-150"
               placeholder="Ej. 217471988"
             />
           </div>
@@ -73,7 +73,7 @@ export default function LoginPage() {
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Contraseña
               </label>
-              <a href="#" className="text-xs font-medium text-indigo-600 hover:text-indigo-500 transition duration-150">
+              <a href="#" className="text-xs font-medium text-blue-900 hover:text-indigo-500 transition duration-150">
                 Olvidaste tu contraseña?
               </a>
             </div>
@@ -85,7 +85,7 @@ export default function LoginPage() {
               name="password"
               autoComplete="current-password"
               required
-              className="appearance-none block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150"
+              className="appearance-none block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-900 focus:border-blue-900 sm:text-sm transition duration-150"
               placeholder="••••••••"
             />
           </div>
@@ -101,7 +101,7 @@ export default function LoginPage() {
           <div>
             <button
               type="submit"
-              className={"w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-lg text-sm font-semibold text-white transition duration-300 ease-in-out bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transform active:scale-98"}
+              className={"w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-lg text-sm font-semibold text-white transition duration-300 ease-in-out bg-blue-900 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-900 transform active:scale-98"}
               >Iniciar sesion
             </button>
           </div>
