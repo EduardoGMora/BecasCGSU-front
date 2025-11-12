@@ -6,12 +6,11 @@ import ContactPage from "../pages/ContactPage";
 import { ProtectedRoute } from "./ProtectedRoute";
 import LoginPage from "../pages/auth/LoginPage";
 
-export const AppRoutes = ({ user }) => {
+export const AppRoutes = () => {
   return (
     <Routes>
         {/* Pública */}
         <Route path="/login" element={<LoginPage />} />
-        <Route path="*" element={<Navigate to="/login" replace />} />
 
         {/* Protegidas */}
         <Route path="/admin" element={
@@ -21,10 +20,9 @@ export const AppRoutes = ({ user }) => {
             }
         />
 
-        <Route element={<ProtectedRoute allowedRoles={["student", "admin"]} user={user} />}>
+        <Route element={<ProtectedRoute allowedRoles={["admin", "student"]} />}>
           <Route path="/" element={<HomePage />} />
-          <Route path="/requests" element={<RequestsPage />} />
-          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/contacto" element={<ContactPage />} />
         </Route>
 
         {/* Fallback */}
