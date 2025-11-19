@@ -64,7 +64,10 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
         </span>
         
         <button
-          onClick={() => onApply(scholarship)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onApply(scholarship);
+          }}
           disabled={scholarship.status !== 'open'}
           className={`w-full sm:w-auto px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg font-semibold transition-all text-sm sm:text-base ${
             scholarship.status === 'open'
