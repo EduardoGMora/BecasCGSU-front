@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { ScholarshipCard } from '../components/ScholarShipCard';
 
 // ScholarshipsPage
 export function ScholarshipsPage({ onApply }) {
+  const { handleApply } = useOutletContext();
   const [viewType, setViewType] = useState('grid');
   
   const scholarships = [
@@ -70,10 +72,10 @@ export function ScholarshipsPage({ onApply }) {
 
   return (
     <div className="pt-20">
-      <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg p-16 mb-8 text-center">
+      <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg px-8 py-16 md:px-16 mb-8 text-center">
         <h1 className="text-5xl font-bold mb-4">Becas Disponibles</h1>
         <p className="text-xl mb-6 opacity-90">Explora todas las oportunidades de financiamiento disponibles</p>
-        <div className="flex gap-4 max-w-2xl mx-auto mt-6">
+        <div className="flex gap-4 max-w-2xl mx-auto mt-6 flex-col md:flex-row">
           <input
             type="text"
             placeholder="Buscar becas..."
@@ -162,7 +164,7 @@ export function ScholarshipsPage({ onApply }) {
         : 'space-y-4'
       }>
         {scholarships.map(scholarship => (
-          <ScholarshipCard key={scholarship.id} scholarship={scholarship} onApply={onApply} />
+          <ScholarshipCard key={scholarship.id} scholarship={scholarship} onApply={handleApply} />
         ))}
       </div>
     </div>

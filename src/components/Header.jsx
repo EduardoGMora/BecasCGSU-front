@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { NavBar } from './NavBar';
 
 library.add(fas);
 
-export function Header({ isAdmin }) {
+export function Header({ role }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const isAdmin = role === 'admin' || role === 'subadmin';
 
     if (window.location.pathname === '/login' || window.location.pathname === '/register') {
         return null;
@@ -37,9 +40,7 @@ export function Header({ isAdmin }) {
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <nav className="hidden md:flex items-center gap-4 lg:gap-6">
-                        <NavLinks isAdmin={isAdmin} onLinkClick={closeMenu} />
-                    </nav>
+                    <NavBar isAdmin={isAdmin} onLinkClick={closeMenu} mobile={false}/>
 
                     {/* Mobile Menu Button */}
                     <button
@@ -60,28 +61,30 @@ export function Header({ isAdmin }) {
                         isMenuOpen ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
                     }`}
                 >
-                    <nav className="flex flex-col gap-2 pb-4">
-                        <NavLinks isAdmin={isAdmin} onLinkClick={closeMenu} mobile />
-                    </nav>
+                    <NavBar isAdmin={isAdmin} onLinkClick={closeMenu} mobile />
                 </div>
             </div>
         </header>
     );
 }
 
-function NavLinks({ isAdmin, onLinkClick, mobile = false }) {
+function NavLinks({ role, onLinkClick, mobile = false }) {
     const links = [
-        { to: '/', label: 'Inicio', icon: 'fa-solid fa-home' },
-        { to: '/becas', label: 'Becas', icon: 'fa-solid fa-award' },
-        { to: '/mis-solicitudes', label: 'Solicitudes', icon: 'fa-solid fa-file-alt' },
-        { to: '/contacto', label: 'Contacto', icon: 'fa-solid fa-envelope' },
-        { to: '/admin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true }
+        { to: '/', label: 'Inicio', icon: 'fa-solid fa-home',userOnly:true },
+        { to: '/becas', label: 'Becas', icon: 'fa-solid fa-award',userOnly:true },
+        { to: '/mis-solicitudes', label: 'Solicitudes', icon: 'fa-solid fa-file-alt', userOnly:true },
+        { to: '/contacto', label: 'Contacto', icon: 'fa-solid fa-envelope', userOnly:true},
+        { to: '/admin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true },
+        { to: '/subadmin', label: 'Admin', icon: 'fa-solid fa-cog', subadminOnly: true }
+        
     ];
 
     return (
         <>
             {links.map(link => {
-                if (link.adminOnly && !isAdmin) return null;
+                if (link.adminOnly && role != "admin") return null;
+                if (link.userOnly && role != "student") return null;
+                if (link.subadminOnly && role != "subadmin") return null;
                 
                 const isActive = window.location.pathname === link.to;
                 
