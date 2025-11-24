@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EmailService } from '../services/emailService';
 import { InfoCard } from '../components/InfoCard';
+import { HeroCard } from '../components/HeroCard';
 
 export function ContactPage() {
   const [formData, setFormData] = useState({
@@ -137,15 +138,12 @@ export function ContactPage() {
   };
 
   return (
-    <div className="pt-16 sm:pt-20">
+    <div className="pt-20">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg p-8 sm:p-12 lg:p-16 mb-8 text-center">
-        <FontAwesomeIcon icon="fa-solid fa-envelope" className="text-4xl sm:text-5xl mb-4" />
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">Contacto</h1>
-        <p className="text-base sm:text-lg lg:text-xl opacity-90 max-w-2xl mx-auto">
-          ¿Tienes preguntas sobre las becas? Estamos aquí para ayudarte
-        </p>
-      </section>
+      <HeroCard
+        title="Contacto"
+        subtitle="¿Tienes preguntas sobre las becas? Estamos aquí para ayudarte"
+      />
 
       {/* Info Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8">

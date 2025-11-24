@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { ScholarshipCard } from '../components/ScholarShipCard';
+import { HeroCard } from '../components/HeroCard';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // ScholarshipsPage
 export function ScholarshipsPage({ onApply }) {
@@ -72,24 +74,23 @@ export function ScholarshipsPage({ onApply }) {
 
   return (
     <div className="pt-20">
-      <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg px-8 py-16 md:px-16 mb-8 text-center">
-        <h1 className="text-5xl font-bold mb-4">Becas Disponibles</h1>
-        <p className="text-xl mb-6 opacity-90">Explora todas las oportunidades de financiamiento disponibles</p>
-        <div className="flex gap-4 max-w-2xl mx-auto mt-6 flex-col md:flex-row">
-          <input
+      <HeroCard 
+        title="Becas Disponibles"
+        subtitle="Explora todas las oportunidades de financiamiento disponibles para tu educación."
+      >
+        <input
             type="text"
             placeholder="Buscar becas..."
             className="flex-1 px-5 py-3 rounded-lg text-gray-900"
           />
           <button className="px-6 py-3 bg-blue-800 hover:bg-blue-950 rounded-lg font-semibold transition-all">
-            <i className="fas fa-search mr-2"></i>Buscar
+            <FontAwesomeIcon icon="fa-solid fa-search" className="mr-2" />Buscar
           </button>
-        </div>
-      </section>
+      </HeroCard>
 
       <section className="bg-white p-6 rounded-lg shadow-sm mb-8">
         <h3 className="text-xl font-bold text-blue-900 mb-4">
-          <i className="fas fa-filter mr-2"></i>Filtros de Búsqueda
+          <FontAwesomeIcon icon="fa-solid fa-filter" className="mr-2" />Filtros de Búsqueda
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-4 items-end">
           <div>
@@ -144,7 +145,7 @@ export function ScholarshipsPage({ onApply }) {
                 : 'border-gray-300 hover:bg-gray-100'
             }`}
           >
-            <i className="fas fa-th"></i>
+            <FontAwesomeIcon icon="fa-solid fa-grid" />
           </button>
           <button
             onClick={() => setViewType('list')}
@@ -154,7 +155,7 @@ export function ScholarshipsPage({ onApply }) {
                 : 'border-gray-300 hover:bg-gray-100'
             }`}
           >
-            <i className="fas fa-list"></i>
+            <FontAwesomeIcon icon="fa-solid fa-list" />
           </button>
         </div>
       </div>
