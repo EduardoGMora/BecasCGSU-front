@@ -5,37 +5,45 @@ import { CloseButton } from './common/Button';
 import { StatusBadge } from './common/StatusBadge';
 
 export const ViewApplication = ({ application, onClose }) => {
+  const totalScore = application.academicScore && application.economicScore && application.motivationScore
+    ? ((application.academicScore + application.economicScore + application.motivationScore) / 3).toFixed(1)
+    : 'Sin evaluar';
+
   return (
     <Modal title="Detalles de la Solicitud" onClose={onClose}>
       <ModalContent>
         <ContentGrid>
           <Section title="Información del Solicitante">
             <InfoGrid>
-              <InfoField label="Nombre" value={application.name} />
-              <InfoField label="Email" value={application.email} />
-              <InfoField label="Código" value={application.studentId} />
-              <InfoField label="Carrera" value={application.major} />
+              <InfoField label="Nombre" value={application.studentName} />
+              <InfoField label="ID Solicitud" value={application.id} />
+              <InfoField label="Institución" value={application.institution} />
             </InfoGrid>
           </Section>
 
           <Section title="Información de la Beca">
             <InfoGrid>
               <InfoField label="Beca" value={application.scholarship} />
-              <InfoField label="Tipo" value={application.type} />
-              <InfoField label="Monto" value={application.amount} className="text-green-600" />
+              <InfoField label="Monto" value={application.amount} valueClass="text-green-600" />
             </InfoGrid>
           </Section>
 
           <Section title="Estado de la Solicitud">
             <InfoGrid>
-              <InfoField label="Fecha" value={application.date} />
+              <InfoField label="Fecha" value={application.applicationDate} />
               <div className="flex items-start">
                 <span className="text-gray-600 w-32">Estado:</span>
                 <StatusBadge status={application.status} />
               </div>
-              <InfoField label="Puntaje" value={`${application.score}/100`} />
+              <InfoField label="Puntaje" value={typeof totalScore === 'number' ? `${totalScore}/10` : totalScore} />
             </InfoGrid>
           </Section>
+
+          {application.comments && (
+            <Section title="Comentarios">
+              <p className="text-gray-700">{application.comments}</p>
+            </Section>
+          )}
 
             {/* Documentos */}
             {application.documents?.length > 0 && (
@@ -67,17 +75,17 @@ export const ViewApplication = ({ application, onClose }) => {
               </Section>
             )}
 
-          {application.evaluations?.length > 0 && (
+          {application.evaluationHistory?.length > 0 && (
             <Section title="Historial de Evaluaciones">
               <div className="space-y-4">
-                {application.evaluations.map((evaluation, index) => (
+                {application.evaluationHistory.map((evaluation, index) => (
                   <div key={index} className="p-4 bg-gray-50 rounded-lg">
                     <div className="flex justify-between items-start mb-2">
                       <div>
                         <span className="font-semibold">{evaluation.evaluator}</span>
                         <span className="text-gray-600 text-sm ml-2">{evaluation.date}</span>
                       </div>
-                      <span className="font-medium">{evaluation.score}/100</span>
+                      <span className="font-medium text-blue-600">{evaluation.action}</span>
                     </div>
                     <p className="text-gray-700">{evaluation.comments}</p>
                   </div>

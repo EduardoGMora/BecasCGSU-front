@@ -6,8 +6,11 @@ import { CancelButton, Button } from './common/Button';
 
 export const EvaluateApplication = ({ application, onClose, onSave }) => {
   const [formData, setFormData] = useState({
-    score: '',
-    comments: ''
+    academicScore: application.academicScore || '',
+    economicScore: application.economicScore || '',
+    motivationScore: application.motivationScore || '',
+    comments: '',
+    evaluator: 'Sistema' // TODO: Reemplazar con usuario actual del sistema
   });
 
   const handleChange = (e) => {
@@ -22,8 +25,9 @@ export const EvaluateApplication = ({ application, onClose, onSave }) => {
     e.preventDefault();
     onSave({
       ...formData,
-      applicationId: application.id,
-      date: new Date().toISOString()
+      academicScore: parseFloat(formData.academicScore),
+      economicScore: parseFloat(formData.economicScore),
+      motivationScore: parseFloat(formData.motivationScore)
     });
     onClose();
   };
@@ -35,21 +39,46 @@ export const EvaluateApplication = ({ application, onClose, onSave }) => {
           <ContentGrid>
             <Section title="Información del Solicitante">
               <InfoGrid>
-                <InfoField label="Nombre" value={application.name} />
+                <InfoField label="Nombre" value={application.studentName} />
                 <InfoField label="Beca" value={application.scholarship} />
+                <InfoField label="ID" value={application.id} />
               </InfoGrid>
             </Section>
 
-            <Section title="Evaluación">
+            <Section title="Criterios de Evaluación">
               <div className="space-y-4">
                 <FormField
-                  label="Puntaje (0-100)"
-                  name="score"
+                  label="Desempeño Académico (0-10)"
+                  name="academicScore"
                   type="number"
-                  value={formData.score}
+                  value={formData.academicScore}
                   onChange={handleChange}
                   required
-                  className="min-0 max-100"
+                  min="0"
+                  max="10"
+                  step="0.1"
+                />
+                <FormField
+                  label="Situación Económica (0-10)"
+                  name="economicScore"
+                  type="number"
+                  value={formData.economicScore}
+                  onChange={handleChange}
+                  required
+                  min="0"
+                  max="10"
+                  step="0.1"
+                />
+                <FormField
+                  label="Carta de Motivación (0-10)"
+                  name="motivationScore"
+                  type="number"
+                  value={formData.motivationScore}
+                  onChange={handleChange}
+                  required
+                  min="0"
+                  max="10"
+                  step="0.1"
                 />
                 <TextAreaField
                   label="Comentarios"
@@ -58,19 +87,17 @@ export const EvaluateApplication = ({ application, onClose, onSave }) => {
                   onChange={handleChange}
                   required
                   placeholder="Ingrese sus comentarios y observaciones sobre la solicitud..."
-                  rows={6}
+                  rows={4}
                 />
               </div>
             </Section>
 
-            <Section title="Criterios de Evaluación">
+            <Section title="Ponderación">
               <div className="bg-blue-50 p-4 rounded-lg">
                 <ul className="list-disc list-inside space-y-2 text-sm">
-                  <li>90-100: Cumple excepcionalmente con todos los requisitos</li>
-                  <li>80-89: Cumple satisfactoriamente con los requisitos</li>
-                  <li>70-79: Cumple con la mayoría de los requisitos</li>
-                  <li>60-69: Cumple parcialmente con los requisitos</li>
-                  <li>&lt;60: No cumple con los requisitos mínimos</li>
+                  <li>Desempeño Académico: 40%</li>
+                  <li>Situación Económica: 35%</li>
+                  <li>Carta de Motivación: 25%</li>
                 </ul>
               </div>
             </Section>

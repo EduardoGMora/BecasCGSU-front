@@ -6,7 +6,7 @@ import { FormField, SelectField } from './common/FormFields';
 import { CancelButton, SaveButton } from './common/Button';
 
 const ROLE_OPTIONS = [
-  { value: 'user', label: 'Usuario' },
+  { value: 'student', label: 'Estudiante' },
   { value: 'evaluator', label: 'Evaluador' },
   { value: 'admin', label: 'Administrador' }
 ];
@@ -19,18 +19,17 @@ const STATUS_OPTIONS = [
 export const EditUser = ({ user, onClose, onSave }) => {
   const [formData, setFormData] = useState(user || {
     name: '',
-    position: '',
     email: '',
     phone: '',
-    username: '',
-    role: 'user',
+    role: 'student',
     status: 'active',
-    permissions: [
-      { name: 'Gestionar becas', granted: false },
-      { name: 'Evaluar solicitudes', granted: false },
-      { name: 'Gestionar usuarios', granted: false },
-      { name: 'Ver reportes', granted: false }
-    ]
+    permissions: {
+      manageScholarships: false,
+      evaluateApplications: false,
+      manageUsers: false,
+      viewReports: false,
+      exportData: false
+    }
   });
 
   const handleChange = (e) => {
@@ -41,12 +40,13 @@ export const EditUser = ({ user, onClose, onSave }) => {
     }));
   };
 
-  const handlePermissionChange = (index) => {
+  const handlePermissionChange = (permissionKey) => {
     setFormData(prev => ({
       ...prev,
-      permissions: prev.permissions.map((permission, i) => 
-        i === index ? { ...permission, granted: !permission.granted } : permission
-      )
+      permissions: {
+        ...prev.permissions,
+        [permissionKey]: !prev.permissions[permissionKey]
+      }
     }));
   };
 
@@ -71,13 +71,6 @@ export const EditUser = ({ user, onClose, onSave }) => {
                   required
                 />
                 <FormField
-                  label="Cargo"
-                  name="position"
-                  value={formData.position}
-                  onChange={handleChange}
-                  required
-                />
-                <FormField
                   label="Email"
                   name="email"
                   type="email"
@@ -97,13 +90,6 @@ export const EditUser = ({ user, onClose, onSave }) => {
 
             <Section title="Información de la Cuenta">
               <div className="grid gap-4">
-                <FormField
-                  label="Nombre de Usuario"
-                  name="username"
-                  value={formData.username}
-                  onChange={handleChange}
-                  required
-                />
                 {!user && (
                   <FormField
                     label="Contraseña"
@@ -134,21 +120,66 @@ export const EditUser = ({ user, onClose, onSave }) => {
 
             <Section title="Permisos">
               <div className="grid grid-cols-2 gap-3">
-                {formData.permissions.map((permission, index) => (
-                  <div 
-                    key={index}
-                    className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100"
-                    onClick={() => handlePermissionChange(index)}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={permission.granted}
-                      onChange={() => handlePermissionChange(index)}
-                      className="w-4 h-4"
-                    />
-                    <span>{permission.name}</span>
-                  </div>
-                ))}
+                <div 
+                  className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100"
+                  onClick={() => handlePermissionChange('manageScholarships')}
+                >
+                  <input
+                    type="checkbox"
+                    checked={formData.permissions.manageScholarships}
+                    onChange={() => handlePermissionChange('manageScholarships')}
+                    className="w-4 h-4"
+                  />
+                  <span>Gestionar becas</span>
+                </div>
+                <div 
+                  className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100"
+                  onClick={() => handlePermissionChange('evaluateApplications')}
+                >
+                  <input
+                    type="checkbox"
+                    checked={formData.permissions.evaluateApplications}
+                    onChange={() => handlePermissionChange('evaluateApplications')}
+                    className="w-4 h-4"
+                  />
+                  <span>Evaluar solicitudes</span>
+                </div>
+                <div 
+                  className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100"
+                  onClick={() => handlePermissionChange('manageUsers')}
+                >
+                  <input
+                    type="checkbox"
+                    checked={formData.permissions.manageUsers}
+                    onChange={() => handlePermissionChange('manageUsers')}
+                    className="w-4 h-4"
+                  />
+                  <span>Gestionar usuarios</span>
+                </div>
+                <div 
+                  className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100"
+                  onClick={() => handlePermissionChange('viewReports')}
+                >
+                  <input
+                    type="checkbox"
+                    checked={formData.permissions.viewReports}
+                    onChange={() => handlePermissionChange('viewReports')}
+                    className="w-4 h-4"
+                  />
+                  <span>Ver reportes</span>
+                </div>
+                <div 
+                  className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100"
+                  onClick={() => handlePermissionChange('exportData')}
+                >
+                  <input
+                    type="checkbox"
+                    checked={formData.permissions.exportData}
+                    onChange={() => handlePermissionChange('exportData')}
+                    className="w-4 h-4"
+                  />
+                  <span>Exportar datos</span>
+                </div>
               </div>
             </Section>
           </ContentGrid>

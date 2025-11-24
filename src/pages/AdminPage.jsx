@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StatCard } from '../components/StatCard';
 import { CreateScholarship } from '../components/CreateScholarship';
 import { EditScholarship } from '../components/EditScholarship';
@@ -8,48 +8,113 @@ import { EvaluateApplication } from '../components/EvaluateApplication';
 import { CreateUser } from '../components/CreateUser';
 import { EditUser } from '../components/EditUser';
 import { ViewUser } from '../components/ViewUser';
+import { 
+  getScholarships, 
+  createScholarship, 
+  updateScholarship,
+  getApplications,
+  updateApplication,
+  evaluateApplication,
+  getUsers,
+  createUser,
+  updateUser,
+  getEvaluationCriteria
+} from '../services/dataService';
 
 // Componente AdminPanel
 export function AdminPanel() {
+  // Estados para datos
+  const [scholarships, setScholarships] = useState([]);
+  const [applications, setApplications] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [evaluationCriteria, setEvaluationCriteria] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Estados para modales de becas
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [selectedScholarship, setSelectedScholarship] = useState(null);
   const [editScholarship, setEditScholarship] = useState(null);
 
-  const handleCreateScholarship = (scholarship) => {
-    // TODO: Implementar la lógica para crear una beca
-    console.log('Crear beca:', scholarship);
-  };
-
-  const handleUpdateScholarship = (scholarship) => {
-    // TODO: Implementar la lógica para actualizar una beca
-    console.log('Actualizar beca:', scholarship);
-  };
-
   // Estados para la gestión de solicitudes
   const [selectedApplication, setSelectedApplication] = useState(null);
   const [evaluatingApplication, setEvaluatingApplication] = useState(null);
-
-  const handleEvaluateApplication = (evaluation) => {
-    // TODO: Implementar la lógica para guardar la evaluación
-    console.log('Guardar evaluación:', evaluation);
-  };
 
   // Estados para la gestión de usuarios
   const [showCreateUserModal, setShowCreateUserModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [editUser, setEditUser] = useState(null);
 
-  const handleCreateUser = (user) => {
-    // TODO: Implementar la lógica para crear un usuario
-    console.log('Crear usuario:', user);
-  };
-
-  const handleUpdateUser = (user) => {
-    // TODO: Implementar la lógica para actualizar un usuario
-    console.log('Actualizar usuario:', user);
-  };
-
   const [activeSection, setActiveSection] = useState('overview');
+
+  // Cargar datos iniciales
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      const [scholarshipsData, applicationsData, usersData, criteriaData] = await Promise.all([
+        getScholarships(),
+        getApplications(),
+        getUsers(),
+        getEvaluationCriteria()
+      ]);
+      setScholarships(scholarshipsData);
+      setApplications(applicationsData);
+      setUsers(usersData);
+      setEvaluationCriteria(criteriaData);
+    } catch (error) {
+      console.error('Error al cargar datos:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCreateScholarship = async (scholarship) => {
+    try {
+      const newScholarship = await createScholarship(scholarship);
+      setScholarships([...scholarships, newScholarship]);
+    } catch (error) {
+      console.error('Error al crear beca:', error);
+    }
+  };
+
+  const handleUpdateScholarship = async (scholarship) => {
+    try {
+      const updated = await updateScholarship(scholarship.id, scholarship);
+      setScholarships(scholarships.map(s => s.id === updated.id ? updated : s));
+    } catch (error) {
+      console.error('Error al actualizar beca:', error);
+    }
+  };
+
+  const handleEvaluateApplication = async (evaluation) => {
+    try {
+      const updated = await evaluateApplication(evaluatingApplication.id, evaluation);
+      setApplications(applications.map(a => a.id === updated.id ? updated : a));
+    } catch (error) {
+      console.error('Error al evaluar solicitud:', error);
+    }
+  };
+
+  const handleCreateUser = async (user) => {
+    try {
+      const newUser = await createUser(user);
+      setUsers([...users, newUser]);
+    } catch (error) {
+      console.error('Error al crear usuario:', error);
+    }
+  };
+
+  const handleUpdateUser = async (user) => {
+    try {
+      const updated = await updateUser(user.id, user);
+      setUsers(users.map(u => u.id === updated.id ? updated : u));
+    } catch (error) {
+      console.error('Error al actualizar usuario:', error);
+    }
+  };
 
   return (
     <div className="pt-20">
@@ -200,81 +265,67 @@ export function AdminPanel() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b border-gray-200 hover:bg-gray-50">
-                  <td className="px-6 py-4">Beca de Excelencia Académica 2025</td>
-                  <td className="px-6 py-4">Universidad de Guadalajara</td>
-                  <td className="px-6 py-4">Excelencia</td>
-                  <td className="px-6 py-4">$50,000</td>
-                  <td className="px-6 py-4">
-                    <span className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-semibold">Activa</span>
-                  </td>
-                  <td className="px-6 py-4">234</td>
-                  <td className="px-6 py-4">
-                    <div className="flex gap-2">
-                      <button 
-                        onClick={() => setSelectedScholarship({
-                          name: 'Beca de Excelencia Académica 2025',
-                          institution: 'Universidad de Guadalajara',
-                          type: 'Excelencia',
-                          amount: '$50,000',
-                          status: 'active',
-                          requirements: [
-                            'Promedio mínimo de 9.0',
-                            'Ser alumno regular',
-                            'No tener materias reprobadas'
-                          ],
-                          requiredDocuments: [
-                            'Kardex actualizado',
-                            'Identificación oficial',
-                            'Comprobante de domicilio'
-                          ],
-                          startDate: '2025-01-01',
-                          endDate: '2025-12-31',
-                          resultsDate: '2026-01-15'
-                        })}
-                        className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold"
-                      >
-                        Ver
-                      </button>
-                      <button 
-                        onClick={() => setEditScholarship({
-                          name: 'Beca de Excelencia Académica 2025',
-                          institution: 'Universidad de Guadalajara',
-                          type: 'academic',
-                          amount: '50000',
-                          status: 'active',
-                          requirements: [
-                            'Promedio mínimo de 9.0',
-                            'Ser alumno regular',
-                            'No tener materias reprobadas'
-                          ],
-                          requiredDocuments: [
-                            'Kardex actualizado',
-                            'Identificación oficial',
-                            'Comprobante de domicilio'
-                          ],
-                          startDate: '2025-01-01',
-                          endDate: '2025-12-31',
-                          resultsDate: '2026-01-15'
-                        })}
-                        className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold"
-                      >
-                        Editar
-                      </button>
-                      <button 
-                        onClick={() => {
-                          if (window.confirm('¿Estás seguro de que deseas eliminar esta beca?')) {
-                            // TODO: Implementar la lógica para eliminar la beca
-                            console.log('Eliminar beca');
-                          }
-                        }}
-                        className="px-3 py-1 bg-red-500 text-white rounded text-sm font-semibold"
-                      >
-                        Eliminar
-                      </button>
-                    </div>
-                  </td>
-                </tr>
+                {loading ? (
+                  <tr>
+                    <td colSpan="7" className="px-6 py-8 text-center text-gray-500">
+                      <i className="fas fa-spinner fa-spin mr-2"></i>Cargando becas...
+                    </td>
+                  </tr>
+                ) : scholarships.length === 0 ? (
+                  <tr>
+                    <td colSpan="7" className="px-6 py-8 text-center text-gray-500">
+                      No hay becas registradas
+                    </td>
+                  </tr>
+                ) : (
+                  scholarships.map((scholarship) => (
+                    <tr key={scholarship.id} className="border-b border-gray-200 hover:bg-gray-50">
+                      <td className="px-6 py-4">{scholarship.name}</td>
+                      <td className="px-6 py-4">{scholarship.institution}</td>
+                      <td className="px-6 py-4">{scholarship.type}</td>
+                      <td className="px-6 py-4">{scholarship.amount}</td>
+                      <td className="px-6 py-4">
+                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                          scholarship.status === 'active' 
+                            ? 'bg-green-500 text-white' 
+                            : 'bg-gray-500 text-white'
+                        }`}>
+                          {scholarship.status === 'active' ? 'Activa' : 'Inactiva'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        {applications.filter(app => app.scholarship === scholarship.name).length}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex gap-2">
+                          <button 
+                            onClick={() => setSelectedScholarship(scholarship)}
+                            className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold"
+                          >
+                            Ver
+                          </button>
+                          <button 
+                            onClick={() => setEditScholarship(scholarship)}
+                            className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold"
+                          >
+                            Editar
+                          </button>
+                          <button 
+                            onClick={() => {
+                              if (window.confirm('¿Estás seguro de que deseas eliminar esta beca?')) {
+                                // TODO: Implementar deleteScholarship
+                                console.log('Eliminar beca:', scholarship.id);
+                              }
+                            }}
+                            className="px-3 py-1 bg-red-500 text-white rounded text-sm font-semibold"
+                          >
+                            Eliminar
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
@@ -328,62 +379,68 @@ export function AdminPanel() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b border-gray-200 hover:bg-gray-50">
-                  <td className="px-6 py-4">
-                    <div className="font-semibold">Juan Pérez García</div>
-                    <div className="text-sm text-gray-600">juan.perez@alumnos.udg.mx</div>
-                  </td>
-                  <td className="px-6 py-4">Excelencia Académica</td>
-                  <td className="px-6 py-4">15 Nov 2025</td>
-                  <td className="px-6 py-4">
-                    <span className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-semibold">Aprobada</span>
-                  </td>
-                  <td className="px-6 py-4">95/100</td>
-                  <td className="px-6 py-4">
-                    <div className="flex gap-2">
-                      <button 
-                        onClick={() => setSelectedApplication({
-                          name: 'Juan Pérez García',
-                          email: 'juan.perez@alumnos.udg.mx',
-                          studentId: '215784362',
-                          major: 'Ingeniería en Computación',
-                          scholarship: 'Beca de Excelencia Académica',
-                          type: 'Excelencia',
-                          amount: '$50,000',
-                          date: '15 Nov 2025',
-                          status: 'approved',
-                          score: '95',
-                          documents: [
-                            { name: 'Kardex actualizado' },
-                            { name: 'Identificación oficial' },
-                            { name: 'Comprobante de domicilio' }
-                          ],
-                          evaluations: [
-                            {
-                              evaluator: 'Dr. Roberto Mendoza',
-                              date: '14 Nov 2025',
-                              score: 95,
-                              comments: 'Excelente expediente académico. Cumple con todos los requisitos.'
-                            }
-                          ]
-                        })}
-                        className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold"
-                      >
-                        Ver
-                      </button>
-                      <button 
-                        onClick={() => setEvaluatingApplication({
-                          id: '1',
-                          name: 'Juan Pérez García',
-                          scholarship: 'Beca de Excelencia Académica'
-                        })}
-                        className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold"
-                      >
-                        Evaluar
-                      </button>
-                    </div>
-                  </td>
-                </tr>
+                {loading ? (
+                  <tr>
+                    <td colSpan="6" className="px-6 py-8 text-center text-gray-500">
+                      <i className="fas fa-spinner fa-spin mr-2"></i>Cargando solicitudes...
+                    </td>
+                  </tr>
+                ) : applications.length === 0 ? (
+                  <tr>
+                    <td colSpan="6" className="px-6 py-8 text-center text-gray-500">
+                      No hay solicitudes registradas
+                    </td>
+                  </tr>
+                ) : (
+                  applications.map((application) => {
+                    const totalScore = (
+                      (application.academicScore || 0) + 
+                      (application.economicScore || 0) + 
+                      (application.motivationScore || 0)
+                    ) / 3;
+                    
+                    return (
+                      <tr key={application.id} className="border-b border-gray-200 hover:bg-gray-50">
+                        <td className="px-6 py-4">
+                          <div className="font-semibold">{application.studentName}</div>
+                          <div className="text-sm text-gray-600">{application.id}</div>
+                        </td>
+                        <td className="px-6 py-4">{application.scholarship}</td>
+                        <td className="px-6 py-4">{application.applicationDate}</td>
+                        <td className="px-6 py-4">
+                          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                            application.status === 'approved' ? 'bg-green-500 text-white' :
+                            application.status === 'pending' ? 'bg-yellow-500 text-gray-900' :
+                            'bg-red-500 text-white'
+                          }`}>
+                            {application.status === 'approved' ? 'Aprobada' :
+                             application.status === 'pending' ? 'Pendiente' :
+                             'Rechazada'}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4">
+                          {totalScore > 0 ? `${totalScore.toFixed(1)}/10` : 'Sin evaluar'}
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="flex gap-2">
+                            <button 
+                              onClick={() => setSelectedApplication(application)}
+                              className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold"
+                            >
+                              Ver
+                            </button>
+                            <button 
+                              onClick={() => setEvaluatingApplication(application)}
+                              className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold"
+                            >
+                              Evaluar
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
               </tbody>
             </table>
           </div>
@@ -428,78 +485,63 @@ export function AdminPanel() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b border-gray-200 hover:bg-gray-50">
-                  <td className="px-6 py-4">
-                    <div className="font-semibold">Dr. Roberto Mendoza</div>
-                    <div className="text-sm text-gray-600">Coordinador de Becas</div>
-                  </td>
-                  <td className="px-6 py-4">r.mendoza@udg.mx</td>
-                  <td className="px-6 py-4">
-                    <span className="px-3 py-1 bg-red-500 text-white rounded-full text-xs font-semibold">Administrador</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-semibold">Activo</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex gap-2">
-                      <button 
-                        onClick={() => setSelectedUser({
-                          name: 'Dr. Roberto Mendoza',
-                          position: 'Coordinador de Becas',
-                          email: 'r.mendoza@udg.mx',
-                          phone: '33-1234-5678',
-                          username: 'rmendoza',
-                          role: 'admin',
-                          status: 'active',
-                          createdAt: '01 Oct 2025',
-                          permissions: [
-                            { name: 'Gestionar becas', granted: true },
-                            { name: 'Evaluar solicitudes', granted: true },
-                            { name: 'Gestionar usuarios', granted: true },
-                            { name: 'Ver reportes', granted: true }
-                          ],
-                          recentActivity: [
-                            {
-                              icon: 'fa-solid fa-check-circle',
-                              color: 'green-500',
-                              action: 'Aprobó una solicitud',
-                              date: '4 Nov 2025'
-                            },
-                            {
-                              icon: 'fa-solid fa-edit',
-                              color: 'blue-500',
-                              action: 'Modificó una beca',
-                              date: '3 Nov 2025'
-                            }
-                          ]
-                        })}
-                        className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold"
-                      >
-                        Ver
-                      </button>
-                      <button 
-                        onClick={() => setEditUser({
-                          name: 'Dr. Roberto Mendoza',
-                          position: 'Coordinador de Becas',
-                          email: 'r.mendoza@udg.mx',
-                          phone: '33-1234-5678',
-                          username: 'rmendoza',
-                          role: 'admin',
-                          status: 'active',
-                          permissions: [
-                            { name: 'Gestionar becas', granted: true },
-                            { name: 'Evaluar solicitudes', granted: true },
-                            { name: 'Gestionar usuarios', granted: true },
-                            { name: 'Ver reportes', granted: true }
-                          ]
-                        })}
-                        className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold"
-                      >
-                        Editar
-                      </button>
-                    </div>
-                  </td>
-                </tr>
+                {loading ? (
+                  <tr>
+                    <td colSpan="5" className="px-6 py-8 text-center text-gray-500">
+                      <i className="fas fa-spinner fa-spin mr-2"></i>Cargando usuarios...
+                    </td>
+                  </tr>
+                ) : users.length === 0 ? (
+                  <tr>
+                    <td colSpan="5" className="px-6 py-8 text-center text-gray-500">
+                      No hay usuarios registrados
+                    </td>
+                  </tr>
+                ) : (
+                  users.map((user) => (
+                    <tr key={user.id} className="border-b border-gray-200 hover:bg-gray-50">
+                      <td className="px-6 py-4">
+                        <div className="font-semibold">{user.name}</div>
+                        <div className="text-sm text-gray-600">{user.phone}</div>
+                      </td>
+                      <td className="px-6 py-4">{user.email}</td>
+                      <td className="px-6 py-4">
+                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                          user.role === 'admin' ? 'bg-red-500 text-white' :
+                          user.role === 'evaluator' ? 'bg-blue-500 text-white' :
+                          'bg-gray-500 text-white'
+                        }`}>
+                          {user.role === 'admin' ? 'Administrador' :
+                           user.role === 'evaluator' ? 'Evaluador' :
+                           'Estudiante'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                          user.status === 'active' ? 'bg-green-500 text-white' : 'bg-gray-500 text-white'
+                        }`}>
+                          {user.status === 'active' ? 'Activo' : 'Inactivo'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex gap-2">
+                          <button 
+                            onClick={() => setSelectedUser(user)}
+                            className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold"
+                          >
+                            Ver
+                          </button>
+                          <button 
+                            onClick={() => setEditUser(user)}
+                            className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold"
+                          >
+                            Editar
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
