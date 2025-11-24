@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { StatCard } from '../components/StatCard';
+import { StatCard } from '../../components/StatCard';
 
-// Componente AdminPanel
-export function AdminPanel() {
+// Componente AdminPage
+export default function AdminPage() {
   const [activeSection, setActiveSection] = useState('overview');
 
   return (

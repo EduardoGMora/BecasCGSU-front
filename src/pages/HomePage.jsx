@@ -1,9 +1,12 @@
 import { StatCard } from '../components/StatCard';
 import { ScholarshipCard } from '../components/ScholarShipCard';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
+import { HeroCard } from '../components/HeroCard';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // HomePage
-export function HomePage({ onApply }){
+export function HomePage(){
+  const { handleApply } = useOutletContext();
   const featuredScholarships = [
     {
       id: 1,
@@ -39,22 +42,19 @@ export function HomePage({ onApply }){
 
   return (
     <div className="pt-20">
-      <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg py-16 px-8 md:px-16 mb-8 text-center">
-        <h1 className="text-5xl font-bold mb-4">Portal de Becas Universitarias</h1>
-        <p className="text-xl mb-6 opacity-90">
-          Descubre oportunidades de financiamiento educativo de la Universidad de Guadalajara y instituciones colaboradoras
-        </p>
-        <div className="flex gap-4 max-w-2xl mx-auto mt-6 flex-col md:flex-row">
-          <input
+      <HeroCard 
+        title="Portal de Becas CGSU"
+        subtitle="Descubre oportunidades de financiamiento educativo de la Universidad de Guadalajara y instituciones colaboradoras"
+      >
+        <input
             type="text"
             placeholder="Buscar por palabra clave, carrera, institución..."
             className="flex-1 px-5 py-3 rounded-lg text-gray-900"
-          />
-          <button className="px-6 py-3 bg-blue-800 hover:bg-blue-950 rounded-lg font-semibold transition-all hover:transform hover:-translate-y-0.5">
-            <i className="fas fa-search mr-2"></i>Buscar
-          </button>
-        </div>
-      </section>
+        />
+        <button className="px-6 py-3 bg-blue-800 hover:bg-blue-950 rounded-lg font-semibold transition-all hover:transform hover:-translate-y-0.5">
+            <FontAwesomeIcon icon="fa-solid fa-search" className="mr-2" />Buscar
+        </button>
+      </HeroCard>
 
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard icon="fas fa-award" number="127" label="Becas Activas" />
@@ -69,11 +69,10 @@ export function HomePage({ onApply }){
           <Link to="/becas" className="text-blue-600 hover:underline">
             Ver Todas
           </Link>
-          
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredScholarships.map(scholarship => (
-            <ScholarshipCard key={scholarship.id} scholarship={scholarship} onApply={onApply} />
+            <ScholarshipCard key={scholarship.id} scholarship={scholarship} onApply={handleApply} />
           ))}
         </div>
       </section>
