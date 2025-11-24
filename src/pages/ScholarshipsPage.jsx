@@ -3,74 +3,69 @@ import { useOutletContext } from 'react-router-dom';
 import { ScholarshipCard } from '../components/ScholarShipCard';
 import { HeroCard } from '../components/HeroCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Scholarships from '../utils/scholarships.json';
 
 // ScholarshipsPage
 export function ScholarshipsPage({ onApply }) {
   const { handleApply } = useOutletContext();
   const [viewType, setViewType] = useState('grid');
   
-  const scholarships = [
-    {
-      id: 1,
-      title: 'Beca de Excelencia Académica 2025',
-      institution: 'Universidad de Guadalajara',
-      deadline: '15 de Diciembre, 2025',
-      beneficiaries: 50,
-      description: 'Beca dirigida a estudiantes con promedio superior a 9.5. Cubre 100% de colegiatura y gastos de manutención mensual.',
-      amount: '$50,000 MXN',
-      status: 'open'
-    },
-    {
-      id: 2,
-      title: 'Programa de Apoyo Socioeconómico',
-      institution: 'Fundación Telmex',
-      deadline: '20 de Diciembre, 2025',
-      beneficiaries: 200,
-      description: 'Apoyo financiero para estudiantes con comprobada necesidad económica y buen rendimiento académico (promedio mínimo 8.0).',
-      amount: '$25,000 MXN',
-      status: 'open'
-    },
-    {
-      id: 3,
-      title: 'Beca de Innovación Tecnológica',
-      institution: 'Google México',
-      deadline: '10 de Enero, 2026',
-      beneficiaries: 25,
-      description: 'Programa exclusivo para estudiantes de ingeniería en sistemas con proyectos innovadores y potencial de impacto social.',
-      amount: '$75,000 MXN',
-      status: 'open'
-    },
-    {
-      id: 4,
-      title: 'Beca Deportiva de Alto Rendimiento',
-      institution: 'Universidad de Guadalajara',
-      deadline: '5 de Enero, 2026',
-      beneficiaries: 30,
-      description: 'Dirigida a deportistas destacados en disciplinas olímpicas con representación nacional o internacional.',
-      amount: '$40,000 MXN',
-      status: 'open'
-    },
-    {
-      id: 5,
-      title: 'Programa de Investigación Científica',
-      institution: 'CONACyT',
-      deadline: '25 de Enero, 2026',
-      beneficiaries: 15,
-      description: 'Beca para estudiantes de posgrado con proyectos de investigación en ciencias exactas y naturales.',
-      amount: '$120,000 MXN',
-      status: 'open'
-    },
-    {
-      id: 6,
-      title: 'Beca de Intercambio Internacional',
-      institution: 'Fundación BBVA',
-      deadline: '31 de Octubre, 2025',
-      beneficiaries: 10,
-      description: 'Programa de movilidad estudiantil para realizar un semestre en universidades europeas de prestigio.',
-      amount: '$200,000 MXN',
-      status: 'closed'
-    }
-  ];
+  const [filterState, setFilterState] = useState({
+    type: "Todas",
+    area: "Todas",
+    institution: "Todas",
+    amountRange: "Cualquier monto",
+  });
+
+  const [filteredScholarships, setFilteredScholarships] =
+    useState(Scholarships);
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilterState((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  const parseAmount = (amountStr) => {
+    return Number(amountStr.replace(/[^0-9.-]+/g, ""));
+  };
+
+  const applyFilters = () => {
+    const result = Scholarships.filter((item) => {
+      const matchType =
+        filterState.type === "Todas" || item.type === filterState.type;
+
+      const matchArea =
+        filterState.area === "Todas" || item.area === filterState.area;
+
+      const matchInst =
+        filterState.institution === "Todas" ||
+        item.institution === filterState.institution;
+
+      let matchAmount = true;
+      const amountNum = parseAmount(item.amount);
+
+      if (filterState.amountRange === "$10,000 - $25,000") {
+        matchAmount = amountNum >= 10000 && amountNum <= 25000;
+      } else if (filterState.amountRange === "$25,000 - $50,000") {
+        matchAmount = amountNum > 25000 && amountNum <= 50000;
+      }
+
+      return matchType && matchArea && matchInst && matchAmount;
+    });
+    setFilteredScholarships(result);
+  };
+
+  const clearFilters = () => {
+    setFilterState({
+      type: "Todas",
+      area: "Todas",
+      institution: "Todas",
+      amountRange: "Cualquier monto",
+    });
+    setFilteredScholarships(Scholarships);
+  };
 
   return (
     <div className="pt-20">
@@ -95,15 +90,19 @@ export function ScholarshipsPage({ onApply }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-4 items-end">
           <div>
             <label className="block font-semibold mb-2">Tipo de Beca</label>
-            <select className="w-full px-3 py-2 border border-gray-300 rounded-lg">
+            <select name="type" value={filterState.type} onChange={handleFilterChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg" >
               <option>Todas</option>
               <option>Excelencia Académica</option>
               <option>Necesidad Económica</option>
+              <option>Deportiva</option>
+              <option>Innovación Tecnológica</option>
+              <option>Investigación Científica</option>
+              <option>Intercambio</option>
             </select>
           </div>
           <div>
             <label className="block font-semibold mb-2">Área de Estudio</label>
-            <select className="w-full px-3 py-2 border border-gray-300 rounded-lg">
+            <select name="area" value={filterState.area} onChange={handleFilterChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg" >
               <option>Todas</option>
               <option>Ingeniería</option>
               <option>Ciencias de la Salud</option>
@@ -111,48 +110,52 @@ export function ScholarshipsPage({ onApply }) {
           </div>
           <div>
             <label className="block font-semibold mb-2">Institución</label>
-            <select className="w-full px-3 py-2 border border-gray-300 rounded-lg">
-              <option>Todas</option>
-              <option>Universidad de Guadalajara</option>
-              <option>Fundación Telmex</option>
+            <select name="institution" value={filterState.institution} onChange={handleFilterChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg" >
+              <option value="Todas">Todas</option>
+              <option value="Universidad de Guadalajara">Universidad de Guadalajara</option>
+              <option value="Fundación Telmex">Fundación Telmex</option>
+              <option value="Google México">Google México</option>
+              <option value="CONACyT">CONACyT</option>
             </select>
           </div>
           <div>
             <label className="block font-semibold mb-2">Monto Mínimo</label>
-            <select className="w-full px-3 py-2 border border-gray-300 rounded-lg">
+            <select name="amountRange" value={filterState.amountRange} onChange={handleFilterChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg" >
               <option>Cualquier monto</option>
               <option>$10,000 - $25,000</option>
               <option>$25,000 - $50,000</option>
             </select>
           </div>
-          <button className="px-5 py-2 border border-blue-900 text-blue-900 rounded-lg font-semibold hover:bg-blue-900 hover:text-white transition-all">
+          <button onClick={clearFilters} className="px-5 py-2 border border-blue-900 text-blue-900 rounded-lg font-semibold hover:bg-blue-900 hover:text-white transition-all">
             Limpiar
-          </button>
-          <button className="px-5 py-2 bg-blue-900 text-white rounded-lg font-semibold hover:bg-blue-800 transition-all">
+          </button> 
+          <button onClick={applyFilters} className="px-5 py-2 bg-blue-900 text-white rounded-lg font-semibold hover:bg-blue-800 transition-all">
             Aplicar
           </button>
         </div>
       </section>
 
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-blue-900">127 Becas Encontradas</h2>
+        <h2 className="text-2xl font-bold text-blue-900">
+          {filteredScholarships.length} Becas Encontradas
+        </h2>
         <div className="flex gap-2">
           <button
-            onClick={() => setViewType('grid')}
+            onClick={() => setViewType("grid")}
             className={`p-2 border rounded-lg transition-all ${
-              viewType === 'grid' 
-                ? 'bg-blue-900 text-white border-blue-900' 
-                : 'border-gray-300 hover:bg-gray-100'
+              viewType === "grid"
+                ? "bg-blue-900 text-white border-blue-900"
+                : "border-gray-300 hover:bg-gray-100"
             }`}
           >
             <FontAwesomeIcon icon="fa-solid fa-grid" />
           </button>
           <button
-            onClick={() => setViewType('list')}
+            onClick={() => setViewType("list")}
             className={`p-2 border rounded-lg transition-all ${
-              viewType === 'list' 
-                ? 'bg-blue-900 text-white border-blue-900' 
-                : 'border-gray-300 hover:bg-gray-100'
+              viewType === "list"
+                ? "bg-blue-900 text-white border-blue-900"
+                : "border-gray-300 hover:bg-gray-100"
             }`}
           >
             <FontAwesomeIcon icon="fa-solid fa-list" />
@@ -160,14 +163,17 @@ export function ScholarshipsPage({ onApply }) {
         </div>
       </div>
 
-      <div className={viewType === 'grid' 
-        ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' 
-        : 'space-y-4'
-      }>
-        {scholarships.map(scholarship => (
-          <ScholarshipCard key={scholarship.id} scholarship={scholarship} onApply={handleApply} />
+      <div
+        className={
+          viewType === "grid"
+            ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            : "space-y-4"
+        }
+      >
+        {filteredScholarships.map(scholarship => (  
+          <ScholarshipCard key={scholarship.id} scholarship={scholarship} onApply={handleApply}  />
         ))}
       </div>
     </div>
   );
-};
+}

@@ -3,42 +3,12 @@ import { ScholarshipCard } from '../components/ScholarShipCard';
 import { Link, useOutletContext } from 'react-router-dom';
 import { HeroCard } from '../components/HeroCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Scholarships from '../utils/scholarships.json';
 
 // HomePage
 export function HomePage(){
   const { handleApply } = useOutletContext();
-  const featuredScholarships = [
-    {
-      id: 1,
-      title: 'Beca de Excelencia Académica 2025',
-      institution: 'Universidad de Guadalajara',
-      deadline: '15 de Diciembre, 2025',
-      beneficiaries: 50,
-      description: 'Beca dirigida a estudiantes con promedio superior a 9.5. Cubre 100% de colegiatura y gastos de manutención.',
-      amount: '$50,000 MXN',
-      status: 'open'
-    },
-    {
-      id: 2,
-      title: 'Beca de Apoyo Socioeconómico',
-      institution: 'Fundación Telmex',
-      deadline: '20 de Diciembre, 2025',
-      beneficiaries: 200,
-      description: 'Apoyo financiero para estudiantes con comprobada necesidad económica y buen rendimiento académico.',
-      amount: '$25,000 MXN',
-      status: 'open'
-    },
-    {
-      id: 3,
-      title: 'Beca de Innovación Tecnológica',
-      institution: 'Google México',
-      deadline: '10 de Enero, 2026',
-      beneficiaries: 25,
-      description: 'Programa exclusivo para estudiantes de tecnología con proyectos innovadores y impacto social.',
-      amount: '$75,000 MXN',
-      status: 'open'
-    }
-  ];
+  const featuredScholarships = Scholarships.filter(scholarship => scholarship.featured);
 
   return (
     <div className="pt-20">
