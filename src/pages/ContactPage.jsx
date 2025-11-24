@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EmailService } from '../services/emailService';
+import { InfoCard } from '../components/InfoCard';
 
 export function ContactPage() {
   const [formData, setFormData] = useState({
@@ -148,50 +149,28 @@ export function ContactPage() {
 
       {/* Info Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8">
-        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-              <FontAwesomeIcon icon="fa-solid fa-phone" className="text-blue-900 text-xl" />
-            </div>
-            <h3 className="text-lg sm:text-xl font-bold text-blue-900">Teléfono</h3>
-          </div>
+        <InfoCard icon="fa-solid fa-phone" title="Teléfono">
           <p className="font-semibold mb-2 text-sm sm:text-base">Centro de Atención:</p>
           <p className="text-gray-600 mb-3 text-sm sm:text-base">33 3134-2222 ext. 12345</p>
           <p className="font-semibold mb-2 text-sm sm:text-base">Horario:</p>
           <p className="text-gray-600 text-sm sm:text-base">Lunes a Viernes 8:00 - 18:00</p>
-        </div>
-
-        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-              <FontAwesomeIcon icon="fa-solid fa-envelope" className="text-blue-900 text-xl" />
-            </div>
-            <h3 className="text-lg sm:text-xl font-bold text-blue-900">Email</h3>
-          </div>
+        </InfoCard>
+        
+        <InfoCard icon="fa-solid fa-envelope" title="Email">
           <p className="font-semibold mb-2 text-sm sm:text-base">Becas UDG:</p>
-          <a href="mailto:becas@udg.mx" className="text-blue-600 hover:underline mb-3 block text-sm sm:text-base break-all">
-            becas@udg.mx
-          </a>
+          <a href="mailto:becas@udg.mx" className="text-blue-600 hover:underline mb-3 text-sm sm:text-base break-all">becas@udg.mx</a>
           <p className="font-semibold mb-2 text-sm sm:text-base">Soporte Técnico:</p>
-          <a href="mailto:soporte.becas@udg.mx" className="text-blue-600 hover:underline text-sm sm:text-base break-all">
-            soporte.becas@udg.mx
-          </a>
-        </div>
-
-        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-              <FontAwesomeIcon icon="fa-solid fa-map-marker-alt" className="text-blue-900 text-xl" />
-            </div>
-            <h3 className="text-lg sm:text-xl font-bold text-blue-900">Ubicación</h3>
-          </div>
+          <a href="mailto:soporte.becas@udg.mx" className="text-blue-600 hover:underline text-sm sm:text-base break-all">soporte.becas@udg.mx</a>
+        </InfoCard>
+        
+        <InfoCard icon="fa-solid fa-map-marker-alt" title="Ubicación">
           <p className="font-semibold mb-2 text-sm sm:text-base">Oficina de Becas:</p>
           <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
             Av. Juárez No. 976<br />
             Col. Centro, Guadalajara, Jal.<br />
             C.P. 44100
           </p>
-        </div>
+        </InfoCard>
       </div>
 
       {/* Contact Form */}
