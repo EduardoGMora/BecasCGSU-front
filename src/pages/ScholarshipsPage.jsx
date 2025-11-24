@@ -3,93 +3,13 @@ import { useOutletContext } from 'react-router-dom';
 import { ScholarshipCard } from '../components/ScholarShipCard';
 import { HeroCard } from '../components/HeroCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Scholarships from '../utils/scholarships.json';
 
 // ScholarshipsPage
 export function ScholarshipsPage({ onApply }) {
   const { handleApply } = useOutletContext();
   const [viewType, setViewType] = useState('grid');
   
-  const scholarships = [
-    {
-      id: 1,
-      title: "Beca de Excelencia Académica 2025",
-      institution: "Universidad de Guadalajara",
-      deadline: "15 de Diciembre, 2025",
-      beneficiaries: 50,
-      description:
-        "Beca dirigida a estudiantes con promedio superior a 9.5. Cubre 100% de colegiatura y gastos de manutención mensual.",
-      amount: "$50,000 MXN",
-      status: "open",
-      type: "Excelencia Académica",
-      area: "Todas",
-    },
-    {
-      id: 2,
-      title: "Programa de Apoyo Socioeconómico",
-      institution: "Fundación Telmex",
-      deadline: "20 de Diciembre, 2025",
-      beneficiaries: 200,
-      description:
-        "Apoyo financiero para estudiantes con comprobada necesidad económica y buen rendimiento académico (promedio mínimo 8.0).",
-      amount: "$25,000 MXN",
-      status: "open",
-      type: "Necesidad Economica",
-      area: "Todas",
-    },
-    {
-      id: 3,
-      title: "Beca de Innovación Tecnológica",
-      institution: "Google México",
-      deadline: "10 de Enero, 2026",
-      beneficiaries: 25,
-      description:
-        "Programa exclusivo para estudiantes de ingeniería en sistemas con proyectos innovadores y potencial de impacto social.",
-      amount: "$75,000 MXN",
-      status: "open",
-      type: "Innovación Tecnológica",
-      area: "Ingeniería",
-    },
-    {
-      id: 4,
-      title: "Beca Deportiva de Alto Rendimiento",
-      institution: "Universidad de Guadalajara",
-      deadline: "5 de Enero, 2026",
-      beneficiaries: 30,
-      description:
-        "Dirigida a deportistas destacados en disciplinas olímpicas con representación nacional o internacional.",
-      amount: "$40,000 MXN",
-      status: "open",
-      type: "Deportiva",
-      area: "Todas",
-    },
-    {
-      id: 5,
-      title: "Programa de Investigación Científica",
-      institution: "CONACyT",
-      deadline: "25 de Enero, 2026",
-      beneficiaries: 15,
-      description:
-        "Beca para estudiantes de posgrado con proyectos de investigación en ciencias exactas y naturales.",
-      amount: "$120,000 MXN",
-      status: "open",
-      type: "Investigacion Cientifica",
-      area: "Todas",
-    },
-    {
-      id: 6,
-      title: "Beca de Intercambio Internacional",
-      institution: "Fundación BBVA",
-      deadline: "31 de Octubre, 2025",
-      beneficiaries: 10,
-      description:
-        "Programa de movilidad estudiantil para realizar un semestre en universidades europeas de prestigio.",
-      amount: "$200,000 MXN",
-      status: "closed",
-      type: "Intercambio",
-      area: "Todas",
-    },
-  ];
-
   const [filterState, setFilterState] = useState({
     type: "Todas",
     area: "Todas",
@@ -251,7 +171,7 @@ export function ScholarshipsPage({ onApply }) {
         }
       >
         {filteredScholarships.map(scholarship => (  
-          <ScholarshipCard key={scholarship.id} scholarship={scholarship} onApply={onApply} />
+          <ScholarshipCard key={scholarship.id} scholarship={scholarship} onApply={handleApply}  />
         ))}
       </div>
     </div>
