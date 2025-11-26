@@ -49,6 +49,9 @@ export function AdminPanel() {
     console.log('Actualizar usuario:', user);
   };
 
+
+// Componente AdminPage
+export default function AdminPage() {
   const [activeSection, setActiveSection] = useState('overview');
 
   return (

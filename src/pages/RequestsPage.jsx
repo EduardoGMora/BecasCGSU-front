@@ -2,6 +2,7 @@ import { StatCard } from '../components/StatCard';
 import { ApplicationDetails } from '../components/ApplicationDetails';
 import { EditApplication } from '../components/EditApplication';
 import { useState } from 'react';
+import { HeroCard } from '../components/HeroCard';
 
 // Componente ApplicationsPage
 export function ApplicationsPage() {
@@ -35,96 +36,64 @@ export function ApplicationsPage() {
 
     return (
         <div className="pt-20">
-        <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg px-8 py-16 md:px-16 mb-8 text-center">
-            <h1 className="text-5xl font-bold mb-4">Mis Solicitudes</h1>
-            <p className="text-xl opacity-90">Administra y da seguimiento a tus aplicaciones de beca</p>
-        </section>
+            <HeroCard
+                title="Mis Solicitudes"
+                subtitle="Administra y da seguimiento a tus aplicaciones de beca"
+            />
 
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <StatCard icon="fas fa-paper-plane" number="5" label="Solicitudes Enviadas" />
-            <StatCard icon="fas fa-clock" number="2" label="En Proceso" />
-            <StatCard icon="fas fa-check-circle" number="1" label="Aprobadas" />
-            <StatCard icon="fas fa-times-circle" number="2" label="Rechazadas" />
-        </section>
+            <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <StatCard icon="fas fa-paper-plane" number="5" label="Solicitudes Enviadas" />
+                <StatCard icon="fas fa-clock" number="2" label="En Proceso" />
+                <StatCard icon="fas fa-check-circle" number="1" label="Aprobadas" />
+                <StatCard icon="fas fa-times-circle" number="2" label="Rechazadas" />
+            </section>
 
-        <section className="bg-white rounded-lg shadow-sm overflow-hidden">
-            <div className="bg-blue-900 text-white px-6 py-4">
-            <h3 className="text-xl font-bold">Solicitudes de Beca</h3>
-            </div>
-            <div className="overflow-x-auto">
-            <table className="w-full">
-                <thead className="bg-gray-200">
-                <tr>
-                    <th className="px-6 py-4 text-left font-semibold">Beca</th>
-                    <th className="px-6 py-4 text-left font-semibold">Institución</th>
-                    <th className="px-6 py-4 text-left font-semibold">Fecha Aplicación</th>
-                    <th className="px-6 py-4 text-left font-semibold">Estado</th>
-                    <th className="px-6 py-4 text-left font-semibold">Monto</th>
-                    <th className="px-6 py-4 text-left font-semibold">Acciones</th>
-                </tr>
-                </thead>
-                <tbody>
-                {applications.map(app => (
-                    <tr key={app.id} className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="px-6 py-4">{app.scholarship}</td>
-                    <td className="px-6 py-4">{app.institution}</td>
-                    <td className="px-6 py-4">{app.date}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusStyle(app.status)}`}>
-                        {getStatusText(app.status)}
-                        </span>
-                    </td>
-                    <td className="px-6 py-4 font-semibold">{app.amount}</td>
-                    <td className="px-6 py-4">
-                        <div className="flex gap-2">
-                        <button 
-                            onClick={() => setSelectedApplication(app)}
-                            className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold hover:bg-yellow-600 transition-all">
-                            Ver
-                        </button>
-                        {app.status === 'pending' && (
-                            <button 
-                                onClick={() => {
-                                    setSelectedApplication(app);
-                                    setIsEditing(true);
-                                }}
-                                className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold hover:bg-blue-600 transition-all">
-                                Editar
-                            </button>
-                        )}
-                        </div>
-                    </td>
+            <section className="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div className="bg-blue-900 text-white px-6 py-4">
+                <h3 className="text-xl font-bold">Solicitudes de Beca</h3>
+                </div>
+                <div className="overflow-x-auto">
+                <table className="w-full">
+                    <thead className="bg-gray-200">
+                    <tr>
+                        <th className="px-6 py-4 text-left font-semibold">Beca</th>
+                        <th className="px-6 py-4 text-left font-semibold">Institución</th>
+                        <th className="px-6 py-4 text-left font-semibold">Fecha Aplicación</th>
+                        <th className="px-6 py-4 text-left font-semibold">Estado</th>
+                        <th className="px-6 py-4 text-left font-semibold">Monto</th>
+                        <th className="px-6 py-4 text-left font-semibold">Acciones</th>
                     </tr>
-                ))}
-                </tbody>
-            </table>
-            </div>
-        </section>
-
-        {/* Modal de detalles */}
-        {selectedApplication && !isEditing && (
-            <ApplicationDetails
-                application={selectedApplication}
-                onClose={() => setSelectedApplication(null)}
-            />
-        )}
-
-        {/* Modal de edición */}
-        {selectedApplication && isEditing && (
-            <EditApplication
-                application={selectedApplication}
-                onClose={() => {
-                    setSelectedApplication(null);
-                    setIsEditing(false);
-                }}
-                onSave={(updatedApplication) => {
-                    // Aquí implementarías la lógica para guardar los cambios
-                    console.log('Aplicación actualizada:', updatedApplication);
-                    setSelectedApplication(null);
-                    setIsEditing(false);
-                }}
-            />
-        )}
+                    </thead>
+                    <tbody>
+                    {applications.map(app => (
+                        <tr key={app.id} className="border-b border-gray-200 hover:bg-gray-50">
+                        <td className="px-6 py-4">{app.scholarship}</td>
+                        <td className="px-6 py-4">{app.institution}</td>
+                        <td className="px-6 py-4">{app.date}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusStyle(app.status)}`}>
+                            {getStatusText(app.status)}
+                            </span>
+                        </td>
+                        <td className="px-6 py-4 font-semibold">{app.amount}</td>
+                        <td className="px-6 py-4">
+                            <div className="flex gap-2">
+                            <button className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold hover:bg-yellow-600 transition-all">
+                                Ver
+                            </button>
+                            {app.status === 'pending' && (
+                                <button className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold hover:bg-blue-600 transition-all">
+                                Editar
+                                </button>
+                            )}
+                            </div>
+                        </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+                </div>
+            </section>
         </div>
     );
 };
