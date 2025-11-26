@@ -1,13 +1,4 @@
 import { useState, useEffect } from 'react';
-import { StatCard } from '../components/StatCard';
-import { CreateScholarship } from '../components/CreateScholarship';
-import { EditScholarship } from '../components/EditScholarship';
-import { ScholarshipDetails } from '../components/ScholarshipDetails';
-import { ViewApplication } from '../components/ViewApplication';
-import { EvaluateApplication } from '../components/EvaluateApplication';
-import { CreateUser } from '../components/CreateUser';
-import { EditUser } from '../components/EditUser';
-import { ViewUser } from '../components/ViewUser';
 import { 
   getScholarships, 
   createScholarship, 
@@ -19,10 +10,10 @@ import {
   createUser,
   updateUser,
   getEvaluationCriteria
-} from '../services/dataService';
+} from '../../services/dataService';
 
 // Componente AdminPanel
-export function AdminPanel() {
+export function AdminPage() {
   // Estados para datos
   const [scholarships, setScholarships] = useState([]);
   const [applications, setApplications] = useState([]);

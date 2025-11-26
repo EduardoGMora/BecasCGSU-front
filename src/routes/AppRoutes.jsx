@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { HomePage } from "../pages/HomePage";
-import AdminPage from "../pages/admin/AdminPage";
+import { AdminPage } from "../pages/admin/AdminPage";
 import { ApplicationsPage } from "../pages/RequestsPage";
 import { ContactPage } from "../pages/ContactPage";
 import { ScholarshipsPage } from "../pages/ScholarshipsPage";
