@@ -1,0 +1,211 @@
+{
+  "scholarships": [
+    {
+      "id": 1,
+      "name": "Beca de Excelencia Académica 2024",
+      "institution": "Universidad Nacional",
+      "type": "academic",
+      "amount": "$5,000",
+      "status": "active",
+      "requirements": [
+        "Promedio mínimo de 9.0",
+        "Carta de recomendación",
+        "Ensayo de 500 palabras"
+      ],
+      "requiredDocuments": [
+        "Certificado de calificaciones",
+        "Identificación oficial",
+        "Comprobante de domicilio"
+      ],
+      "startDate": "2024-01-15",
+      "endDate": "2024-06-30",
+      "resultsDate": "2024-07-15",
+      "description": "Beca destinada a estudiantes con excelente desempeño académico"
+    },
+    {
+      "id": 2,
+      "name": "Apoyo Económico Estudiantil",
+      "institution": "Fundación Educativa",
+      "type": "economic",
+      "amount": "$3,000",
+      "status": "active",
+      "requirements": [
+        "Estudio socioeconómico",
+        "Promedio mínimo de 8.0"
+      ],
+      "requiredDocuments": [
+        "Comprobante de ingresos familiares",
+        "Certificado de calificaciones"
+      ],
+      "startDate": "2024-02-01",
+      "endDate": "2024-07-31",
+      "resultsDate": "2024-08-15",
+      "description": "Apoyo económico para estudiantes de bajos recursos"
+    }
+  ],
+  "applications": [
+    {
+      "id": "APP-2024-001",
+      "studentName": "Juan Pérez García",
+      "scholarship": "Beca de Excelencia Académica 2024",
+      "institution": "Universidad Nacional",
+      "amount": "$5,000",
+      "status": "pending",
+      "applicationDate": "2024-03-15",
+      "documents": [
+        {
+          "name": "Certificado_Calificaciones.pdf",
+          "size": 2457600,
+          "uploadDate": "2024-03-15"
+        },
+        {
+          "name": "Identificacion_Oficial.pdf",
+          "size": 1536000,
+          "uploadDate": "2024-03-15"
+        }
+      ],
+      "comments": "Solicitud completa, todos los requisitos cumplidos",
+      "evaluationHistory": [
+        {
+          "date": "2024-03-20",
+          "evaluator": "María López",
+          "action": "Revisión inicial",
+          "comments": "Documentación completa"
+        }
+      ],
+      "academicScore": 9.5,
+      "economicScore": 8.0,
+      "motivationScore": 9.0
+    },
+    {
+      "id": "APP-2024-002",
+      "studentName": "Ana Martínez Rodríguez",
+      "scholarship": "Apoyo Económico Estudiantil",
+      "institution": "Fundación Educativa",
+      "amount": "$3,000",
+      "status": "approved",
+      "applicationDate": "2024-02-20",
+      "documents": [
+        {
+          "name": "Estudio_Socioeconomico.pdf",
+          "size": 3145728,
+          "uploadDate": "2024-02-20"
+        }
+      ],
+      "comments": "Situación económica justifica el apoyo",
+      "evaluationHistory": [
+        {
+          "date": "2024-02-25",
+          "evaluator": "Carlos Gómez",
+          "action": "Evaluación completa",
+          "comments": "Aprobada por cumplir requisitos"
+        },
+        {
+          "date": "2024-03-01",
+          "evaluator": "Laura Sánchez",
+          "action": "Revisión final",
+          "comments": "Confirmada aprobación"
+        }
+      ],
+      "academicScore": 8.5,
+      "economicScore": 9.5,
+      "motivationScore": 8.8
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "María López González",
+      "email": "maria.lopez@universidad.edu",
+      "role": "admin",
+      "status": "active",
+      "phone": "555-1234-5678",
+      "registrationDate": "2023-01-15",
+      "lastAccess": "2024-03-20 14:30",
+      "permissions": {
+        "manageScholarships": true,
+        "evaluateApplications": true,
+        "manageUsers": true,
+        "viewReports": true,
+        "exportData": true
+      },
+      "recentActivity": [
+        {
+          "action": "Evaluó solicitud APP-2024-001",
+          "date": "2024-03-20 14:25"
+        },
+        {
+          "action": "Creó nueva beca",
+          "date": "2024-03-19 10:15"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Carlos Gómez Hernández",
+      "email": "carlos.gomez@fundacion.org",
+      "role": "evaluator",
+      "status": "active",
+      "phone": "555-9876-5432",
+      "registrationDate": "2023-06-20",
+      "lastAccess": "2024-03-19 16:45",
+      "permissions": {
+        "manageScholarships": false,
+        "evaluateApplications": true,
+        "manageUsers": false,
+        "viewReports": true,
+        "exportData": false
+      },
+      "recentActivity": [
+        {
+          "action": "Evaluó solicitud APP-2024-002",
+          "date": "2024-03-19 16:30"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Laura Sánchez Morales",
+      "email": "laura.sanchez@estudiante.edu",
+      "role": "student",
+      "status": "active",
+      "phone": "555-5555-1111",
+      "registrationDate": "2024-01-10",
+      "lastAccess": "2024-03-21 09:15",
+      "permissions": {
+        "manageScholarships": false,
+        "evaluateApplications": false,
+        "manageUsers": false,
+        "viewReports": false,
+        "exportData": false
+      },
+      "recentActivity": [
+        {
+          "action": "Aplicó a beca",
+          "date": "2024-03-15 11:20"
+        },
+        {
+          "action": "Actualizó perfil",
+          "date": "2024-03-10 15:30"
+        }
+      ]
+    }
+  ],
+  "evaluationCriteria": [
+    {
+      "name": "Desempeño Académico",
+      "weight": "40%",
+      "maxScore": 10
+    },
+    {
+      "name": "Situación Económica",
+      "weight": "35%",
+      "maxScore": 10
+    },
+    {
+      "name": "Carta de Motivación",
+      "weight": "25%",
+      "maxScore": 10
+    }
+  ]
+}
