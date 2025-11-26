@@ -4,16 +4,26 @@ import {
   createScholarship, 
   updateScholarship,
   getApplications,
-  updateApplication,
   evaluateApplication,
   getUsers,
   createUser,
   updateUser,
   getEvaluationCriteria
 } from '../../services/dataService';
+import { StatCard } from '../../components/StatCard';
+import { CreateScholarship } from '../../components/CreateScholarship';
+import { EditScholarship } from '../../components/EditScholarship';
+import { ScholarshipDetails } from '../../components/ScholarshipDetails';
+import { ViewApplication } from '../../components/ViewApplication';
+import { EvaluateApplication } from '../../components/EvaluateApplication';
+import { CreateUser } from '../../components/CreateUser';
+import { EditUser } from '../../components/EditUser';
+import { ViewUser } from '../../components/ViewUser';
 
-// Componente AdminPanel
-export function AdminPage() {
+// Componente AdminPage
+export default function AdminPage() {
+  const [activeSection, setActiveSection] = useState('overview');
+  
   // Estados para datos
   const [scholarships, setScholarships] = useState([]);
   const [applications, setApplications] = useState([]);
@@ -34,21 +44,6 @@ export function AdminPage() {
   const [showCreateUserModal, setShowCreateUserModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [editUser, setEditUser] = useState(null);
-
-  const handleCreateUser = (user) => {
-    // TODO: Implementar la lógica para crear un usuario
-    console.log('Crear usuario:', user);
-  };
-
-  const handleUpdateUser = (user) => {
-    // TODO: Implementar la lógica para actualizar un usuario
-    console.log('Actualizar usuario:', user);
-  };
-
-
-// Componente AdminPage
-function AdminPage() {
-  const [activeSection, setActiveSection] = useState('overview');
 
   // Cargar datos iniciales
   useEffect(() => {
@@ -576,5 +571,4 @@ function AdminPage() {
       )}
     </div>
   );
-};
 }
