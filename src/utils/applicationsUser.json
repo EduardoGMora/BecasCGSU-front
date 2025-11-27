@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "scholarship": "Beca de Excelencia Académica",
+    "institution": "Universidad de Guadalajara",
+    "date": "2025-11-15",
+    "status": "approved",
+    "amount": "$50,000",
+    "description": "Beca destinada a estudiantes con promedio superior a 9.5",
+    "promedio": 9.8,
+    "motivacion": "Deseo continuar mis estudios y mantener mi excelencia académica",
+    "documentos": "Completos",
+    "comentarios": "Solicitud aprobada por cumplir todos los requisitos"
+  },
+  {
+    "id": 2,
+    "scholarship": "Programa de Apoyo Socioeconómico",
+    "institution": "Fundación Telmex",
+    "date": "2025-11-20",
+    "status": "pending",
+    "amount": "$25,000",
+    "description": "Apoyo económico para estudiantes de bajos recursos",
+    "promedio": 8.5,
+    "motivacion": "Necesito apoyo económico para continuar con mis estudios",
+    "documentos": "En revisión",
+    "comentarios": "Pendiente de verificación de documentos"
+  },
+  {
+    "id": 3,
+    "scholarship": "Beca de Innovación Tecnológica",
+    "institution": "Google México",
+    "date": "2025-11-25",
+    "status": "pending",
+    "amount": "$75,000",
+    "description": "Beca para proyectos de innovación tecnológica",
+    "promedio": 9.2,
+    "motivacion": "Quiero desarrollar una aplicación innovadora para educación",
+    "documentos": "Completos",
+    "comentarios": "En proceso de evaluación"
+  },
+  {
+    "id": 4,
+    "scholarship": "Beca Deportiva",
+    "institution": "Universidad de Guadalajara",
+    "date": "2025-10-10",
+    "status": "rejected",
+    "amount": "$40,000",
+    "description": "Beca para deportistas destacados",
+    "promedio": 8.0,
+    "motivacion": "Soy atleta de alto rendimiento",
+    "documentos": "Completos",
+    "comentarios": "No cumple con el nivel deportivo requerido"
+  },
+  {
+    "id": 5,
+    "scholarship": "Beca de Intercambio",
+    "institution": "Fundación BBVA",
+    "date": "2025-10-05",
+    "status": "rejected",
+    "amount": "$200,000",
+    "description": "Programa de intercambio internacional",
+    "promedio": 8.8,
+    "motivacion": "Deseo estudiar en el extranjero",
+    "documentos": "Incompletos",
+    "comentarios": "Falta certificación de idiomas"
+  }
+]
