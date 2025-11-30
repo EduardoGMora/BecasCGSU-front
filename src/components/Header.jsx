@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { NavBar } from './NavBar';
+import pub_logo from '../assets/PUB.svg';
 
 library.add(fas);
 
@@ -31,12 +32,10 @@ export function Header({ role }) {
                     {/* Logo */}
                     <Link 
                         to="/" 
-                        className="text-lg sm:text-xl font-bold text-blue-900 flex items-center gap-2 hover:text-blue-700 transition-colors"
+                        className=""
                         onClick={closeMenu}
                     >
-                        <FontAwesomeIcon icon="fa-solid fa-graduation-cap" />
-                        <span className="hidden sm:inline">Universidad de Guadalajara</span>
-                        <span className="sm:hidden">UdeG</span>
+                        <img src={pub_logo} alt="Logo de la Universidad de Guadalajara" className="h-24" />
                     </Link>
 
                     {/* Desktop Navigation */}

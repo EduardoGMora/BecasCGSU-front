@@ -11,7 +11,7 @@ export function HomePage(){
   const featuredScholarships = Scholarships.filter(scholarship => scholarship.featured);
 
   return (
-    <div className="pt-20">
+    <>
       <HeroCard 
         title="Portal de Becas CGSU"
         subtitle="Descubre oportunidades de financiamiento educativo de la Universidad de Guadalajara y instituciones colaboradoras"
@@ -46,6 +46,6 @@ export function HomePage(){
           ))}
         </div>
       </section>
-    </div>
+    </>
   );
 };

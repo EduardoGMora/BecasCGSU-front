@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
+import pub_logo from '../assets/PUB.svg';
 
 export function Footer() {
     const date = new Date();
@@ -26,10 +27,7 @@ export function Footer() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
                     {/* About Section */}
                     <div className="space-y-4">
-                        <div className="flex items-center gap-2 text-blue-900">
-                            <FontAwesomeIcon icon="fa-solid fa-graduation-cap" className="text-2xl" />
-                            <h3 className="font-bold text-lg">UdeG Becas</h3>
-                        </div>
+                        <img src={pub_logo} alt="Logo de la Universidad de Guadalajara" />
                         <p className="text-sm text-gray-600 leading-relaxed">
                             Portal oficial de becas de la Universidad de Guadalajara. 
                             Apoyando el desarrollo académico de nuestros estudiantes.

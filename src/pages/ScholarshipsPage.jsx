@@ -68,7 +68,7 @@ export function ScholarshipsPage({ onApply }) {
   };
 
   return (
-    <div className="pt-20">
+    <>
       <HeroCard 
         title="Becas Disponibles"
         subtitle="Explora todas las oportunidades de financiamiento disponibles para tu educación."
@@ -174,6 +174,6 @@ export function ScholarshipsPage({ onApply }) {
           <ScholarshipCard key={scholarship.id} scholarship={scholarship} onApply={handleApply}  />
         ))}
       </div>
-    </div>
+    </>
   );
 }
