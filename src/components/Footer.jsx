@@ -31,7 +31,6 @@ export function Footer() {
                     <div className="space-y-4 text-center">
                         <Link 
                             to="/" 
-                            className=""
                             // reloadDocument
                             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                         >   
