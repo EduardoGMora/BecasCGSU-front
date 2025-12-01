@@ -33,13 +33,13 @@ export function Header({ role }) {
                     <Link 
                         to="/" 
                         className=""
-                        onClick={closeMenu}
+                        onClick={() => { closeMenu(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                     >
                         <img src={pub_logo} alt="Logo de la Universidad de Guadalajara" className="h-24" />
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <NavBar isAdmin={isAdmin} onLinkClick={closeMenu} mobile={false}/>
+                    <NavBar isAdmin={isAdmin} onLinkClick={() => { closeMenu(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} mobile={false}/>
 
                     {/* Mobile Menu Button */}
                     <button
@@ -60,7 +60,7 @@ export function Header({ role }) {
                         isMenuOpen ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
                     }`}
                 >
-                    <NavBar isAdmin={isAdmin} onLinkClick={closeMenu} mobile />
+                    <NavBar isAdmin={isAdmin} onLinkClick={() => { closeMenu(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} mobile />
                 </div>
             </div>
         </header>

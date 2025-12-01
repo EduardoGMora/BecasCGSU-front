@@ -29,7 +29,15 @@ export function Footer() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8 items-center">
                     {/* About Section */}
                     <div className="space-y-4 text-center">
-                        <img src={pub_logo} alt="Logo de la Universidad de Guadalajara" className='max-w-xs mx-auto'/>
+                        <Link 
+                            to="/" 
+                            className=""
+                            // reloadDocument
+                            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                        >   
+
+                            <img src={pub_logo} alt="Logo de la Universidad de Guadalajara" className='max-w-xs mx-auto'/>
+                        </Link>
                         <p className="text-sm text-gray-600 leading-relaxed">
                             Portal oficial de becas de la Universidad de Guadalajara. 
                             Apoyando el desarrollo académico de nuestros estudiantes.
@@ -45,6 +53,7 @@ export function Footer() {
                                     <Link 
                                         to={link.to}
                                         className="text-base text-gray-600 hover:text-blue-900 transition-colors flex items-center gap-2"
+                                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                                     >
                                         <FontAwesomeIcon icon="fa-solid fa-chevron-right" className="text-sm" />
                                         {link.label}
