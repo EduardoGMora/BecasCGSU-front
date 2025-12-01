@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext';
 
 library.add(fas);
 
@@ -10,13 +11,20 @@ const links = [
     { to: '/becas', label: 'Becas', icon: 'fa-solid fa-award',adminOnly:false },
     { to: '/mis-solicitudes', label: 'Solicitudes', icon: 'fa-solid fa-file-alt',adminOnly:false },
     { to: '/contacto', label: 'Contacto', icon: 'fa-solid fa-envelope',adminOnly:false },
-    { to: '/admin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true }
+    { to: '/admin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true },
+    // { to: '/subadmin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true }
 ];
 
 export const NavBar = ({ isAdmin, onLinkClick, mobile }) => {
     const location = useLocation();
+    const { logout } = useAuth();
+    const navigate = useNavigate();
 
-    // Debug: Check what pathname we're getting
+    const handleLogout = () => {
+        logout();
+        if (onLinkClick) onLinkClick();
+        navigate('/login');
+    };
 
     return (
         <nav className={mobile ? 'flex flex-col gap-2 pb-4' : 'hidden md:flex items-center gap-4 lg:gap-6'}>
@@ -50,6 +58,29 @@ export const NavBar = ({ isAdmin, onLinkClick, mobile }) => {
                     </Link>
                 );
             })}
+            
+            {/* Logout Button */}
+            {mobile ? (
+                <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-gray-600 hover:bg-red-50 hover:text-red-600"
+                >
+                    <FontAwesomeIcon icon="fa-solid fa-sign-out-alt" className="w-5" />
+                    <span className="font-semibold">Cerrar sesión</span>
+                </button>
+            ) : (
+                <button
+                    onClick={handleLogout}
+                    className="p-2 text-gray-600 hover:text-red-600 hover:bg-gray-100 rounded-lg transition-all"
+                    aria-label="Cerrar sesión"
+                    title="Cerrar sesión"
+                >
+                    <FontAwesomeIcon 
+                        icon="fa-solid fa-sign-out-alt" 
+                        className="text-xl"
+                    />
+                </button>
+            )}
         </nav>
     );
 }
