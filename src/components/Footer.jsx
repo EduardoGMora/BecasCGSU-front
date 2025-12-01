@@ -46,7 +46,7 @@ export function Footer() {
                         <h3 className="font-bold text-gray-900 mb-4">Enlaces Rápidos</h3>
                         <ul className="space-y-2">
                             {quickLinks.map(link => (
-                                <li key={link.to} >
+                                <li key={link.to}>
                                     <Link 
                                         to={link.to}
                                         className="text-base text-gray-600 hover:text-blue-900 transition-colors flex items-center gap-2"
