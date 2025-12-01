@@ -32,7 +32,6 @@ export function Header({ role }) {
                     {/* Logo */}
                     <Link 
                         to="/" 
-                        className=""
                         onClick={() => { closeMenu(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                     >
                         <img src={pub_logo} alt="Logo de la Universidad de Guadalajara" className="h-24" />
