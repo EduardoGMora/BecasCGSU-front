@@ -33,7 +33,7 @@ export function Footer() {
                             to="/" 
                             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                         >   
-                            <img src={pub_logo} alt="Logo de la Universidad de Guadalajara" className='max-w-xs mx-auto'/>
+                            <img src={pub_logo} alt="Logo de la Universidad de Guadalajara" className="max-w-xs mx-auto"/>
                         </Link>
                         <p className="text-sm text-gray-600 leading-relaxed">
                             Portal oficial de becas de la Universidad de Guadalajara. 
