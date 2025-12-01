@@ -6,7 +6,7 @@ export function SubAdminPanel() {
   const [activeSection, setActiveSection] = useState('overview');
 
   return (
-    <div className="pt-20">
+    <>
       <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg p-12 mb-8 text-center">
         <h1 className="text-4xl font-bold mb-2">
           <i className="fas fa-cog mr-3"></i>Panel de Administración
@@ -229,8 +229,6 @@ export function SubAdminPanel() {
           </div>
         </div>
       )}
-
-
-    </div>
+    </>
   );
 };

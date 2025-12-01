@@ -73,7 +73,7 @@ export default function AdminPage() {
   };
 
   return (
-    <div className="pt-20">
+    <>
       <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg px-8 py-16 md:px-16 mb-8 text-center">
         <h1 className="text-4xl font-bold mb-2">
           <i className="fas fa-cog mr-3"></i>Panel de Administración
@@ -607,6 +607,6 @@ export default function AdminPage() {
           </div>
         </form>
       </Modal>
-    </div>
+    </>
   );
 };

@@ -51,7 +51,7 @@ export function ApplicationsPage() {
     };
 
     return (
-        <div className="pt-20">
+        <>
             <HeroCard
                 title="Mis Solicitudes"
                 subtitle="Administra y da seguimiento a tus aplicaciones de beca"
@@ -185,6 +185,6 @@ export function ApplicationsPage() {
                     </form>
                 )}
             </Modal>
-        </div>
+        </>
     );
 };
