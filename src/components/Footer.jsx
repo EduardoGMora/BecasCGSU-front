@@ -89,7 +89,7 @@ export function Footer() {
                     </div>
 
                     {/* Horarios y Redes */}
-                    <div className='text-center sm:text-left'>
+                    <div className="text-center sm:text-left">
                         <h3 className="font-bold text-gray-900 mb-4">Horarios</h3>
                         <div className="space-y-2 mb-6">
                             <p className="text-sm text-gray-600 gap-2">
