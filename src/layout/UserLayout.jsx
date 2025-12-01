@@ -31,7 +31,7 @@ export function UserLayout() {
       />
 
       <ChatBot />
-      <Footer />
+      <Footer className="mt-12" />
     </div>
   );
 }

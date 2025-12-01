@@ -1,4 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebook, faInstagram, faLinkedin, faXTwitter } from '@fortawesome/free-brands-svg-icons';
+
 import { Link } from 'react-router-dom';
 import pub_logo from '../assets/PUB.svg';
 
@@ -14,20 +16,20 @@ export function Footer() {
     ];
 
     const socialLinks = [
-        { icon: 'fa-brands fa-facebook', url: '#', label: 'Facebook' },
-        { icon: 'fa-brands fa-twitter', url: '#', label: 'Twitter' },
-        { icon: 'fa-brands fa-instagram', url: '#', label: 'Instagram' },
-        { icon: 'fa-brands fa-linkedin', url: '#', label: 'LinkedIn' }
+        { icon: faFacebook, url: '#', label: 'Facebook' },
+        { icon: faXTwitter, url: '#', label: 'Twitter' },
+        { icon: faInstagram, url: '#', label: 'Instagram' },
+        { icon: faLinkedin, url: '#', label: 'LinkedIn' }
     ];
 
     return (
-        <footer className="bg-white border-t border-gray-200 mt-12">
+        <footer className="bg-white border-t border-gray-200">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
                 {/* Main Footer Content */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8 items-center">
                     {/* About Section */}
-                    <div className="space-y-4">
-                        <img src={pub_logo} alt="Logo de la Universidad de Guadalajara" />
+                    <div className="space-y-4 text-center">
+                        <img src={pub_logo} alt="Logo de la Universidad de Guadalajara" className='max-w-xs mx-auto'/>
                         <p className="text-sm text-gray-600 leading-relaxed">
                             Portal oficial de becas de la Universidad de Guadalajara. 
                             Apoyando el desarrollo académico de nuestros estudiantes.
@@ -39,12 +41,12 @@ export function Footer() {
                         <h3 className="font-bold text-gray-900 mb-4">Enlaces Rápidos</h3>
                         <ul className="space-y-2">
                             {quickLinks.map(link => (
-                                <li key={link.to}>
+                                <li key={link.to} >
                                     <Link 
                                         to={link.to}
-                                        className="text-sm text-gray-600 hover:text-blue-900 transition-colors flex items-center gap-2"
+                                        className="text-base text-gray-600 hover:text-blue-900 transition-colors flex items-center gap-2"
                                     >
-                                        <FontAwesomeIcon icon="fa-solid fa-chevron-right" className="text-xs" />
+                                        <FontAwesomeIcon icon="fa-solid fa-chevron-right" className="text-sm" />
                                         {link.label}
                                     </Link>
                                 </li>
@@ -59,8 +61,7 @@ export function Footer() {
                             <li className="flex items-start gap-3">
                                 <FontAwesomeIcon icon="fa-solid fa-phone" className="text-blue-900 mt-1" />
                                 <div className="text-sm">
-                                    <p className="text-gray-600">33 3134-2222</p>
-                                    <p className="text-gray-500 text-xs">Ext. 12345</p>
+                                    <p className="text-gray-600">33 3134-2222 <span className="text-gray-500 text-xs">Ext. 12345</span></p>
                                 </div>
                             </li>
                             <li className="flex items-start gap-3">
@@ -75,29 +76,26 @@ export function Footer() {
                             <li className="flex items-start gap-3">
                                 <FontAwesomeIcon icon="fa-solid fa-map-marker-alt" className="text-blue-900 mt-1" />
                                 <p className="text-sm text-gray-600">
-                                    Av. Juárez No. 976<br />
-                                    Guadalajara, Jalisco
+                                    Av Juárez 976, Col Americana, Americana, 44100 Guadalajara, Jal.
                                 </p>
                             </li>
                         </ul>
                     </div>
 
                     {/* Horarios y Redes */}
-                    <div>
+                    <div className='text-center sm:text-left'>
                         <h3 className="font-bold text-gray-900 mb-4">Horarios</h3>
                         <div className="space-y-2 mb-6">
-                            <p className="text-sm text-gray-600">
-                                <strong>Lunes - Viernes:</strong><br />
-                                8:00 AM - 6:00 PM
+                            <p className="text-sm text-gray-600 gap-2">
+                                <strong>Lunes - Viernes:</strong> 8:00 AM - 6:00 PM
                             </p>
-                            <p className="text-sm text-gray-600">
-                                <strong>Sábado:</strong><br />
-                                9:00 AM - 2:00 PM
+                            <p className="text-sm text-gray-600 gap-2">
+                                <strong>Sábado:</strong> 9:00 AM - 2:00 PM
                             </p>
                         </div>
                         
-                        <h4 className="font-bold text-gray-900 mb-3">Síguenos</h4>
-                        <div className="flex gap-3">
+                        <h3 className="font-bold text-gray-900 mb-4">Síguenos</h3>
+                        <div className="flex gap-3 justify-evenly sm:justify-start">
                             {socialLinks.map((social, index) => (
                                 <a
                                     key={index}
