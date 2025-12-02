@@ -14,7 +14,7 @@ export function ScholarshipsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   
   // Fetch filter options from custom hook
-  const { scholarshipTypes, universityCenters } = useScholarshipFilters();
+  const { scholarshipTypes, universityCenters, loading } = useScholarshipFilters();
   
   // Temporary filter state (before applying)
   const [tempFilterState, setTempFilterState] = useState({
@@ -94,6 +94,7 @@ export function ScholarshipsPage() {
         onFilterChange={handleFilterChange}
         onApply={applyFilters}
         onClear={clearFilters}
+        loading={loading}
       />
 
       <ViewToggle 
