@@ -24,7 +24,7 @@ export const ScholarshipFilters = ({
             className="w-full px-3 py-2 border border-gray-300 rounded-lg"
           >
             <option value="Todas">Todas</option>
-            <option value="Abierta">Abierta</option>
+            <option value="open">Abierta</option>
             <option value="Cerrada">Cerrada</option>
           </select>
         </div>

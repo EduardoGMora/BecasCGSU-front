@@ -8,7 +8,7 @@ import { ViewToggle } from '../components/ViewToggle';
 import { useScholarshipFilters } from '../hooks/useScholarshipFilters';
 
 // ScholarshipsPage
-export function ScholarshipsPage({ onApply }) {
+export function ScholarshipsPage() {
   const { handleApply } = useOutletContext();
   const [viewType, setViewType] = useState('list');
   const [searchTerm, setSearchTerm] = useState('');
