@@ -9,25 +9,25 @@ export const useScholarshipFilters = () => {
   useEffect(() => {
     const fetchFilterOptions = async () => {
       setLoading(true);
+      
       try {
-        // Fetch scholarship types
-        const typesResponse = await api.get('/scholarship-types');
-        if (typesResponse.data?.data) {
-          setScholarshipTypes(typesResponse.data.data);
-        }
-      } catch (error) {
-        console.error('Error fetching scholarship types:', error);
-        setScholarshipTypes([]);
-      }
+        // Fetch both in parallel using Promise.all
+        const [typesResponse, centersResponse] = await Promise.all([
+          api.get('/scholarship-types').catch(err => {
+            console.error('Error fetching scholarship types:', err);
+            return { data: { data: [] } };
+          }),
+          api.get('/university-centers').catch(err => {
+            console.error('Error fetching university centers:', err);
+            return { data: { data: [] } };
+          })
+        ]);
 
-      try {
-        // Fetch university centers
-        const centersResponse = await api.get('/university-centers');
-        if (centersResponse.data?.data) {
-          setUniversityCenters(centersResponse.data.data);
-        }
+        setScholarshipTypes(typesResponse.data?.data || []);
+        setUniversityCenters(centersResponse.data?.data || []);
       } catch (error) {
-        console.error('Error fetching university centers:', error);
+        console.error('Unexpected error fetching filter options:', error);
+        setScholarshipTypes([]);
         setUniversityCenters([]);
       } finally {
         setLoading(false);
