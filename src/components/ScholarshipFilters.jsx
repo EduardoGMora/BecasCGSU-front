@@ -22,9 +22,10 @@ export const ScholarshipFilters = ({
             name="status" 
             value={filterState.status || "Todas"} 
             onChange={onFilterChange} 
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            disabled={loading}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg disabled:bg-gray-100 disabled:cursor-not-allowed"
           >
-            <option value="Todas">Todas</option>
+            <option value="Todas">{loading ? 'Cargando...' : 'Todas'}</option>
             <option value="open">Abierta</option>
             <option value="Cerrada">Cerrada</option>
           </select>
