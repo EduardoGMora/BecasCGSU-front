@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import api from '../api/axios';
 import { ScholarshipCard } from './ScholarshipCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,75 +11,72 @@ export const ScholarshipsList = ({ viewType, filters, handleApply }) => {
     const [totalCount, setTotalCount] = useState(0);
     const [currentOffset, setCurrentOffset] = useState(0);
 
+    // Helper function to build query parameters
+    const buildQueryParams = useCallback((offset = 0) => {
+        const params = new URLSearchParams();
+        
+        if (filters?.status) {
+            params.append('status', filters.status);
+        }
+        if (filters?.scholarship_type_id) {
+            params.append('scholarship_type_id', filters.scholarship_type_id);
+        }
+        if (filters?.university_center_id) {
+            params.append('university_center_id', filters.university_center_id);
+        }
+        if (filters?.search) {
+            params.append('search', filters.search);
+        }
+        if (filters?.limit) {
+            params.append('limit', filters.limit);
+        }
+        params.append('offset', offset);
+        
+        return params.toString();
+    }, [filters]);
+
     useEffect(() => {
         const fetchScholarships = async() => {
             try{
                 setLoading(true);
                 setCurrentOffset(0); // Reset offset when filters change
                 
-                // Build query parameters
-                const params = new URLSearchParams();
-                
-                if (filters?.status) {
-                    params.append('status', filters.status);
-                }
-                if (filters?.scholarship_type_id) {
-                    params.append('scholarship_type_id', filters.scholarship_type_id);
-                }
-                if (filters?.university_center_id) {
-                    params.append('university_center_id', filters.university_center_id);
-                }
-                if (filters?.search) {
-                    params.append('search', filters.search);
-                }
-                if (filters?.limit) {
-                    params.append('limit', filters.limit);
-                }
-                // Always start from offset 0 when filters change
-                params.append('offset', 0);
-                
-                const queryString = params.toString();
+                const queryString = buildQueryParams(0);
                 const url = queryString ? `/scholarships?${queryString}` : '/scholarships';
                 
+                console.log('Fetching URL:', url);
                 const response = await api.get(url);
-                setScholarships(response.data.data); // Replace scholarships
-                setTotalCount(response.data.total || response.data.count);
+                console.log('Response:', response.data);
+                
+                // Ensure we have an array
+                const scholarshipsData = response.data?.data;
+                if (!Array.isArray(scholarshipsData)) {
+                    console.error('Expected array but got:', typeof scholarshipsData, scholarshipsData);
+                    setScholarships([]);
+                    setError('Formato de datos incorrecto');
+                    return;
+                }
+                
+                setScholarships(scholarshipsData);
+                setTotalCount(response.data.total || response.data.count || scholarshipsData.length);
+                setError(null);
             } catch (err) {
                 console.error("Error conectando al backend -> ", err);
                 setError("No se pudo cargar las becas");
+                setScholarships([]);
             } finally {
                 setLoading(false);
             }
         }
         fetchScholarships();
-    }, [filters]);
+    }, [filters, buildQueryParams]);
 
     const loadMore = async () => {
         try {
             setLoadingMore(true);
             const newOffset = currentOffset + (filters?.limit || 9);
             
-            // Build query parameters
-            const params = new URLSearchParams();
-            
-            if (filters?.status) {
-                params.append('status', filters.status);
-            }
-            if (filters?.scholarship_type_id) {
-                params.append('scholarship_type_id', filters.scholarship_type_id);
-            }
-            if (filters?.university_center_id) {
-                params.append('university_center_id', filters.university_center_id);
-            }
-            if (filters?.search) {
-                params.append('search', filters.search);
-            }
-            if (filters?.limit) {
-                params.append('limit', filters.limit);
-            }
-            params.append('offset', newOffset);
-            
-            const queryString = params.toString();
+            const queryString = buildQueryParams(newOffset);
             const url = `/scholarships?${queryString}`;
             
             const response = await api.get(url);
