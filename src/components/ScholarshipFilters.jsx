@@ -6,7 +6,8 @@ export const ScholarshipFilters = ({
   universityCenters,
   onFilterChange,
   onApply,
-  onClear
+  onClear,
+  loading = false
 }) => {
   return (
     <section className="bg-white p-6 rounded-lg shadow-sm mb-8">
@@ -35,9 +36,10 @@ export const ScholarshipFilters = ({
             name="scholarship_type_id" 
             value={filterState.scholarship_type_id || "Todas"} 
             onChange={onFilterChange} 
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            disabled={loading}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg disabled:bg-gray-100 disabled:cursor-not-allowed"
           >
-            <option value="Todas">Todas</option>
+            <option value="Todas">{loading ? 'Cargando...' : 'Todas'}</option>
             {scholarshipTypes.map((type) => (
               <option key={type.id} value={type.id}>
                 {type.name || type.type_name || `Tipo ${type.id}`}
@@ -52,9 +54,10 @@ export const ScholarshipFilters = ({
             name="university_center_id" 
             value={filterState.university_center_id || "Todas"} 
             onChange={onFilterChange} 
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            disabled={loading}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg disabled:bg-gray-100 disabled:cursor-not-allowed"
           >
-            <option value="Todas">Todas</option>
+            <option value="Todas">{loading ? 'Cargando...' : 'Todas'}</option>
             {universityCenters.map((center) => (
               <option key={center.id} value={center.id}>
                 {center.name || center.center_name || `Centro ${center.id}`}
@@ -72,7 +75,8 @@ export const ScholarshipFilters = ({
         
         <button 
           onClick={onApply} 
-          className="px-5 py-2 bg-blue-900 text-white rounded-lg font-semibold hover:bg-blue-800 transition-all"
+          disabled={loading}
+          className="px-5 py-2 bg-blue-900 text-white rounded-lg font-semibold hover:bg-blue-800 transition-all disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
           Aplicar
         </button>
