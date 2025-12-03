@@ -7,7 +7,7 @@ import { NavBar } from './NavBar';
 
 library.add(fas);
 
-export function Header({ role }) {
+export function Header({ role, onSelectOption, optionSelected }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const isAdmin = role === 'admin' || role === 'subadmin';
@@ -40,7 +40,7 @@ export function Header({ role }) {
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <NavBar isAdmin={isAdmin} onLinkClick={closeMenu} mobile={false}/>
+                    <NavBar isAdmin={role} onLinkClick={closeMenu} mobile={false} onSelectOption={onSelectOption} optionSelected={optionSelected}/>
 
                     {/* Mobile Menu Button */}
                     <button
@@ -61,7 +61,7 @@ export function Header({ role }) {
                         isMenuOpen ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
                     }`}
                 >
-                    <NavBar isAdmin={isAdmin} onLinkClick={closeMenu} mobile />
+                    <NavBar isAdmin={role} onLinkClick={closeMenu} mobile onSelectOption={onSelectOption} optionSelected={optionSelected} />
                 </div>
             </div>
         </header>

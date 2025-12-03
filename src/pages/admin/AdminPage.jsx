@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { StatCard } from '../../components/StatCard';
+import { useOutletContext } from 'react-router-dom';
 
 // Componente AdminPage
 export default function AdminPage() {
-  const [activeSection, setActiveSection] = useState('overview');
+  const {selectedOption} = useOutletContext()
 
   return (
     <div className="pt-20">
@@ -13,51 +14,7 @@ export default function AdminPage() {
         </h1>
         <p className="text-lg opacity-90">Gestión integral del sistema de becas</p>
       </section>
-
-      <nav className="flex gap-4 mb-8 overflow-x-auto pb-2">
-        <button
-          onClick={() => setActiveSection('overview')}
-          className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
-            activeSection === 'overview'
-              ? 'bg-blue-900 text-white'
-              : 'bg-white border border-gray-300 hover:bg-gray-50'
-          }`}
-        >
-          <i className="fas fa-chart-line mr-2"></i>Resumen
-        </button>
-        <button
-          onClick={() => setActiveSection('scholarships')}
-          className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
-            activeSection === 'scholarships'
-              ? 'bg-blue-900 text-white'
-              : 'bg-white border border-gray-300 hover:bg-gray-50'
-          }`}
-        >
-          <i className="fas fa-award mr-2"></i>Gestión de Becas
-        </button>
-        <button
-          onClick={() => setActiveSection('applications')}
-          className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
-            activeSection === 'applications'
-              ? 'bg-blue-900 text-white'
-              : 'bg-white border border-gray-300 hover:bg-gray-50'
-          }`}
-        >
-          <i className="fas fa-file-alt mr-2"></i>Solicitudes
-        </button>
-        <button
-          onClick={() => setActiveSection('users')}
-          className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
-            activeSection === 'users'
-              ? 'bg-blue-900 text-white'
-              : 'bg-white border border-gray-300 hover:bg-gray-50'
-          }`}
-        >
-          <i className="fas fa-users mr-2"></i>Usuarios
-        </button>
-      </nav>
-
-      {activeSection === 'overview' && (
+      {selectedOption === 'overview' && (
         <div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <StatCard icon="fas fa-award" number="127" label="Total de Becas" />
@@ -130,7 +87,7 @@ export default function AdminPage() {
         </div>
       )}
 
-      {activeSection === 'scholarships' && (
+      {selectedOption === 'scholarships' && (
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
             <h3 className="text-xl font-bold">Gestión de Becas</h3>
@@ -192,7 +149,7 @@ export default function AdminPage() {
         </div>
       )}
 
-      {activeSection === 'applications' && (
+      {selectedOption === 'applications' && (
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
             <h3 className="text-xl font-bold">Solicitudes de Beca</h3>
@@ -240,7 +197,7 @@ export default function AdminPage() {
         </div>
       )}
 
-      {activeSection === 'users' && (
+      {selectedOption === 'users' && (
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
             <h3 className="text-xl font-bold">Gestión de Usuarios</h3>
