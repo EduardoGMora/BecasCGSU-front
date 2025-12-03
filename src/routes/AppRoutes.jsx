@@ -9,6 +9,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import LoginPage from "../pages/auth/LoginPage";
 import { AuthProvider } from "../context/AuthContext";
 import { UserLayout } from "../layout/UserLayout";
+import { StudentPage } from "../pages/StudentPage";
 
 export default function AppRoutes() {
   return (
@@ -40,7 +41,7 @@ export default function AppRoutes() {
             path="/mis-solicitudes"
             element={
               <ProtectedRoute allowedRoles={["student"]}>
-                <ApplicationsPage />
+                <StudentPage />
               </ProtectedRoute>
             }
           />
