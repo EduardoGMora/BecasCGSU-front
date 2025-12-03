@@ -66,7 +66,7 @@ export default function AppRoutes() {
             path="/subadmin"
             element={
               <ProtectedRoute allowedRoles={["subadmin"]}>
-                <SubAdminPanel />
+                <AdminPage />
               </ProtectedRoute>
             }
           />

@@ -18,7 +18,7 @@ export function UserLayout() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {user && <Header role={user.role} onSelectOption ={setSelectedOptions} optionSelected ={selectedOption} />}
+      {user && <Header id={user.id} role={user.role} onSelectOption ={setSelectedOptions} optionSelected ={selectedOption} />}
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 pb-12">
         <Outlet context={{ handleApply, selectedOption }} />

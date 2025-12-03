@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation } from 'react-router-dom'
-
+import {usuarios} from "./../utils/users.json"
 library.add(fas);
 
 const links = [
@@ -13,16 +13,72 @@ const links = [
     { to: '/admin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true }
 ];
 
-export const NavBar = ({ isAdmin, onLinkClick, mobile, onSelectOption, optionSelected }) => {
+
+
+export const NavBar = ({ isAdmin, onLinkClick, mobile, onSelectOption, optionSelected, id }) => {
+    
+    function ButtonOverview() {
+    return (
+        <button
+            onClick={() => onSelectOption('overview')}
+            className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
+                optionSelected === 'overview'
+                ? 'bg-blue-900 text-white'
+                : 'bg-white border border-gray-300 hover:bg-gray-50'
+            }`}
+            >
+            <i className="fas fa-chart-line mr-2"></i>Resumen
+        </button>
+    )
+    }
+    function ButtonScholarships() {
+    return (
+        <button
+        onClick={() => onSelectOption('scholarships')}
+        className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
+            optionSelected === 'scholarships'
+            ? 'bg-blue-900 text-white'
+            : 'bg-white border border-gray-300 hover:bg-gray-50'
+        }`}
+        >
+        <i className="fas fa-award mr-2"></i>Gestión de Becas
+        </button>
+    )
+    }
+    function ButtonApplications() {
+    return (
+        <button
+        onClick={() => onSelectOption('applications')}
+        className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
+            optionSelected === 'applications'
+            ? 'bg-blue-900 text-white'
+            : 'bg-white border border-gray-300 hover:bg-gray-50'
+        }`}
+        >
+        <i className="fas fa-file-alt mr-2"></i>Solicitudes
+        </button>
+    )
+    }
+    function ButtonUsers() {
+    return (
+        <button
+        onClick={() => onSelectOption('users')}
+        className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
+            optionSelected === 'users'
+            ? 'bg-blue-900 text-white'
+            : 'bg-white border border-gray-300 hover:bg-gray-50'
+        }`}
+        >
+        <i className="fas fa-users mr-2"></i>Usuarios
+        </button>
+    )
+    }
     const location = useLocation();
-
-    // Debug: Check what pathname we're getting
-
+    const user = usuarios.find(u => u.id === id);
     return (
         <nav className={mobile ? 'flex flex-col gap-2 pb-4' : 'hidden md:flex items-center gap-4 lg:gap-6'}>
             {isAdmin == "student" && links.map(link => {
-                if (link.adminOnly && !isAdmin) return null;
-                if (!link.adminOnly && isAdmin) return null;
+                if (link.adminOnly && isAdmin =="student") return null;
                 const isActive = location.pathname === link.to;
                 // console.log(`Link ${link.to} is active:`, isActive);
 
@@ -52,46 +108,21 @@ export const NavBar = ({ isAdmin, onLinkClick, mobile, onSelectOption, optionSel
             })}
             {isAdmin == "admin" && (
                 <>
-                    <button
-                    onClick={() => onSelectOption('overview')}
-                    className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
-                        optionSelected === 'overview'
-                        ? 'bg-blue-900 text-white'
-                        : 'bg-white border border-gray-300 hover:bg-gray-50'
-                    }`}
-                    >
-                    <i className="fas fa-chart-line mr-2"></i>Resumen
-                    </button>
-                    <button
-                    onClick={() => onSelectOption('scholarships')}
-                    className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
-                        optionSelected === 'scholarships'
-                        ? 'bg-blue-900 text-white'
-                        : 'bg-white border border-gray-300 hover:bg-gray-50'
-                    }`}
-                    >
-                    <i className="fas fa-award mr-2"></i>Gestión de Becas
-                    </button>
-                    <button
-                    onClick={() => onSelectOption('applications')}
-                    className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
-                        optionSelected === 'applications'
-                        ? 'bg-blue-900 text-white'
-                        : 'bg-white border border-gray-300 hover:bg-gray-50'
-                    }`}
-                    >
-                    <i className="fas fa-file-alt mr-2"></i>Solicitudes
-                    </button>
-                    <button
-                    onClick={() => onSelectOption('users')}
-                    className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
-                        optionSelected === 'users'
-                        ? 'bg-blue-900 text-white'
-                        : 'bg-white border border-gray-300 hover:bg-gray-50'
-                    }`}
-                    >
-                    <i className="fas fa-users mr-2"></i>Usuarios
-                    </button>
+                <ButtonOverview></ButtonOverview>
+                <ButtonScholarships></ButtonScholarships>
+                <ButtonApplications></ButtonApplications>
+                <ButtonUsers></ButtonUsers>
+                { console.log(id)}
+                </>
+               
+            )}
+            {isAdmin === "subadmin" && (
+                <>
+                    { console.log(id)}
+                    {user.permisos.dashboard && <ButtonOverview />}
+                    {user.permisos.becarios && <ButtonScholarships />}
+                    {user.permisos.solicitudes && <ButtonApplications />}                
+                    {user.permisos.usuarios && <ButtonUsers />}
                 </>
             )}
         </nav>

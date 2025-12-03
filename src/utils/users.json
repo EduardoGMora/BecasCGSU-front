@@ -1,6 +1,64 @@
-[
-  { "email": "81253368", "password": "admin123", "role": "admin" },
-  { "email": "217471988", "password": "admin123", "role": "student" },
-  { "email": "253251588", "password": "user123", "role": "subadmin" },
-  { "email": "218547104", "password": "password", "role": "student" }
-]
+{
+  "usuarios": [
+    {
+      "id": "1515",
+      "nombre": "Andrea Garcia",
+      "email": "andy@udg.com.mx",
+      "codigo": "81253368",
+      "password": "admin123",
+      "role": "admin",
+      "permisos": {
+        "dashboard": true,
+        "usuarios": true,
+        "becarios": true,
+        "solicitudes": true,
+        "reportes": true
+      }
+    },
+    {
+      "id": "2578",
+      "nombre": "Alan Gomez",
+      "email": "alan@udg.com.mx",
+      "codigo": "217471988",
+      "password": "admin123",
+      "role": "student",
+      "permisos": {
+        "dashboard": false,
+        "usuarios": false,
+        "becarios": false,
+        "solicitudes": false,
+        "reportes": false
+      }
+    },
+    {
+      "id": "1472",
+      "nombre": "Perez Prado",
+      "email": "Perez@udg.com.mx",
+      "codigo": "253251588",
+      "password": "user123",
+      "role": "subadmin",
+      "permisos": {
+        "dashboard": true,
+        "usuarios": false,
+        "becarios": true,
+        "solicitudes": false,
+        "reportes": true
+      }
+    },
+    {
+      "id": "23b2",
+      "nombre": "Bonilla",
+      "email": "bonilla@udg.com.mx",
+      "codigo": "217471988",
+      "password": "bonillaperez",
+      "role": "subadmin",
+      "permisos": {
+        "dashboard": false,
+        "usuarios": false,
+        "becarios": false,
+        "solicitudes": true,
+        "reportes": true
+      }
+    }
+  ]
+}

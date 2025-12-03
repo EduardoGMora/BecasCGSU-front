@@ -1,10 +1,59 @@
 import { useState } from 'react';
 import { StatCard } from '../../components/StatCard';
 import { useOutletContext } from 'react-router-dom';
-
+import NewUserForm from './NewUserForm';
+import {usuarios} from "./../../utils/users.json"
+import SeeDataUser from './SeeDataUser';
 // Componente AdminPage
 export default function AdminPage() {
   const {selectedOption} = useOutletContext()
+  const [showUserModal, setShowUserModal] = useState(false);
+  const [showViewModal, setShowViewModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [newUser, setNewUser] = useState({
+    nombre: '',
+    email: '',
+    codigo: '',
+    password: '',
+    rol: 'admin',
+    permisos: {
+      dashboard: true,
+      usuarios: true,
+      becarios: true,
+      solicitudes: true,
+      reportes: true
+    }
+  });
+
+  const handleCreateUser = () => {
+    console.log('Nuevo usuario:', newUser);
+    fetch("http://localhost:3001/usuarios", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newUser)   // data = tu useState
+    });
+    setShowUserModal(false);
+    // Resetear formulario
+    setNewUser({
+      nombre: '',
+      email: '',
+      codigo: '',
+      password: '',
+      rol: 'admin',
+      permisos: {
+        dashboard: true,
+        usuarios: true,
+        becarios: true,
+        solicitudes: true,
+        reportes: true
+      }
+    });
+  };
+  const handleViewUser = (user) => {
+    setSelectedUser(user);
+    setShowViewModal(true);
+  };
+
 
   return (
     <div className="pt-20">
@@ -199,47 +248,59 @@ export default function AdminPage() {
 
       {selectedOption === 'users' && (
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
-            <h3 className="text-xl font-bold">Gestión de Usuarios</h3>
-            <button className="px-4 py-2 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition-all">
-              <i className="fas fa-plus mr-2"></i>Nuevo Usuario
-            </button>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-200">
-                <tr>
-                  <th className="px-6 py-4 text-left font-semibold">Usuario</th>
-                  <th className="px-6 py-4 text-left font-semibold">Email</th>
-                  <th className="px-6 py-4 text-left font-semibold">Rol</th>
-                  <th className="px-6 py-4 text-left font-semibold">Estado</th>
-                  <th className="px-6 py-4 text-left font-semibold">Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b border-gray-200 hover:bg-gray-50">
-                  <td className="px-6 py-4">
-                    <div className="font-semibold">Dr. Roberto Mendoza</div>
-                    <div className="text-sm text-gray-600">Coordinador de Becas</div>
-                  </td>
-                  <td className="px-6 py-4">r.mendoza@udg.mx</td>
-                  <td className="px-6 py-4">
-                    <span className="px-3 py-1 bg-red-500 text-white rounded-full text-xs font-semibold">Administrador</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-semibold">Activo</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex gap-2">
-                      <button className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
-                      <button className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Editar</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
+          <h3 className="text-xl font-bold">Gestión de Usuarios</h3>
+          <button 
+            onClick={() => setShowUserModal(true)}
+            className="px-4 py-2 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition-all">
+            <i className="fas fa-plus mr-2"></i>Nuevo Usuario
+          </button>
         </div>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-200">
+              <tr>
+                <th className="px-6 py-4 text-left font-semibold">Usuario</th>
+                <th className="px-6 py-4 text-left font-semibold">Email</th>
+                <th className="px-6 py-4 text-left font-semibold">Rol</th>
+                <th className="px-6 py-4 text-left font-semibold">Estado</th>
+                <th className="px-6 py-4 text-left font-semibold">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {usuarios.map((u, index) =>(
+              <tr className="border-b border-gray-200 hover:bg-gray-50" key={index}>
+                <td className="px-6 py-4">
+                  <div className="font-semibold">{u.nombre}</div>
+                  <div className="text-sm text-gray-600">Coordinador de Becas</div>
+                </td>
+                <td className="px-6 py-4">{u.email}</td>
+                <td className="px-6 py-4">
+                  {u.role == "admin"&&<span className="px-3 py-1 bg-red-500 text-white rounded-full text-xs font-semibold">Administrador</span>}
+                  {u.role == "subadmin"&&<span className="px-3 py-1 bg-blue-500 text-white rounded-full text-xs font-semibold">Sub-Admin</span>}
+                  {u.role == "student"&&<span className="px-3 py-1 bg-purple-500 text-white rounded-full text-xs font-semibold">Estudiante</span>}
+                </td>
+                <td className="px-6 py-4">
+                  <span className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-semibold">Activo</span>
+                </td>
+                <td className="px-6 py-4">
+                  <div className="flex gap-2">
+                    <button  onClick={() => handleViewUser(u.id)} className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
+                    <button className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Editar</button>
+                  </div>
+                </td>
+              </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      )}
+      {showUserModal && (
+        <NewUserForm newUser={newUser} setNewUser={setNewUser} handleCreateUser = {handleCreateUser} setShowUserModal={setShowUserModal}></NewUserForm>
+      )}
+      {showViewModal && (
+        <SeeDataUser selectedUser={selectedUser} setShowViewModal={setShowViewModal}></SeeDataUser>
       )}
     </div>
   );
