@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { HomePage } from "../pages/HomePage";
 import AdminPage from "../pages/admin/AdminPage";
-import { ApplicationsPage } from "../pages/RequestsPage";
+import { ApplicationsPage } from "../pages/ApplicationsPage";
 import { ContactPage } from "../pages/ContactPage";
 import { ScholarshipsPage } from "../pages/ScholarshipsPage";
 import { SubAdminPanel } from "../pages/SubAdminPage";
