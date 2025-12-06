@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "nombre": "Beca de Excelencia Académica 2025",
+    "institucion": "Universidad de Guadalajara",
+    "tipo": "Excelencia",
+    "monto": 50000,
+    "estado": "Activa",
+    "solicitudes": 234,
+    "descripcion": "Beca destinada a estudiantes con promedio superior a 9.5",
+    "requisitos": "Promedio mínimo 9.5, carta de motivos, constancia de estudios",
+    "duracion": "1 año",
+    "fechaInicio": "2025-01-15",
+    "fechaFin": "2025-12-31"
+  },
+  {
+    "id": 2,
+    "nombre": "Programa de Apoyo Socioeconómico",
+    "institucion": "Fundación Telmex",
+    "tipo": "Socioeconómica",
+    "monto": 25000,
+    "estado": "Activa",
+    "solicitudes": 567,
+    "descripcion": "Apoyo económico para estudiantes de bajos recursos",
+    "requisitos": "Estudio socioeconómico, comprobantes de ingresos familiares",
+    "duracion": "6 meses",
+    "fechaInicio": "2025-02-01",
+    "fechaFin": "2025-07-31"
+  }
+]

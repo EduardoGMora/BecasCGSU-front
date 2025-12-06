@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { StatCard } from '../components/StatCard';
 
 // Componente AdminPanel
-export function AdminPanel() {
+export function SubAdminPanel() {
   const [activeSection, setActiveSection] = useState('overview');
 
   return (
-    <div className="pt-20">
-      <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg px-8 py-16 md:px-16 mb-8 text-center">
+    <>
+      <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg p-12 mb-8 text-center">
         <h1 className="text-4xl font-bold mb-2">
           <i className="fas fa-cog mr-3"></i>Panel de Administración
         </h1>
@@ -44,16 +44,6 @@ export function AdminPanel() {
           }`}
         >
           <i className="fas fa-file-alt mr-2"></i>Solicitudes
-        </button>
-        <button
-          onClick={() => setActiveSection('users')}
-          className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
-            activeSection === 'users'
-              ? 'bg-blue-900 text-white'
-              : 'bg-white border border-gray-300 hover:bg-gray-50'
-          }`}
-        >
-          <i className="fas fa-users mr-2"></i>Usuarios
         </button>
       </nav>
 
@@ -239,51 +229,6 @@ export function AdminPanel() {
           </div>
         </div>
       )}
-
-      {activeSection === 'users' && (
-        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
-            <h3 className="text-xl font-bold">Gestión de Usuarios</h3>
-            <button className="px-4 py-2 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition-all">
-              <i className="fas fa-plus mr-2"></i>Nuevo Usuario
-            </button>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-200">
-                <tr>
-                  <th className="px-6 py-4 text-left font-semibold">Usuario</th>
-                  <th className="px-6 py-4 text-left font-semibold">Email</th>
-                  <th className="px-6 py-4 text-left font-semibold">Rol</th>
-                  <th className="px-6 py-4 text-left font-semibold">Estado</th>
-                  <th className="px-6 py-4 text-left font-semibold">Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b border-gray-200 hover:bg-gray-50">
-                  <td className="px-6 py-4">
-                    <div className="font-semibold">Dr. Roberto Mendoza</div>
-                    <div className="text-sm text-gray-600">Coordinador de Becas</div>
-                  </td>
-                  <td className="px-6 py-4">r.mendoza@udg.mx</td>
-                  <td className="px-6 py-4">
-                    <span className="px-3 py-1 bg-red-500 text-white rounded-full text-xs font-semibold">Administrador</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-semibold">Activo</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex gap-2">
-                      <button className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
-                      <button className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Editar</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-    </div>
+    </>
   );
 };
