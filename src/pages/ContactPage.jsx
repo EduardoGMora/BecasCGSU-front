@@ -138,7 +138,7 @@ export function ContactPage() {
   };
 
   return (
-    <div className="pt-20">
+    <>
       {/* Hero Section */}
       <HeroCard
         title="Contacto"
@@ -349,6 +349,6 @@ export function ContactPage() {
           </button>
         </form>
       </div>
-    </div>
+    </>
   );
 }

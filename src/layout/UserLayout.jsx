@@ -20,7 +20,7 @@ export function UserLayout() {
     <div className="min-h-screen bg-gray-50">
       {user && <Header id={user.id} role={user.role} onSelectOption ={setSelectedOptions} optionSelected ={selectedOption} />}
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 pb-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 pb-12 pt-32">
         <Outlet context={{ handleApply, selectedOption }} />
       </main>
 
@@ -31,7 +31,7 @@ export function UserLayout() {
       />
 
       <ChatBot />
-      <Footer />
+      <Footer className="mt-12" />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useOutletContext } from 'react-router-dom';
 import NewUserForm from './NewUserForm';
 import {usuarios} from "./../../utils/users.json"
 import SeeDataUser from './SeeDataUser';
+
 // Componente AdminPage
 export default function AdminPage() {
   const {selectedOption} = useOutletContext()
@@ -30,7 +31,7 @@ export default function AdminPage() {
     fetch("http://localhost:3001/usuarios", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newUser)   // data = tu useState
+      body: JSON.stringify(newUser)
     });
     setShowUserModal(false);
     // Resetear formulario
@@ -53,10 +54,8 @@ export default function AdminPage() {
     setSelectedUser(user);
     setShowViewModal(true);
   };
-
-
   return (
-    <div className="pt-20">
+    <>
       <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg px-8 py-16 md:px-16 mb-8 text-center">
         <h1 className="text-4xl font-bold mb-2">
           <i className="fas fa-cog mr-3"></i>Panel de Administración
@@ -140,7 +139,7 @@ export default function AdminPage() {
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
             <h3 className="text-xl font-bold">Gestión de Becas</h3>
-            <button className="px-4 py-2 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition-all">
+            <button onClick={() => openModal('create')} className="px-4 py-2 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition-all">
               <i className="fas fa-plus mr-2"></i>Nueva Beca
             </button>
           </div>
@@ -158,40 +157,25 @@ export default function AdminPage() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b border-gray-200 hover:bg-gray-50">
-                  <td className="px-6 py-4">Beca de Excelencia Académica 2025</td>
-                  <td className="px-6 py-4">Universidad de Guadalajara</td>
-                  <td className="px-6 py-4">Excelencia</td>
-                  <td className="px-6 py-4">$50,000</td>
-                  <td className="px-6 py-4">
-                    <span className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-semibold">Activa</span>
-                  </td>
-                  <td className="px-6 py-4">234</td>
-                  <td className="px-6 py-4">
-                    <div className="flex gap-2">
-                      <button className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
-                      <button className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Editar</button>
-                      <button className="px-3 py-1 bg-red-500 text-white rounded text-sm font-semibold">Eliminar</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr className="border-b border-gray-200 hover:bg-gray-50">
-                  <td className="px-6 py-4">Programa de Apoyo Socioeconómico</td>
-                  <td className="px-6 py-4">Fundación Telmex</td>
-                  <td className="px-6 py-4">Socioeconómica</td>
-                  <td className="px-6 py-4">$25,000</td>
-                  <td className="px-6 py-4">
-                    <span className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-semibold">Activa</span>
-                  </td>
-                  <td className="px-6 py-4">567</td>
-                  <td className="px-6 py-4">
-                    <div className="flex gap-2">
-                      <button className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
-                      <button className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Editar</button>
-                      <button className="px-3 py-1 bg-red-500 text-white rounded text-sm font-semibold">Eliminar</button>
-                    </div>
-                  </td>
-                </tr>
+                {scholarships.map(s => (
+                  <tr key={s.id} className="border-b border-gray-200 hover:bg-gray-50">
+                    <td className="px-6 py-4">{s.nombre}</td>
+                    <td className="px-6 py-4">{s.institucion}</td>
+                    <td className="px-6 py-4">{s.tipo}</td>
+                    <td className="px-6 py-4">${s.monto.toLocaleString()}</td>
+                    <td className="px-6 py-4">
+                      <span className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-semibold">{s.estado}</span>
+                    </td>
+                    <td className="px-6 py-4">{s.solicitudes}</td>
+                    <td className="px-6 py-4">
+                      <div className="flex gap-2">
+                        <button onClick={() => openModal('view', s)} className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
+                        <button onClick={() => openModal('edit', s)} className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Editar</button>
+                        <button onClick={() => setScholarships(scholarships.filter(sc => sc.id !== s.id))} className="px-3 py-1 bg-red-500 text-white rounded text-sm font-semibold">Eliminar</button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -222,24 +206,26 @@ export default function AdminPage() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b border-gray-200 hover:bg-gray-50">
-                  <td className="px-6 py-4">
-                    <div className="font-semibold">Juan Pérez García</div>
-                    <div className="text-sm text-gray-600">juan.perez@alumnos.udg.mx</div>
-                  </td>
-                  <td className="px-6 py-4">Excelencia Académica</td>
-                  <td className="px-6 py-4">15 Nov 2025</td>
-                  <td className="px-6 py-4">
-                    <span className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-semibold">Aprobada</span>
-                  </td>
-                  <td className="px-6 py-4">95/100</td>
-                  <td className="px-6 py-4">
-                    <div className="flex gap-2">
-                      <button className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
-                      <button className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Evaluar</button>
-                    </div>
-                  </td>
-                </tr>
+                {applications.map(app => (
+                  <tr key={app.id} className="border-b border-gray-200 hover:bg-gray-50">
+                    <td className="px-6 py-4">
+                      <div className="font-semibold">{app.solicitante}</div>
+                      <div className="text-sm text-gray-600">{app.email}</div>
+                    </td>
+                    <td className="px-6 py-4">{app.beca}</td>
+                    <td className="px-6 py-4">{new Date(app.fecha).toLocaleDateString('es-MX')}</td>
+                    <td className="px-6 py-4">
+                      <span className={`px-3 py-1 ${getStatusColor(app.estado)} text-white rounded-full text-xs font-semibold`}>{app.estado}</span>
+                    </td>
+                    <td className="px-6 py-4">{app.puntaje}/100</td>
+                    <td className="px-6 py-4">
+                      <div className="flex gap-2">
+                        <button onClick={() => openApplicationModal('viewApp', app)} className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
+                        <button onClick={() => openApplicationModal('evaluate', app)} className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Evaluar</button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -302,6 +288,6 @@ export default function AdminPage() {
       {showViewModal && (
         <SeeDataUser selectedUser={selectedUser} setShowViewModal={setShowViewModal}></SeeDataUser>
       )}
-    </div>
+    </>
   );
-};
+}

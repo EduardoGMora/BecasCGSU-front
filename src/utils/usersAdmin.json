@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "nombre": "Dr. Roberto Mendoza",
+    "cargo": "Coordinador de Becas",
+    "email": "r.mendoza@udg.mx",
+    "telefono": "33-3134-2200",
+    "rol": "Administrador",
+    "estado": "Activo",
+    "departamento": "Coordinación Académica",
+    "fechaIngreso": "2020-01-15",
+    "permisos": "Gestión completa del sistema"
+  },
+  {
+    "id": 2,
+    "nombre": "Lic. Ana María Torres",
+    "cargo": "Asistente Administrativa",
+    "email": "a.torres@udg.mx",
+    "telefono": "33-3134-2201",
+    "rol": "Subadministrador",
+    "estado": "Activo",
+    "departamento": "Servicios Escolares",
+    "fechaIngreso": "2021-03-10",
+    "permisos": "Gestión de solicitudes y evaluación"
+  },
+  {
+    "id": 3,
+    "nombre": "Mtro. Carlos Jiménez",
+    "cargo": "Revisor de Becas",
+    "email": "c.jimenez@udg.mx",
+    "telefono": "33-3134-2202",
+    "rol": "Revisor",
+    "estado": "Inactivo",
+    "departamento": "Control Escolar",
+    "fechaIngreso": "2019-08-22",
+    "permisos": "Solo lectura y evaluación"
+  }
+]
