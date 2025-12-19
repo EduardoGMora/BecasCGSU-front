@@ -167,11 +167,7 @@ export const ScholarshipsList = ({ viewType, filters, handleApply }) => {
 }
 
 ScholarshipsList.propTypes = {
-    scholarships: PropTypes.array.isRequired,
-    filters: PropTypes.shape({
-        status: PropTypes.string,
-        category: PropTypes.string,
-        search: PropTypes.string,
-    }).isRequired,
+    viewType: PropTypes.oneOf(['list', 'grid']),
+    filters: PropTypes.object,
     handleApply: PropTypes.func.isRequired,
-};
+}
