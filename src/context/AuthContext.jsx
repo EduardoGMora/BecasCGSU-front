@@ -1,7 +1,8 @@
-import { createContext, useContext, useState } from "react";
-import users from "../utils/users.json";
+import { createContext, useState } from "react";
+import users from "../mocks/users.json";
 
-const AuthContext = createContext();
+// eslint-disable-next-line react-refresh/only-export-components
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -27,5 +28,3 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = () => useContext(AuthContext);

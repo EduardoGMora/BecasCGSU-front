@@ -4,7 +4,7 @@ import { HeroCard } from '../components/HeroCard';
 import { Modal } from '../components/Modal';
 import { FormField } from '../components/FormField';
 import { DetailCard, DetailSection, DetailHeader } from '../components/DetailCard';
-import applicationsData from '../utils/applicationsUser.json';
+import applicationsData from '../mocks/applicationsUser.json';
 
 // Componente ApplicationsPage
 export function ApplicationsPage() {

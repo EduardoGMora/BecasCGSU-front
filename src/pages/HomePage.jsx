@@ -3,7 +3,7 @@ import { ScholarshipCard } from '../components/ScholarShipCard';
 import { Link, useOutletContext } from 'react-router-dom';
 import { HeroCard } from '../components/HeroCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Scholarships from '../utils/scholarships.json';
+import Scholarships from '../mocks/scholarships.json';
 
 // HomePage
 export function HomePage(){

@@ -4,12 +4,10 @@ import {
   EMAILJS_TEMPLATE_ID, 
   EMAILJS_PUBLIC_KEY 
 } from '../config/emailjs.config';
+import { isValidEmail } from '../utils/validators';
 
 export class EmailService {
-  static isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
+  static isValidEmail = isValidEmail;
 
   static async sendContactForm(formData) {
     try {

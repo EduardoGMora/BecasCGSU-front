@@ -127,7 +127,8 @@ export function ContactPage() {
           message: result.message
         });
       }
-    } catch (error) {
+    } catch (err) {
+      console.error('Error al enviar:', err);
       setStatus({
         loading: false,
         success: false,

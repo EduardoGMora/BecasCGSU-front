@@ -3,9 +3,9 @@ import { StatCard } from '../../components/StatCard';
 import { Modal } from '../../components/Modal';
 import { FormField } from '../../components/FormField';
 import { DetailCard, DetailSection, DetailHeader } from '../../components/DetailCard';
-import scholarshipsData from '../../utils/scholarshipsAdmin.json';
-import applicationsData from '../../utils/applicationsAdmin.json';
-import usersData from '../../utils/usersAdmin.json';
+import scholarshipsData from '../../mocks/scholarshipsAdmin.json';
+import applicationsData from '../../mocks/applicationsAdmin.json';
+import usersData from '../../mocks/usersAdmin.json';
 
 // Componente AdminPage
 export default function AdminPage() {

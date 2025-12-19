@@ -4,7 +4,7 @@ import { Footer } from "../components/Footer";
 import { ChatBot } from "../components/Chatbot";
 import { ApplicationModal } from "../components/ApplicationModal";
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 
 export function UserLayout() {
   const { user } = useAuth();
