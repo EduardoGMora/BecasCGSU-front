@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { lazy, Suspense } from 'react';
 import { HomePage } from "../pages/HomePage";
 import AdminPage from "../pages/admin/AdminPage";
 import { ApplicationsPage } from "../pages/ApplicationsPage";
@@ -17,38 +18,19 @@ export default function AppRoutes() {
         {/* Public Routes */}
         <Route path="/login" element={<LoginPage />} />
 
-        {/* Protected Routes with Layout */}
+        {/* Routes with Layout */}
         <Route element={<UserLayout />}>
-          {/* Student Routes */}
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute allowedRoles={["student"]}>
-                <HomePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/becas"
-            element={
-              <ProtectedRoute allowedRoles={["student"]}>
-                <ScholarshipsPage />
-              </ProtectedRoute>
-            }
-          />
+          {/* Public Routes */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/becas" element={<ScholarshipsPage />} />
+          <Route path="/contacto" element={<ContactPage />} />
+
+          {/* Protected Student Routes */}
           <Route
             path="/mis-solicitudes"
             element={
               <ProtectedRoute allowedRoles={["student"]}>
                 <ApplicationsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/contacto"
-            element={
-              <ProtectedRoute allowedRoles={["student"]}>
-                <ContactPage />
               </ProtectedRoute>
             }
           />

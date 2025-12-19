@@ -3,14 +3,15 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/useAuth';
+import PropTypes from 'prop-types';
 
 library.add(fas);
 
 const links = [
     { to: '/', label: 'Inicio', icon: 'fa-solid fa-home',adminOnly:false },
     { to: '/becas', label: 'Becas', icon: 'fa-solid fa-award',adminOnly:false },
-    { to: '/mis-solicitudes', label: 'Solicitudes', icon: 'fa-solid fa-file-alt',adminOnly:false },
     { to: '/contacto', label: 'Contacto', icon: 'fa-solid fa-envelope',adminOnly:false },
+    // { to: '/mis-solicitudes', label: 'Solicitudes', icon: 'fa-solid fa-file-alt',adminOnly:false },
     { to: '/admin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true },
     // { to: '/subadmin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true }
 ];
@@ -84,3 +85,9 @@ export const NavBar = ({ isAdmin, onLinkClick, mobile }) => {
         </nav>
     );
 }
+
+NavBar.propTypes = {
+  isAdmin: PropTypes.bool,
+  onLinkClick: PropTypes.func,
+  mobile: PropTypes.bool,
+};

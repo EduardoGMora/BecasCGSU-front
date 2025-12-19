@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
 
 export const InfoCard = ({icon, title, children}) => {
     return(
@@ -13,3 +14,9 @@ export const InfoCard = ({icon, title, children}) => {
         </div>
     );
 }
+
+InfoCard.propTypes = {
+  icon: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node,
+};

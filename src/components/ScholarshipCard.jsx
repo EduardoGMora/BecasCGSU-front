@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Modal } from './Modal';
 import { DetailCard } from './DetailCard';
 import { SCHOLARSHIP_STATUS } from '../constants';
@@ -159,4 +160,19 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
     </Modal>
     </>
   );
+};
+
+ScholarshipCard.propTypes = {
+  scholarship: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string.isRequired,
+    institution: PropTypes.string,
+    deadline: PropTypes.string,
+    beneficiaries: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    description: PropTypes.string,
+    amount: PropTypes.string,
+    status: PropTypes.string.isRequired,
+    requirements: PropTypes.string,
+  }).isRequired,
+  onApply: PropTypes.func.isRequired,
 };

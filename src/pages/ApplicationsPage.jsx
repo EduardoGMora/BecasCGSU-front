@@ -4,6 +4,7 @@ import { HeroCard } from '../components/HeroCard';
 import { Modal } from '../components/Modal';
 import { FormField } from '../components/FormField';
 import { DetailCard, DetailSection, DetailHeader } from '../components/DetailCard';
+import { APPLICATION_STATUS } from '../constants';
 import applicationsData from '../mocks/applicationsUser.json';
 
 // Componente ApplicationsPage
@@ -34,9 +35,9 @@ export function ApplicationsPage() {
 
     const getStatusStyle = (status) => {
         switch(status) {
-        case 'approved': return 'bg-green-500 text-white';
-        case 'pending': return 'bg-yellow-500 text-gray-900';
-        case 'rejected': return 'bg-red-500 text-white';
+        case APPLICATION_STATUS.APPROVED: return 'bg-green-500 text-white';
+        case APPLICATION_STATUS.PENDING: return 'bg-yellow-500 text-gray-900';
+        case APPLICATION_STATUS.REJECTED: return 'bg-red-500 text-white';
         default: return 'bg-gray-500 text-white';
         }
     };

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
 
 export const ApplicationModal = ({ isOpen, onClose, scholarship }) => {
   useEffect(() => {
@@ -219,3 +220,14 @@ export const ApplicationModal = ({ isOpen, onClose, scholarship }) => {
     </div>
   );
 }
+
+ApplicationModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  scholarship: PropTypes.shape({
+    title: PropTypes.string,
+    description: PropTypes.string,
+    amount: PropTypes.string,
+    deadline: PropTypes.string,
+  }),
+};

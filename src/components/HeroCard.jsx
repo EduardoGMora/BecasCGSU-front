@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export const HeroCard = ({title, subtitle, children}) => {
     return (
         <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg py-16 px-8 md:px-16 mb-8 text-center">
@@ -9,3 +11,9 @@ export const HeroCard = ({title, subtitle, children}) => {
         </section>
         );
 }
+
+HeroCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string.isRequired,
+  children: PropTypes.node,
+};

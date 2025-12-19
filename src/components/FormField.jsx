@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 /**
  * Reusable form field component with support for input, textarea, and select
  * @param {Object} props
@@ -77,4 +79,17 @@ export const FormField = ({
       )}
     </div>
   );
+};
+
+FormField.propTypes = {
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onChange: PropTypes.func.isRequired,
+  required: PropTypes.bool,
+  step: PropTypes.string,
+  options: PropTypes.array,
+  placeholder: PropTypes.string,
+  error: PropTypes.string,
 };

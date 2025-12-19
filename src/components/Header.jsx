@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 import { NavBar } from './NavBar';
 import pub_logo from '../assets/PUB.svg';
 
@@ -65,3 +66,7 @@ export function Header({ role }) {
         </header>
     );
 }
+
+Header.propTypes = {
+  role: PropTypes.string,
+};

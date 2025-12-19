@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export const DetailCard = ({ label, value, color = "gray" }) => {
   const colors = {
     gray: "bg-gray-50",
@@ -36,3 +38,20 @@ export const DetailHeader = ({ title, subtitle }) => (
     <p className="text-blue-100">{subtitle}</p>
   </div>
 );
+
+DetailCard.propTypes = {
+  label: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  color: PropTypes.string,
+};
+
+DetailSection.propTypes = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  color: PropTypes.string,
+};
+
+DetailHeader.propTypes = {
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string.isRequired,
+};
