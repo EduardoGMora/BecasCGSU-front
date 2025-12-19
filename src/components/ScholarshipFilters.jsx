@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
 /**
+ * ScholarshipFilters component to display and manage scholarship filters
  * @param {Object} props
  * @param {Object} props.filterState - Estado actual de los filtros.
  * @param {Array} props.scholarshipTypes - Lista de tipos de beca disponibles.

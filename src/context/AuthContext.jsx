@@ -4,6 +4,12 @@ import users from "../mocks/users.json";
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext();
 
+/**
+ * AuthProvider component to manage authentication state
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - Child components
+ * @returns {JSX.Element} AuthProvider component
+ */
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 

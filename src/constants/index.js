@@ -1,7 +1,6 @@
 /**
  * Application constants
  */
-
 export const APP_NAME = 'Portal de Becas CGSU';
 
 export const ROUTES = {

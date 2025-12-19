@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
 /**
- * 
+ * StatCard component to display a statistic with an icon, number, and label
  * @param {Object} props
  * @param {string} props.icon - Icono a mostrar.
  * @param {string|number} props.number - Número a mostrar.

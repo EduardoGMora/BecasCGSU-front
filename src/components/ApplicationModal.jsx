@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
 /**
- * 
+ * ApplicationModal component to display scholarship application form
  * @param {Object} props
  * @param {boolean} props.isOpen - Si el modal está abierto
  * @param {Function} props.onClose - Función para cerrar el modal

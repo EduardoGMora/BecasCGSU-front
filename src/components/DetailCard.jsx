@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 
 /**
+ * DetailCard component to display a labeled detail with optional background color
  * @param {Object} props
  * @param {string} props.label - Etiqueta descriptiva del detalle.
  * @param {string|number} props.value - Valor del detalle.
@@ -25,7 +26,7 @@ export const DetailCard = ({ label, value, color = "gray" }) => {
 };
 
 /**
- * 
+ * DetailSection component to group related details with a title
  * @param {Object} props
  * @param {string} props.title - Título de la sección.
  * @param {React.ReactNode} props.children - Contenido de la sección.
@@ -48,7 +49,7 @@ export const DetailSection = ({ title, children, color = "purple" }) => {
 };
 
 /**
- * 
+ * DetailHeader component to display a header with title and subtitle
  * @param {Object} props
  * @param {string} props.title - Título principal.
  * @param {string} props.subtitle - Subtítulo descriptivo.

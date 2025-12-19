@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
 /** 
+ * ViewToggle component to switch between grid and list views
  * @param {Object} props
  * @param {string} props.viewType - Tipo de vista actual ('grid' o 'list').
  * @param {function} props.onViewChange - Función para manejar el cambio de vista.

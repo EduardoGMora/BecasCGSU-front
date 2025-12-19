@@ -2,14 +2,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
 /**
- * 
+ * InfoCard component to display an information card with an icon, title, and optional children
  * @param {Object} props
  * @param {string} props.icon - Icono de FontAwesome a mostrar en la tarjeta.
  * @param {string} props.title - Título de la tarjeta.
  * @param {React.ReactNode} props.children - Contenido adicional dentro de la tarjeta.
  * @returns {JSX.Element} InfoCard component
  */
-
 export const InfoCard = ({icon, title, children}) => {
     return(
         <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">

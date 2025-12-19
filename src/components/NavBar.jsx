@@ -17,6 +17,7 @@ const links = [
 ];
 
 /**
+ * NavBar component to display navigation links
  * @param {Object} props
  * @param {boolean} props.isAdmin - Indica si el usuario es administrador.
  * @param {function} [props.onLinkClick] - Función opcional a ejecutar al hacer clic en un enlace.
