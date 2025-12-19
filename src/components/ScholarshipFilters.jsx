@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
 
 export const ScholarshipFilters = ({ 
   filterState, 
@@ -84,4 +85,18 @@ export const ScholarshipFilters = ({
       </div>
     </section>
   );
+};
+
+ScholarshipFilters.propTypes = {
+  filterState: PropTypes.shape({
+    status: PropTypes.string,
+    category: PropTypes.string,
+    university_center: PropTypes.string,
+  }).isRequired,
+  scholarshipTypes: PropTypes.arrayOf(PropTypes.string),
+  universityCenters: PropTypes.arrayOf(PropTypes.string),
+  onFilterChange: PropTypes.func.isRequired,
+  onApply: PropTypes.func.isRequired,
+  onClear: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
 };

@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/useAuth";
+import { ROUTES, USER_ROLES, ERROR_MESSAGES } from "../../constants";
 
+/**
+ * Login Page Component
+ * Handles user authentication and redirects based on role
+ */
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -9,16 +14,31 @@ export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = login(email, password);
+    setError("");
 
-    if (result.success) {
-      if (result.role === "admin") navigate("/admin");
-      else if (result.role === "subadmin") navigate("/subadmin");
-      else navigate("/");
-    } else {
-      setError(result.message);
+    try {
+      const result = login(email, password);
+
+      if (result.success) {
+        // Redirect based on user role
+        switch (result.role) {
+          case USER_ROLES.ADMIN:
+            navigate(ROUTES.ADMIN);
+            break;
+          case USER_ROLES.SUB_ADMIN:
+            navigate(ROUTES.SUB_ADMIN);
+            break;
+          default:
+            navigate(ROUTES.HOME);
+        }
+      } else {
+        setError(result.message || ERROR_MESSAGES.INVALID_CREDENTIALS);
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      setError(ERROR_MESSAGES.NETWORK_ERROR);
     }
   };
 

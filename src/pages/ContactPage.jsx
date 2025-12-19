@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EmailService } from '../services/emailService';
 import { InfoCard } from '../components/InfoCard';
 import { HeroCard } from '../components/HeroCard';
+import { isValidEmail, isNotEmpty } from '../utils/validators';
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../constants';
 
 export function ContactPage() {
   const [formData, setFormData] = useState({
@@ -44,22 +46,22 @@ export function ContactPage() {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = 'El nombre es requerido';
+    if (!isNotEmpty(formData.name)) {
+      newErrors.name = ERROR_MESSAGES.REQUIRED_FIELD;
     }
 
-    if (!formData.email.trim()) {
-      newErrors.email = 'El correo es requerido';
-    } else if (!EmailService.isValidEmail(formData.email)) {
-      newErrors.email = 'Correo electrónico inválido';
+    if (!isNotEmpty(formData.email)) {
+      newErrors.email = ERROR_MESSAGES.REQUIRED_FIELD;
+    } else if (!isValidEmail(formData.email)) {
+      newErrors.email = ERROR_MESSAGES.INVALID_EMAIL;
     }
 
     if (!formData.subject) {
-      newErrors.subject = 'Selecciona un asunto';
+      newErrors.subject = ERROR_MESSAGES.REQUIRED_FIELD;
     }
 
-    if (!formData.message.trim()) {
-      newErrors.message = 'El mensaje es requerido';
+    if (!isNotEmpty(formData.message)) {
+      newErrors.message = ERROR_MESSAGES.REQUIRED_FIELD;
     } else if (formData.message.trim().length < 20) {
       newErrors.message = 'El mensaje debe tener al menos 20 caracteres';
     }
@@ -78,7 +80,7 @@ export function ContactPage() {
         loading: false,
         success: false,
         error: true,
-        message: 'Por favor corrige los errores en el formulario'
+        message: ERROR_MESSAGES.FORM_ERROR
       });
       return;
     }

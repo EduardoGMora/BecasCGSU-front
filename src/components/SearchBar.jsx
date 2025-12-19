@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
 
 export const SearchBar = ({ searchTerm, onSearchChange, onSearch }) => {
   return (
@@ -20,4 +21,10 @@ export const SearchBar = ({ searchTerm, onSearchChange, onSearch }) => {
       </button>
     </>
   );
+};
+
+SearchBar.propTypes = {
+  searchTerm: PropTypes.string.isRequired,
+  onSearchChange: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired,
 };

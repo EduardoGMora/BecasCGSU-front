@@ -39,6 +39,10 @@ export const ERROR_MESSAGES = {
   UNAUTHORIZED: 'No tienes permiso para acceder a esta página',
   SERVER_ERROR: 'Error del servidor, por favor intenta más tarde',
   REQUIRED_FIELDS: 'Por favor completa todos los campos requeridos',
+  REQUIRED_FIELD: 'Este campo es requerido',
+  INVALID_EMAIL: 'Correo electrónico inválido',
+  FORM_ERROR: 'Por favor corrige los errores en el formulario',
+  LOAD_ERROR: 'Error al cargar las becas',
 };
 
 export const SUCCESS_MESSAGES = {

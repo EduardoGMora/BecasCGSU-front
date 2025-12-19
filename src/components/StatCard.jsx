@@ -1,4 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
 
 // Componente StatCard
 export const StatCard = ({ icon, number, label }) => {
@@ -11,4 +12,10 @@ export const StatCard = ({ icon, number, label }) => {
       <div className="text-gray-600 font-semibold">{label}</div>
     </div>
   );
+};
+
+StatCard.propTypes = {
+  icon: PropTypes.string.isRequired,
+  number: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  label: PropTypes.string.isRequired,
 };

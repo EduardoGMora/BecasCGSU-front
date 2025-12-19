@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
 
 export const ViewToggle = ({ viewType, onViewChange }) => {
   return (
@@ -30,4 +31,9 @@ export const ViewToggle = ({ viewType, onViewChange }) => {
       </div>
     </div>
   );
+};
+
+ViewToggle.propTypes = {
+  viewType: PropTypes.oneOf(['grid', 'list']).isRequired,
+  onViewChange: PropTypes.func.isRequired,
 };

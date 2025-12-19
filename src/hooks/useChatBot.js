@@ -32,6 +32,7 @@ export const useChatBot = (options = {}) => {
         ChatBotService.endSession(sessionId);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Cargar historial si está habilitado
@@ -39,7 +40,7 @@ export const useChatBot = (options = {}) => {
     if (enableHistory && sessionId && isConnected) {
       loadHistory();
     }
-  }, [sessionId, isConnected]);
+  }, [sessionId, isConnected, enableHistory, loadHistory]);
 
   /**
    * Inicializa una nueva sesión de chat
@@ -67,7 +68,7 @@ export const useChatBot = (options = {}) => {
   /**
    * Carga el historial de mensajes
    */
-  const loadHistory = async () => {
+  const loadHistory = useCallback(async () => {
     try {
       const history = await ChatBotService.getHistory(sessionId);
       if (history.length > 0) {
@@ -76,7 +77,7 @@ export const useChatBot = (options = {}) => {
     } catch (err) {
       console.error('Error loading history:', err);
     }
-  };
+  }, [sessionId]);
 
   /**
    * Agrega un mensaje a la lista
