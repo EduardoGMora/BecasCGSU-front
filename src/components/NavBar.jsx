@@ -8,11 +8,11 @@ import PropTypes from 'prop-types';
 library.add(fas);
 
 const links = [
-    { to: '/', label: 'Inicio', icon: 'fa-solid fa-home',adminOnly:false },
-    { to: '/becas', label: 'Becas', icon: 'fa-solid fa-award',adminOnly:false },
-    { to: '/contacto', label: 'Contacto', icon: 'fa-solid fa-envelope',adminOnly:false },
-    // { to: '/mis-solicitudes', label: 'Solicitudes', icon: 'fa-solid fa-file-alt',adminOnly:false },
-    { to: '/admin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true },
+    { to: '/', label: 'Inicio', icon: 'fa-solid fa-home', adminOnly: false, requiresAuth: false },
+    { to: '/becas', label: 'Becas', icon: 'fa-solid fa-award', adminOnly: false, requiresAuth: false },
+    { to: '/contacto', label: 'Contacto', icon: 'fa-solid fa-envelope', adminOnly: false, requiresAuth: false },
+    { to: '/mis-solicitudes', label: 'Solicitudes', icon: 'fa-solid fa-file-alt', adminOnly: false, requiresAuth: true },
+    { to: '/admin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true, requiresAuth: true },
     // { to: '/subadmin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true }
 ];
 
@@ -26,7 +26,7 @@ const links = [
  */
 export const NavBar = ({ isAdmin, onLinkClick, mobile }) => {
     const location = useLocation();
-    const { logout } = useAuth();
+    const { logout, isAuthenticated } = useAuth();
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -35,11 +35,19 @@ export const NavBar = ({ isAdmin, onLinkClick, mobile }) => {
         navigate('/login');
     };
 
+    const handleLogin = () => {
+        if (onLinkClick) onLinkClick();
+        navigate('/login');
+    };
+
     return (
         <nav className={mobile ? 'flex flex-col gap-2 pb-4' : 'hidden md:flex items-center gap-4 lg:gap-6'}>
             {links.map(link => {
+                // Filtrar por admin
                 if (link.adminOnly && !isAdmin) return null;
                 if (!link.adminOnly && isAdmin) return null;
+                // Filtrar por autenticación
+                if (link.requiresAuth && !isAuthenticated) return null;
                 const isActive = location.pathname === link.to;
                 // console.log(`Link ${link.to} is active:`, isActive);
 
@@ -68,27 +76,51 @@ export const NavBar = ({ isAdmin, onLinkClick, mobile }) => {
                 );
             })}
             
-            {/* Logout Button */}
-            {mobile ? (
-                <button
-                    onClick={handleLogout}
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-gray-600 hover:bg-red-50 hover:text-red-600"
-                >
-                    <FontAwesomeIcon icon="fa-solid fa-sign-out-alt" className="w-5" />
-                    <span className="font-semibold">Cerrar sesión</span>
-                </button>
-            ) : (
-                <button
-                    onClick={handleLogout}
-                    className="p-2 text-gray-600 hover:text-red-600 hover:bg-gray-100 rounded-lg transition-all"
-                    aria-label="Cerrar sesión"
-                    title="Cerrar sesión"
-                >
-                    <FontAwesomeIcon 
-                        icon="fa-solid fa-sign-out-alt" 
-                        className="text-xl"
-                    />
-                </button>
+            {/* Login Button - Solo cuando NO está autenticado */}
+            {!isAuthenticated && (
+                mobile ? (
+                    <button
+                        onClick={handleLogin}
+                        className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all bg-blue-900 text-white hover:bg-blue-800"
+                    >
+                        <FontAwesomeIcon icon="fa-solid fa-sign-in-alt" className="w-5" />
+                        <span className="font-semibold">Iniciar sesión</span>
+                    </button>
+                ) : (
+                    <button
+                        onClick={handleLogin}
+                        className="px-4 py-2 rounded-lg font-semibold transition-all bg-blue-900 text-white hover:bg-blue-800"
+                        aria-label="Iniciar sesión"
+                        title="Iniciar sesión"
+                    >
+                        Iniciar sesión
+                    </button>
+                )
+            )}
+
+            {/* Logout Button - Solo cuando está autenticado */}
+            {isAuthenticated && (
+                mobile ? (
+                    <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-gray-600 hover:bg-red-50 hover:text-red-600"
+                    >
+                        <FontAwesomeIcon icon="fa-solid fa-sign-out-alt" className="w-5" />
+                        <span className="font-semibold">Cerrar sesión</span>
+                    </button>
+                ) : (
+                    <button
+                        onClick={handleLogout}
+                        className="p-2 text-gray-600 hover:text-red-600 hover:bg-gray-100 rounded-lg transition-all"
+                        aria-label="Cerrar sesión"
+                        title="Cerrar sesión"
+                    >
+                        <FontAwesomeIcon 
+                            icon="fa-solid fa-sign-out-alt" 
+                            className="text-xl"
+                        />
+                    </button>
+                )
             )}
         </nav>
     );

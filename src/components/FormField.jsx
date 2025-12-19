@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 /**
  * Reusable form field component with support for input, textarea, and select
@@ -13,6 +14,9 @@ import PropTypes from 'prop-types';
  * @param {Array} props.options - Options for select field
  * @param {string} props.placeholder - Placeholder text
  * @param {string} props.error - Error message to display
+ * @param {string} props.icon - FontAwesome icon class
+ * @param {string} props.helperText - Helper text below the field
+ * @param {string} props.className - Additional classes for the wrapper
  * @returns {JSX.Element} Form field component
  */
 export const FormField = ({ 
@@ -25,16 +29,20 @@ export const FormField = ({
   step,
   options = [],
   placeholder,
-  error
+  error,
+  icon,
+  helperText,
+  className = ""
 }) => {
-  const baseInputClass = "w-full px-4 py-3 border-2 rounded-lg focus:ring-2 transition-all";
+  const baseInputClass = "w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg focus:outline-none focus:border-blue-500 text-sm sm:text-base";
   const inputClass = error 
-    ? `${baseInputClass} border-red-500 focus:border-red-500 focus:ring-red-200`
-    : `${baseInputClass} border-gray-300 focus:border-blue-500 focus:ring-blue-200`;
+    ? `${baseInputClass} border-red-500`
+    : `${baseInputClass} border-gray-300`;
 
   return (
-    <div className="mb-4">
-      <label className="block text-sm font-semibold mb-2 text-gray-700">
+    <div className={className}>
+      <label className="block font-semibold mb-2 text-sm sm:text-base">
+        {icon && <FontAwesomeIcon icon={icon} className="mr-2 text-blue-900" />}
         {label}
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>
@@ -45,7 +53,7 @@ export const FormField = ({
           onChange={onChange} 
           required={required}
           placeholder={placeholder}
-          className={inputClass}
+          className={`${inputClass} resize-none`}
           rows="4" 
         />
       ) : type === "select" ? (
@@ -78,6 +86,9 @@ export const FormField = ({
       {error && (
         <p className="text-red-500 text-xs mt-1">{error}</p>
       )}
+      {helperText && !error && (
+        <p className="text-xs text-gray-500 mt-1">{helperText}</p>
+      )}
     </div>
   );
 };
@@ -93,4 +104,7 @@ FormField.propTypes = {
   options: PropTypes.array,
   placeholder: PropTypes.string,
   error: PropTypes.string,
+  icon: PropTypes.string,
+  helperText: PropTypes.string,
+  className: PropTypes.string,
 };
