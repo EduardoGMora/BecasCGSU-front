@@ -7,8 +7,8 @@ import { ROUTES } from '../constants';
 import Scholarships from '../mocks/scholarships.json';
 
 /**
- * Home Page Component
- * Displays dashboard with stats and featured scholarships
+ * Home Page Component Displays dashboard with stats and featured scholarships
+ * @returns {JSX.Element} HomePage component
  */
 export function HomePage(){
   const { handleApply } = useOutletContext();

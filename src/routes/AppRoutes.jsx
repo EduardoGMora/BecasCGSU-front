@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { lazy, Suspense } from 'react';
 import { HomePage } from "../pages/HomePage";
 import AdminPage from "../pages/admin/AdminPage";
 import { ApplicationsPage } from "../pages/ApplicationsPage";
@@ -11,6 +10,10 @@ import LoginPage from "../pages/auth/LoginPage";
 import { AuthProvider } from "../context/AuthContext";
 import { UserLayout } from "../layout/UserLayout";
 
+/**
+ * AppRoutes component to define application routes
+ * @returns {JSX.Element} AppRoutes component
+ */
 export default function AppRoutes() {
   return (
     <AuthProvider>

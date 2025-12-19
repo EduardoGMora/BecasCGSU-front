@@ -6,6 +6,7 @@ import { ROUTES, USER_ROLES, ERROR_MESSAGES } from "../../constants";
 /**
  * Login Page Component
  * Handles user authentication and redirects based on role
+ * @returns {JSX.Element} LoginPage component
  */
 export default function LoginPage() {
   const [email, setEmail] = useState("");

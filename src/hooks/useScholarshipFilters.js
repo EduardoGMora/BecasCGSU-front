@@ -1,6 +1,13 @@
 import { useState, useEffect } from 'react';
 import api from '../api/axios';
 
+/**
++ * Custom hook to fetch scholarship filter options
++ * @returns {Object} Filter options and loading state
++ * @returns {Array} return.scholarshipTypes - Lista de tipos de beca disponibles.
++ * @returns {Array} return.universityCenters - Lista de centros universitarios disponibles.
++ * @returns {boolean} return.loading - Indica si los datos están cargando.
++ */
 export const useScholarshipFilters = () => {
   const [scholarshipTypes, setScholarshipTypes] = useState([]);
   const [universityCenters, setUniversityCenters] = useState([]);

@@ -7,7 +7,10 @@ import { DetailCard, DetailSection, DetailHeader } from '../components/DetailCar
 import { APPLICATION_STATUS } from '../constants';
 import applicationsData from '../mocks/applicationsUser.json';
 
-// Componente ApplicationsPage
+/**
++ * ApplicationsPage component to manage and display user scholarship applications
++ * @returns {JSX.Element} ApplicationsPage component
++ */
 export function ApplicationsPage() {
     const [applications, setApplications] = useState(applicationsData);
     const [modalType, setModalType] = useState(null);

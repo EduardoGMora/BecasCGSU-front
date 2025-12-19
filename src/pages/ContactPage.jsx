@@ -6,6 +6,10 @@ import { HeroCard } from '../components/HeroCard';
 import { isValidEmail, isNotEmpty } from '../utils/validators';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../constants';
 
+/**
+ * ContactPage component to display contact information and a contact form
+ * @returns {JSX.Element} ContactPage component
+ */
 export function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',

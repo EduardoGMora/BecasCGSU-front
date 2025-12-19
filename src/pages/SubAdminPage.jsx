@@ -3,7 +3,10 @@ import { StatCard } from '../components/StatCard';
 import { ProgressBar } from '../components/ProgressBar';
 import { ActivityCard } from '../components/ActivityCard';
 
-// Componente AdminPanel
+/**
+ * SubAdminPanel component to manage administrative tasks and view statistics
+ * @returns {JSX.Element} SubAdminPanel component
+ */
 export function SubAdminPanel() {
   const [activeSection, setActiveSection] = useState('overview');
 

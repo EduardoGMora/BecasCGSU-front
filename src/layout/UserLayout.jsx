@@ -6,6 +6,10 @@ import { ApplicationModal } from "../components/ApplicationModal";
 import { useState } from "react";
 import { useAuth } from "../context/useAuth";
 
+/**
++ * UserLayout component to provide consistent layout for user pages
++ * @returns {JSX.Element} UserLayout component
++ */
 export function UserLayout() {
   const { user } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
