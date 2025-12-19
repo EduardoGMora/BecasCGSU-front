@@ -173,4 +173,5 @@ ScholarshipsList.propTypes = {
         category: PropTypes.string,
         search: PropTypes.string,
     }).isRequired,
+    handleApply: PropTypes.func.isRequired,
 };
