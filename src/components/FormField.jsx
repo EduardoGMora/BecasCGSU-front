@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
  * @param {Array} props.options - Options for select field
  * @param {string} props.placeholder - Placeholder text
  * @param {string} props.error - Error message to display
+ * @returns {JSX.Element} Form field component
  */
 export const FormField = ({ 
   label, 

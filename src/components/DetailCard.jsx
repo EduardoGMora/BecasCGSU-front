@@ -1,5 +1,12 @@
 import PropTypes from 'prop-types';
 
+/**
+ * @param {Object} props
+ * @param {string} props.label - Etiqueta descriptiva del detalle.
+ * @param {string|number} props.value - Valor del detalle.
+ * @param {string} [props.color] - Color de fondo opcional (gray, blue, green, purple, yellow).
+ * @returns {JSX.Element} DetailCard component
+ */
 export const DetailCard = ({ label, value, color = "gray" }) => {
   const colors = {
     gray: "bg-gray-50",
@@ -17,6 +24,14 @@ export const DetailCard = ({ label, value, color = "gray" }) => {
   );
 };
 
+/**
+ * 
+ * @param {Object} props
+ * @param {string} props.title - Título de la sección.
+ * @param {React.ReactNode} props.children - Contenido de la sección.
+ * @param {string} [props.color] - Color de la sección (purple, yellow, blue).
+ * @returns {JSX.Element} DetailSection component
+ */
 export const DetailSection = ({ title, children, color = "purple" }) => {
   const colors = {
     purple: "bg-purple-50 border-l-4 border-purple-500",
@@ -32,6 +47,13 @@ export const DetailSection = ({ title, children, color = "purple" }) => {
   );
 };
 
+/**
+ * 
+ * @param {Object} props
+ * @param {string} props.title - Título principal.
+ * @param {string} props.subtitle - Subtítulo descriptivo.
+ * @returns {JSX.Element} DetailHeader component
+ */
 export const DetailHeader = ({ title, subtitle }) => (
   <div className="bg-blue-900 text-white p-4 rounded-lg">
     <h2 className="text-2xl font-bold mb-1">{title}</h2>

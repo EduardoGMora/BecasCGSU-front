@@ -1,6 +1,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
+/**
+ * @param {Object} props
+ * @param {Object} props.filterState - Estado actual de los filtros.
+ * @param {Array} props.scholarshipTypes - Lista de tipos de beca disponibles.
+ * @param {Array} props.universityCenters - Lista de centros universitarios disponibles.
+ * @param {function} props.onFilterChange - Función para manejar cambios en los filtros.
+ * @param {function} props.onApply - Función para aplicar los filtros.
+ * @param {function} props.onClear - Función para limpiar los filtros.
+ * @param {boolean} [props.loading=false] - Indica si los datos están cargando.
+ * @returns {JSX.Element} ScholarshipFilters component
+ */
 export const ScholarshipFilters = ({ 
   filterState, 
   scholarshipTypes, 

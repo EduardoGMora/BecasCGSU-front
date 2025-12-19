@@ -1,6 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
+/**
+ * 
+ * @param {Object} props
+ * @param {string} props.searchTerm - Término de búsqueda actual.
+ * @param {function} props.onSearchChange - Función para manejar cambios en el término de búsqueda.
+ * @param {function} props.onSearch - Función para ejecutar la búsqueda.
+ * @returns {JSX.Element} SearchBar component
+ */
 export const SearchBar = ({ searchTerm, onSearchChange, onSearch }) => {
   return (
     <>

@@ -9,6 +9,13 @@ import pub_logo from '../assets/PUB.svg';
 
 library.add(fas);
 
+/**
+ * 
+ * @param {Object} props
+ * @param {string} props.role - User role to determine navigation options
+ * @returns {JSX.Element} Header component
+ */
+
 export function Header({ role }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 

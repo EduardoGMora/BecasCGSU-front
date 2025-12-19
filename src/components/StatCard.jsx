@@ -1,7 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
-// Componente StatCard
+/**
+ * 
+ * @param {Object} props
+ * @param {string} props.icon - Icono a mostrar.
+ * @param {string|number} props.number - Número a mostrar.
+ * @param {string} props.label - Etiqueta descriptiva.
+ * @returns {JSX.Element} StatCard component
+ */
 export const StatCard = ({ icon, number, label }) => {
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm hover:transform hover:-translate-y-1 transition-all text-center">

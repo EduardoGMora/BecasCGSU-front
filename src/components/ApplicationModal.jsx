@@ -2,6 +2,14 @@ import { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
+/**
+ * 
+ * @param {Object} props
+ * @param {boolean} props.isOpen - Si el modal está abierto
+ * @param {Function} props.onClose - Función para cerrar el modal
+ * @param {Object} props.scholarship - Objeto de beca con detalles
+ * @returns {JSX.Element|null} Componente Modal de Aplicación
+ */
 export const ApplicationModal = ({ isOpen, onClose, scholarship }) => {
   useEffect(() => {
     if (isOpen) {

@@ -16,6 +16,13 @@ const links = [
     // { to: '/subadmin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true }
 ];
 
+/**
+ * @param {Object} props
+ * @param {boolean} props.isAdmin - Indica si el usuario es administrador.
+ * @param {function} [props.onLinkClick] - Función opcional a ejecutar al hacer clic en un enlace.
+ * @param {boolean} [props.mobile] - Indica si la barra de navegación es para vista móvil.
+ * @returns {JSX.Element} NavBar component
+ */
 export const NavBar = ({ isAdmin, onLinkClick, mobile }) => {
     const location = useLocation();
     const { logout } = useAuth();

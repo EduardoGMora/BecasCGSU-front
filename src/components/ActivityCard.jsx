@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
  * @param {string} props.borderColor - Tailwind color class for border
  * @param {string} props.title - Activity title
  * @param {string} props.description - Activity description
+ * @returns {JSX.Element} ActivityCard component
  */
 export const ActivityCard = ({ 
   icon, 
