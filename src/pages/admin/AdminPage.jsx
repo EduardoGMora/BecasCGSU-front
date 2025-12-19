@@ -2,22 +2,18 @@ import { useState } from 'react';
 import { StatCard } from '../../components/StatCard';
 import { Modal } from '../../components/Modal';
 import { FormField } from '../../components/FormField';
-import { DetailCard, DetailSection, DetailHeader } from '../../components/DetailCard';
 import { ProgressBar } from '../../components/ProgressBar';
 import { ActivityCard } from '../../components/ActivityCard';
 import scholarshipsData from '../../mocks/scholarshipsAdmin.json';
-import applicationsData from '../../mocks/applicationsAdmin.json';
 import usersData from '../../mocks/usersAdmin.json';
 
 // Componente AdminPage
 export default function AdminPage() {
   const [activeSection, setActiveSection] = useState('overview');
   const [scholarships, setScholarships] = useState(scholarshipsData);
-  const [applications, setApplications] = useState(applicationsData);
   const [users, setUsers] = useState(usersData);
   const [modalType, setModalType] = useState(null);
   const [selectedScholarship, setSelectedScholarship] = useState(null);
-  const [selectedApplication, setSelectedApplication] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
   const [formData, setFormData] = useState({});
 
@@ -25,12 +21,6 @@ export default function AdminPage() {
     setModalType(type);
     setSelectedScholarship(scholarship);
     setFormData(scholarship || { nombre: '', institucion: '', tipo: '', monto: '', estado: 'Activa', solicitudes: 0, descripcion: '', requisitos: '', duracion: '', fechaInicio: '', fechaFin: '' });
-  };
-
-  const openApplicationModal = (type, application = null) => {
-    setModalType(type);
-    setSelectedApplication(application);
-    setFormData(application || { estado: '', puntaje: '', comentarios: '' });
   };
 
   const openUserModal = (type, user = null) => {
@@ -42,7 +32,6 @@ export default function AdminPage() {
   const closeModal = () => { 
     setModalType(null); 
     setSelectedScholarship(null); 
-    setSelectedApplication(null); 
     setSelectedUser(null);
   };
 
@@ -54,8 +43,6 @@ export default function AdminPage() {
       setScholarships([...scholarships, { ...formData, id: scholarships.length + 1 }]);
     } else if (modalType === 'edit') {
       setScholarships(scholarships.map(s => s.id === selectedScholarship.id ? { ...formData, id: s.id } : s));
-    } else if (modalType === 'evaluate') {
-      setApplications(applications.map(a => a.id === selectedApplication.id ? { ...selectedApplication, estado: formData.estado, puntaje: formData.puntaje, comentarios: formData.comentarios } : a));
     } else if (modalType === 'createUser') {
       setUsers([...users, { ...formData, id: users.length + 1 }]);
     } else if (modalType === 'editUser') {
@@ -103,16 +90,6 @@ export default function AdminPage() {
           }`}
         >
           <i className="fas fa-award mr-2"></i>Gestión de Becas
-        </button>
-        <button
-          onClick={() => setActiveSection('applications')}
-          className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
-            activeSection === 'applications'
-              ? 'bg-blue-900 text-white'
-              : 'bg-white border border-gray-300 hover:bg-gray-50'
-          }`}
-        >
-          <i className="fas fa-file-alt mr-2"></i>Solicitudes
         </button>
         <button
           onClick={() => setActiveSection('users')}
@@ -165,18 +142,24 @@ export default function AdminPage() {
               <div className="space-y-4">
                 <ActivityCard
                   icon="fa-check-circle"
+                  iconColor="green-500"
+                  borderColor="green-500"
                   title="Beca aprobada"
                   description="Juan Pérez - Excelencia Académica"
                   variant="success"
                 />
                 <ActivityCard
                   icon="fa-file-alt"
+                  iconColor='blue-500'
+                  borderColor="blue-500"
                   title="Nueva solicitud"
                   description="María González - Apoyo Socioeconómico"
                   variant="info"
                 />
                 <ActivityCard
                   icon="fa-clock"
+                  iconColor='yellow-500'
+                  borderColor="yellow-500"
                   title="Documentación pendiente"
                   description="Carlos Ruiz - Innovación Tecnológica"
                   variant="warning"
@@ -312,161 +295,6 @@ export default function AdminPage() {
             </button>
           </div>
         </form>
-      </Modal>
-
-      {activeSection === 'applications' && (
-        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
-            <h3 className="text-xl font-bold">Solicitudes de Beca</h3>
-            <select className="px-4 py-2 rounded-lg text-gray-900">
-              <option>Todas las solicitudes</option>
-              <option>En proceso</option>
-              <option>Aprobadas</option>
-              <option>Rechazadas</option>
-            </select>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-200">
-                <tr>
-                  <th className="px-6 py-4 text-left font-semibold">Solicitante</th>
-                  <th className="px-6 py-4 text-left font-semibold">Beca</th>
-                  <th className="px-6 py-4 text-left font-semibold">Fecha</th>
-                  <th className="px-6 py-4 text-left font-semibold">Estado</th>
-                  <th className="px-6 py-4 text-left font-semibold">Puntaje</th>
-                  <th className="px-6 py-4 text-left font-semibold">Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {applications.map(app => (
-                  <tr key={app.id} className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="px-6 py-4">
-                      <div className="font-semibold">{app.solicitante}</div>
-                      <div className="text-sm text-gray-600">{app.email}</div>
-                    </td>
-                    <td className="px-6 py-4">{app.beca}</td>
-                    <td className="px-6 py-4">{new Date(app.fecha).toLocaleDateString('es-MX')}</td>
-                    <td className="px-6 py-4">
-                      <span className={`px-3 py-1 ${getStatusColor(app.estado)} text-white rounded-full text-xs font-semibold`}>{app.estado}</span>
-                    </td>
-                    <td className="px-6 py-4">{app.puntaje}/100</td>
-                    <td className="px-6 py-4">
-                      <div className="flex gap-2">
-                        <button onClick={() => openApplicationModal('viewApp', app)} className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
-                        <button onClick={() => openApplicationModal('evaluate', app)} className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Evaluar</button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      <Modal isOpen={modalType === 'viewApp'} onClose={closeModal} title="Detalles de la Solicitud">
-        {selectedApplication && (
-          <div className="space-y-4">
-            <div className="bg-blue-900 text-white p-4 rounded-lg">
-              <h2 className="text-2xl font-bold mb-1">{selectedApplication.solicitante}</h2>
-              <p className="text-blue-100">{selectedApplication.beca}</p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <div className="text-xs text-gray-500 mb-1">Email</div>
-                <div className="font-semibold text-sm">{selectedApplication.email}</div>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <div className="text-xs text-gray-500 mb-1">Teléfono</div>
-                <div className="font-semibold">{selectedApplication.telefono}</div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-4">
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <div className="text-xs text-gray-500 mb-1">Carrera</div>
-                <div className="font-semibold text-sm">{selectedApplication.carrera}</div>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <div className="text-xs text-gray-500 mb-1">Semestre</div>
-                <div className="font-semibold">{selectedApplication.semestre}</div>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <div className="text-xs text-gray-500 mb-1">Promedio</div>
-                <div className="font-semibold text-blue-900">{selectedApplication.promedio}</div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-4">
-              <div className="bg-blue-50 p-3 rounded-lg">
-                <div className="text-xs text-gray-500 mb-1">Estado</div>
-                <span className={`px-3 py-1 ${getStatusColor(selectedApplication.estado)} text-white rounded-full text-xs font-semibold`}>{selectedApplication.estado}</span>
-              </div>
-              <div className="bg-green-50 p-3 rounded-lg">
-                <div className="text-xs text-gray-500 mb-1">Puntaje</div>
-                <div className="font-semibold text-green-600">{selectedApplication.puntaje}/100</div>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <div className="text-xs text-gray-500 mb-1">Fecha</div>
-                <div className="font-semibold text-sm">{new Date(selectedApplication.fecha).toLocaleDateString('es-MX')}</div>
-              </div>
-            </div>
-
-            <div className="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
-              <div className="text-sm font-semibold text-gray-700 mb-2">Motivación</div>
-              <p className="text-gray-700">{selectedApplication.motivacion}</p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <div className="text-xs text-gray-500 mb-1">Documentos</div>
-                <div className="font-semibold">{selectedApplication.documentos}</div>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <div className="text-xs text-gray-500 mb-1">Comentarios</div>
-                <div className="font-semibold text-sm">{selectedApplication.comentarios}</div>
-              </div>
-            </div>
-          </div>
-        )}
-      </Modal>
-
-      <Modal isOpen={modalType === 'evaluate'} onClose={closeModal} title="Evaluar Solicitud">
-        {selectedApplication && (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="bg-blue-900 text-white p-4 rounded-lg">
-              <div className="font-bold text-lg">{selectedApplication.solicitante}</div>
-              <div className="text-sm text-blue-100">{selectedApplication.beca}</div>
-            </div>
-
-            <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
-              <label className="block text-sm font-semibold mb-2 text-gray-700">Estado</label>
-              <select name="estado" value={formData.estado || selectedApplication.estado} onChange={handleChange} required className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all">
-                <option value="En Proceso">En Proceso</option>
-                <option value="Aprobada">Aprobada</option>
-                <option value="Rechazada">Rechazada</option>
-              </select>
-            </div>
-
-            <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
-              <FormField label="Puntaje (0-100)" name="puntaje" type="number" value={formData.puntaje || selectedApplication.puntaje} onChange={handleChange} />
-            </div>
-
-            <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
-              <FormField label="Comentarios de Evaluación" name="comentarios" type="textarea" value={formData.comentarios || selectedApplication.comentarios} onChange={handleChange} />
-            </div>
-
-            <div className="flex gap-3 pt-4 border-t">
-              <button type="button" onClick={closeModal} className="flex-1 px-4 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-all">
-                Cancelar
-              </button>
-              <button type="submit" className="flex-1 px-4 py-3 bg-blue-900 text-white rounded-lg font-semibold hover:bg-blue-800 transition-all shadow-lg">
-                Guardar Evaluación
-              </button>
-            </div>
-          </form>
-        )}
       </Modal>
 
       {activeSection === 'users' && (

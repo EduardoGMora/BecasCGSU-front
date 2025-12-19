@@ -91,18 +91,24 @@ export function SubAdminPanel() {
               <div className="space-y-4">
                 <ActivityCard
                   icon="fa-check-circle"
+                  iconColor="green-500"
+                  borderColor="green-500"
                   title="Beca aprobada"
                   description="Juan Pérez - Excelencia Académica"
                   variant="success"
                 />
                 <ActivityCard
                   icon="fa-file-alt"
+                  iconColor="blue-500"
+                  borderColor="blue-500"
                   title="Nueva solicitud"
                   description="María González - Apoyo Socioeconómico"
                   variant="info"
                 />
                 <ActivityCard
                   icon="fa-clock"
+                  iconColor="yellow-500"
+                  borderColor="yellow-500"
                   title="Documentación pendiente"
                   description="Carlos Ruiz - Innovación Tecnológica"
                   variant="warning"
