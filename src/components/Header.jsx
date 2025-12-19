@@ -3,11 +3,18 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 import { NavBar } from './NavBar';
 import pub_logo from '../assets/PUB.svg';
 
 library.add(fas);
 
+/**
+ * Header component to display the top navigation bar
+ * @param {Object} props
+ * @param {string} props.role - User role to determine navigation options
+ * @returns {JSX.Element} Header component
+ */
 export function Header({ role }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -66,50 +73,6 @@ export function Header({ role }) {
     );
 }
 
-function NavLinks({ role, onLinkClick, mobile = false }) {
-    const links = [
-        { to: '/', label: 'Inicio', icon: 'fa-solid fa-home',userOnly:true },
-        { to: '/becas', label: 'Becas', icon: 'fa-solid fa-award',userOnly:true },
-        { to: '/mis-solicitudes', label: 'Solicitudes', icon: 'fa-solid fa-file-alt', userOnly:true },
-        { to: '/contacto', label: 'Contacto', icon: 'fa-solid fa-envelope', userOnly:true},
-        { to: '/admin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true },
-        { to: '/subadmin', label: 'Admin', icon: 'fa-solid fa-cog', subadminOnly: true }
-        
-    ];
-
-    return (
-        <>
-            {links.map(link => {
-                if (link.adminOnly && role != "admin") return null;
-                if (link.userOnly && role != "student") return null;
-                if (link.subadminOnly && role != "subadmin") return null;
-                
-                const isActive = window.location.pathname === link.to;
-                
-                return (
-                    <Link 
-                        key={link.to} 
-                        to={link.to}
-                        onClick={onLinkClick}
-                        className={`${
-                            mobile 
-                                ? 'flex items-center gap-3 px-4 py-3 rounded-lg transition-all' 
-                                : 'px-3 lg:px-4 py-2 rounded-lg font-semibold transition-all'
-                        } ${
-                            isActive 
-                                ? 'bg-blue-900 text-white' 
-                                : 'text-gray-600 hover:bg-gray-100 hover:text-blue-900'
-                        }`}
-                    >
-                        {mobile && (
-                            <FontAwesomeIcon icon={link.icon} className="w-5" />
-                        )}
-                        <span className={mobile ? 'font-semibold' : ''}>
-                            {link.label}
-                        </span>
-                    </Link>
-                );
-            })}
-        </>
-    );
-}
+Header.propTypes = {
+  role: PropTypes.string,
+};

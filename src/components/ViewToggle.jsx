@@ -1,5 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
 
+/** 
+ * ViewToggle component to switch between grid and list views
+ * @param {Object} props
+ * @param {string} props.viewType - Tipo de vista actual ('grid' o 'list').
+ * @param {function} props.onViewChange - Función para manejar el cambio de vista.
+ * @returns {JSX.Element} ViewToggle component
+ */
 export const ViewToggle = ({ viewType, onViewChange }) => {
   return (
     <div className="flex justify-between items-center mb-6">
@@ -30,4 +38,9 @@ export const ViewToggle = ({ viewType, onViewChange }) => {
       </div>
     </div>
   );
+};
+
+ViewToggle.propTypes = {
+  viewType: PropTypes.oneOf(['grid', 'list']).isRequired,
+  onViewChange: PropTypes.func.isRequired,
 };

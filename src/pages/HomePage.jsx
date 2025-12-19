@@ -1,11 +1,15 @@
 import { StatCard } from '../components/StatCard';
-import { ScholarshipCard } from '../components/ScholarShipCard';
+import { ScholarshipCard } from '../components/ScholarshipCard';
 import { Link, useOutletContext } from 'react-router-dom';
 import { HeroCard } from '../components/HeroCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Scholarships from '../utils/scholarships.json';
+import { ROUTES } from '../constants';
+import Scholarships from '../mocks/scholarships.json';
 
-// HomePage
+/**
+ * Home Page Component Displays dashboard with stats and featured scholarships
+ * @returns {JSX.Element} HomePage component
+ */
 export function HomePage(){
   const { handleApply } = useOutletContext();
   const featuredScholarships = Scholarships.filter(scholarship => scholarship.featured);
@@ -36,8 +40,11 @@ export function HomePage(){
       <section>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-3xl font-bold text-blue-900">Becas Destacadas</h2>
-          <Link to="/becas" className="text-blue-600 hover:underline">
-            Ver Todas
+          <Link 
+            to={ROUTES.SCHOLARSHIPS} 
+            className="text-blue-600 hover:text-blue-800 hover:underline font-semibold transition-colors"
+          >
+            Ver Todas →
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

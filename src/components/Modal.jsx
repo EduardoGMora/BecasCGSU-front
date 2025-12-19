@@ -1,3 +1,14 @@
+import PropTypes from 'prop-types';
+
+/**
+ * Modal component to display content in a centered overlay
+ * @param {Object} props
+ * @param {boolean} props.isOpen - Indica si el modal está abierto.
+ * @param {function} props.onClose - Función para cerrar el modal.
+ * @param {string} props.title - Título del modal.
+ * @param {React.ReactNode} props.children - Contenido del modal.
+ * @returns {JSX.Element} Modal component
+ */
 export const Modal = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
   return (
@@ -11,4 +22,11 @@ export const Modal = ({ isOpen, onClose, title, children }) => {
       </div>
     </div>
   );
+};
+
+Modal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };

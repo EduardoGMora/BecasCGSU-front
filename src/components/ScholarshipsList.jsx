@@ -2,7 +2,17 @@ import { useEffect, useState, useCallback } from 'react';
 import api from '../api/axios';
 import { ScholarshipCard } from './ScholarshipCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ERROR_MESSAGES } from '../constants';
+import PropTypes from 'prop-types';
 
+/**
+ * Scholarships List Component
+ * Displays a list of scholarships with pagination
+ * @param {Object} props
+ * @param {string} props.viewType - Display type ('list' or 'grid')
+ * @param {Object} props.filters - Active filters
+ * @param {Function} props.handleApply - Callback when apply button is clicked
+ */
 export const ScholarshipsList = ({ viewType, filters, handleApply }) => {
     const [scholarships, setScholarships] = useState([])
     const [loading, setLoading] = useState(true);
@@ -62,7 +72,8 @@ export const ScholarshipsList = ({ viewType, filters, handleApply }) => {
                 setError(null);
             } catch (err) {
                 console.error("Error conectando al backend -> ", err);
-                setError("No se pudo cargar las becas");
+                const errorMessage = err.response?.data?.message || ERROR_MESSAGES.NETWORK_ERROR;
+                setError(errorMessage);
                 setScholarships([]);
             } finally {
                 setLoading(false);
@@ -92,8 +103,26 @@ export const ScholarshipsList = ({ viewType, filters, handleApply }) => {
 
     const hasMore = scholarships.length < totalCount;
 
-    if (loading) return <p className="text-center py-8 text-gray-600">Cargando becas de la UDG...</p>;
-    if (error) return <p className="text-red-500 text-center py-8">{error}</p>;
+    if (loading && scholarships.length === 0) {
+        return (
+            <div className="flex items-center justify-center py-12">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-900 mx-auto mb-4"></div>
+                    <p className="text-gray-600">Cargando becas...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+                <FontAwesomeIcon icon="fa-solid fa-exclamation-triangle" className="text-red-500 text-3xl mb-3" />
+                <p className="text-red-700 font-semibold mb-2">{ERROR_MESSAGES.LOAD_ERROR}</p>
+                <p className="text-red-600 text-sm">{error}</p>
+            </div>
+        );
+    }
 
     return (
         <>
@@ -135,4 +164,10 @@ export const ScholarshipsList = ({ viewType, filters, handleApply }) => {
             )}
         </>
     );
+}
+
+ScholarshipsList.propTypes = {
+    viewType: PropTypes.oneOf(['list', 'grid']),
+    filters: PropTypes.object,
+    handleApply: PropTypes.func.isRequired,
 }

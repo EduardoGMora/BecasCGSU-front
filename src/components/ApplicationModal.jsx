@@ -1,6 +1,15 @@
 import { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
 
+/**
+ * ApplicationModal component to display scholarship application form
+ * @param {Object} props
+ * @param {boolean} props.isOpen - Si el modal está abierto
+ * @param {Function} props.onClose - Función para cerrar el modal
+ * @param {Object} props.scholarship - Objeto de beca con detalles
+ * @returns {JSX.Element|null} Componente Modal de Aplicación
+ */
 export const ApplicationModal = ({ isOpen, onClose, scholarship }) => {
   useEffect(() => {
     if (isOpen) {
@@ -219,3 +228,14 @@ export const ApplicationModal = ({ isOpen, onClose, scholarship }) => {
     </div>
   );
 }
+
+ApplicationModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  scholarship: PropTypes.shape({
+    title: PropTypes.string,
+    description: PropTypes.string,
+    amount: PropTypes.string,
+    deadline: PropTypes.string,
+  }),
+};

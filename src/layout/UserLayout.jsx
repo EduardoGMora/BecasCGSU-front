@@ -4,8 +4,12 @@ import { Footer } from "../components/Footer";
 import { ChatBot } from "../components/Chatbot";
 import { ApplicationModal } from "../components/ApplicationModal";
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 
+/**
++ * UserLayout component to provide consistent layout for user pages
++ * @returns {JSX.Element} UserLayout component
++ */
 export function UserLayout() {
   const { user } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
@@ -18,7 +22,7 @@ export function UserLayout() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {user && <Header role={user.role} />}
+      <Header role={user?.role} />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 pb-12 pt-32">
         <Outlet context={{ handleApply }} />

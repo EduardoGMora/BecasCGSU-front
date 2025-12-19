@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import { StatCard } from '../components/StatCard';
+import { ProgressBar } from '../components/ProgressBar';
+import { ActivityCard } from '../components/ActivityCard';
 
-// Componente AdminPanel
+/**
+ * SubAdminPanel component to manage administrative tasks and view statistics
+ * @returns {JSX.Element} SubAdminPanel component
+ */
 export function SubAdminPanel() {
   const [activeSection, setActiveSection] = useState('overview');
 
@@ -60,60 +65,54 @@ export function SubAdminPanel() {
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-bold text-blue-900 mb-4">Solicitudes por Estado</h3>
               <div className="space-y-4">
-                <div>
-                  <div className="flex justify-between mb-2">
-                    <span>En Proceso</span>
-                    <span>856 (30%)</span>
-                  </div>
-                  <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-blue-900 transition-all" style={{width: '30%'}}></div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between mb-2">
-                    <span>Aprobadas</span>
-                    <span>1,235 (43%)</span>
-                  </div>
-                  <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-green-500 transition-all" style={{width: '43%'}}></div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between mb-2">
-                    <span>Rechazadas</span>
-                    <span>756 (27%)</span>
-                  </div>
-                  <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-red-500 transition-all" style={{width: '27%'}}></div>
-                  </div>
-                </div>
+                <ProgressBar 
+                  label="En Proceso" 
+                  value={856} 
+                  total={2847} 
+                  color="blue" 
+                />
+                <ProgressBar 
+                  label="Aprobadas" 
+                  value={1235} 
+                  total={2847} 
+                  color="green" 
+                />
+                <ProgressBar 
+                  label="Rechazadas" 
+                  value={756} 
+                  total={2847} 
+                  color="red" 
+                />
               </div>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-bold text-blue-900 mb-4">Actividad Reciente</h3>
               <div className="space-y-4">
-                <div className="flex items-center gap-3 p-2 border-l-4 border-green-500">
-                  <i className="fas fa-check-circle text-green-500 text-xl"></i>
-                  <div>
-                    <div className="font-semibold">Beca aprobada</div>
-                    <div className="text-sm text-gray-600">Juan Pérez - Excelencia Académica</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 p-2 border-l-4 border-blue-500">
-                  <i className="fas fa-file-alt text-blue-500 text-xl"></i>
-                  <div>
-                    <div className="font-semibold">Nueva solicitud</div>
-                    <div className="text-sm text-gray-600">María González - Apoyo Socioeconómico</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 p-2 border-l-4 border-yellow-500">
-                  <i className="fas fa-clock text-yellow-500 text-xl"></i>
-                  <div>
-                    <div className="font-semibold">Documentación pendiente</div>
-                    <div className="text-sm text-gray-600">Carlos Ruiz - Innovación Tecnológica</div>
-                  </div>
-                </div>
+                <ActivityCard
+                  icon="fa-check-circle"
+                  iconColor="green-500"
+                  borderColor="green-500"
+                  title="Beca aprobada"
+                  description="Juan Pérez - Excelencia Académica"
+                  variant="success"
+                />
+                <ActivityCard
+                  icon="fa-file-alt"
+                  iconColor="blue-500"
+                  borderColor="blue-500"
+                  title="Nueva solicitud"
+                  description="María González - Apoyo Socioeconómico"
+                  variant="info"
+                />
+                <ActivityCard
+                  icon="fa-clock"
+                  iconColor="yellow-500"
+                  borderColor="yellow-500"
+                  title="Documentación pendiente"
+                  description="Carlos Ruiz - Innovación Tecnológica"
+                  variant="warning"
+                />
               </div>
             </div>
           </div>

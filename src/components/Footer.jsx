@@ -1,9 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faLinkedin, faXTwitter } from '@fortawesome/free-brands-svg-icons';
+import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
 import pub_logo from '../assets/PUB.svg';
 
+/**
+ * Footer component for the application
+ * @returns {JSX.Element} Footer component
+ */
 export function Footer() {
     const date = new Date();
     const year = date.getFullYear();

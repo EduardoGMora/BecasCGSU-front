@@ -3,7 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EmailService } from '../services/emailService';
 import { InfoCard } from '../components/InfoCard';
 import { HeroCard } from '../components/HeroCard';
+import { FormField } from '../components/FormField';
+import { isValidEmail, isNotEmpty } from '../utils/validators';
+import { ERROR_MESSAGES } from '../constants';
 
+/**
+ * ContactPage component to display contact information and a contact form
+ * @returns {JSX.Element} ContactPage component
+ */
 export function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
@@ -44,22 +51,22 @@ export function ContactPage() {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = 'El nombre es requerido';
+    if (!isNotEmpty(formData.name)) {
+      newErrors.name = ERROR_MESSAGES.REQUIRED_FIELD;
     }
 
-    if (!formData.email.trim()) {
-      newErrors.email = 'El correo es requerido';
-    } else if (!EmailService.isValidEmail(formData.email)) {
-      newErrors.email = 'Correo electrónico inválido';
+    if (!isNotEmpty(formData.email)) {
+      newErrors.email = ERROR_MESSAGES.REQUIRED_FIELD;
+    } else if (!isValidEmail(formData.email)) {
+      newErrors.email = ERROR_MESSAGES.INVALID_EMAIL;
     }
 
     if (!formData.subject) {
-      newErrors.subject = 'Selecciona un asunto';
+      newErrors.subject = ERROR_MESSAGES.REQUIRED_FIELD;
     }
 
-    if (!formData.message.trim()) {
-      newErrors.message = 'El mensaje es requerido';
+    if (!isNotEmpty(formData.message)) {
+      newErrors.message = ERROR_MESSAGES.REQUIRED_FIELD;
     } else if (formData.message.trim().length < 20) {
       newErrors.message = 'El mensaje debe tener al menos 20 caracteres';
     }
@@ -78,7 +85,7 @@ export function ContactPage() {
         loading: false,
         success: false,
         error: true,
-        message: 'Por favor corrige los errores en el formulario'
+        message: ERROR_MESSAGES.FORM_ERROR
       });
       return;
     }
@@ -127,7 +134,8 @@ export function ContactPage() {
           message: result.message
         });
       }
-    } catch (error) {
+    } catch (err) {
+      console.error('Error al enviar:', err);
       setStatus({
         loading: false,
         success: false,
@@ -202,128 +210,88 @@ export function ContactPage() {
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
           {/* Name and Email */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block font-semibold mb-2 text-sm sm:text-base">
-                <FontAwesomeIcon icon="fa-solid fa-user" className="mr-2 text-blue-900" />
-                Nombre Completo <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Tu nombre completo"
-                className={`w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg focus:outline-none focus:border-blue-500 text-sm sm:text-base ${
-                  errors.name ? 'border-red-500' : 'border-gray-300'
-                }`}
-              />
-              {errors.name && (
-                <p className="text-red-500 text-xs mt-1">{errors.name}</p>
-              )}
-            </div>
+            <FormField
+              label="Nombre Completo"
+              name="name"
+              type="text"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Tu nombre completo"
+              icon="fa-solid fa-user"
+              error={errors.name}
+              required
+            />
 
-            <div>
-              <label className="block font-semibold mb-2 text-sm sm:text-base">
-                <FontAwesomeIcon icon="fa-solid fa-envelope" className="mr-2 text-blue-900" />
-                Correo Electrónico <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="tu.correo@ejemplo.com"
-                className={`w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg focus:outline-none focus:border-blue-500 text-sm sm:text-base ${
-                  errors.email ? 'border-red-500' : 'border-gray-300'
-                }`}
-              />
-              {errors.email && (
-                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
-              )}
-            </div>
+            <FormField
+              label="Correo Electrónico"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="tu.correo@ejemplo.com"
+              icon="fa-solid fa-envelope"
+              error={errors.email}
+              required
+            />
           </div>
 
           {/* Phone and Student Code */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block font-semibold mb-2 text-sm sm:text-base">
-                <FontAwesomeIcon icon="fa-solid fa-phone" className="mr-2 text-blue-900" />
-                Teléfono (Opcional)
-              </label>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="33 1234 5678"
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-sm sm:text-base"
-              />
-            </div>
+            <FormField
+              label="Teléfono (Opcional)"
+              name="phone"
+              type="tel"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="33 1234 5678"
+              icon="fa-solid fa-phone"
+              required={false}
+            />
 
-            <div>
-              <label className="block font-semibold mb-2 text-sm sm:text-base">
-                <FontAwesomeIcon icon="fa-solid fa-id-card" className="mr-2 text-blue-900" />
-                Código de Estudiante (Opcional)
-              </label>
-              <input
-                type="text"
-                name="studentCode"
-                value={formData.studentCode}
-                onChange={handleChange}
-                placeholder="2012345678"
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-sm sm:text-base"
-              />
-            </div>
+            <FormField
+              label="Código de Estudiante (Opcional)"
+              name="studentCode"
+              type="text"
+              value={formData.studentCode}
+              onChange={handleChange}
+              placeholder="2012345678"
+              icon="fa-solid fa-id-card"
+              required={false}
+            />
           </div>
 
           {/* Subject */}
-          <div>
-            <label className="block font-semibold mb-2 text-sm sm:text-base">
-              <FontAwesomeIcon icon="fa-solid fa-tag" className="mr-2 text-blue-900" />
-              Asunto <span className="text-red-500">*</span>
-            </label>
-            <select
-              name="subject"
-              value={formData.subject}
-              onChange={handleChange}
-              className={`w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg focus:outline-none focus:border-blue-500 text-sm sm:text-base ${
-                errors.subject ? 'border-red-500' : 'border-gray-300'
-              }`}
-            >
-              <option value="">Selecciona un tema</option>
-              <option value="Información sobre becas">Información sobre becas</option>
-              <option value="Estado de mi solicitud">Estado de mi solicitud</option>
-              <option value="Documentación requerida">Documentación requerida</option>
-              <option value="Problemas técnicos">Problemas técnicos</option>
-              <option value="Otro">Otro</option>
-            </select>
-            {errors.subject && (
-              <p className="text-red-500 text-xs mt-1">{errors.subject}</p>
-            )}
-          </div>
+          <FormField
+            label="Asunto"
+            name="subject"
+            type="select"
+            value={formData.subject}
+            onChange={handleChange}
+            icon="fa-solid fa-tag"
+            error={errors.subject}
+            options={[
+              "Información sobre becas",
+              "Estado de mi solicitud",
+              "Documentación requerida",
+              "Problemas técnicos",
+              "Otro"
+            ]}
+            required
+          />
 
           {/* Message */}
-          <div>
-            <label className="block font-semibold mb-2 text-sm sm:text-base">
-              <FontAwesomeIcon icon="fa-solid fa-comment" className="mr-2 text-blue-900" />
-              Mensaje <span className="text-red-500">*</span>
-            </label>
-            <textarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              placeholder="Describe tu consulta o problema..."
-              className={`w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg h-32 focus:outline-none focus:border-blue-500 text-sm sm:text-base resize-none ${
-                errors.message ? 'border-red-500' : 'border-gray-300'
-              }`}
-            ></textarea>
-            {errors.message && (
-              <p className="text-red-500 text-xs mt-1">{errors.message}</p>
-            )}
-            <p className="text-xs text-gray-500 mt-1">
-              Mínimo 20 caracteres ({formData.message.length}/20)
-            </p>
-          </div>
+          <FormField
+            label="Mensaje"
+            name="message"
+            type="textarea"
+            value={formData.message}
+            onChange={handleChange}
+            placeholder="Describe tu consulta o problema..."
+            icon="fa-solid fa-comment"
+            error={errors.message}
+            helperText={`Mínimo 20 caracteres (${formData.message.length}/20)`}
+            required
+          />
 
           {/* Submit Button */}
           <button

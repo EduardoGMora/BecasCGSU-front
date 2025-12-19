@@ -1,8 +1,15 @@
-import { createContext, useContext, useState } from "react";
-import users from "../utils/users.json";
+import { createContext, useState } from "react";
+import users from "../mocks/users.json";
 
-const AuthContext = createContext();
+// eslint-disable-next-line react-refresh/only-export-components
+export const AuthContext = createContext();
 
+/**
+ * AuthProvider component to manage authentication state
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - Child components
+ * @returns {JSX.Element} AuthProvider component
+ */
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
@@ -21,11 +28,11 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => setUser(null);
 
+  const isAuthenticated = user !== null;
+
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = () => useContext(AuthContext);
