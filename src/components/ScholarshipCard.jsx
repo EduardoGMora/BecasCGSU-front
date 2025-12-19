@@ -2,17 +2,32 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { Modal } from './Modal';
 import { DetailCard } from './DetailCard';
+import { SCHOLARSHIP_STATUS } from '../constants';
 
+/**
+ * Scholarship Card Component
+ * Displays scholarship information in a card format
+ * @param {Object} props
+ * @param {Object} props.scholarship - Scholarship data
+ * @param {Function} props.onApply - Callback when apply button is clicked
+ */
 export const ScholarshipCard = ({ scholarship, onApply }) => {
   const [showModal, setShowModal] = useState(false);
+  
+  const isOpen = scholarship.status === SCHOLARSHIP_STATUS.OPEN;
+  const borderColor = isOpen ? 'border-blue-900' : 'border-red-500 opacity-70';
+  const statusBadge = isOpen ? 'bg-green-500 text-white' : 'bg-red-500 text-white';
+  const statusText = isOpen ? 'Abierta' : 'Cerrada';
 
   return (
     <>
     <div 
-      className={`bg-white p-4 sm:p-6 rounded-lg shadow-sm hover:shadow-md transition-all border-l-4 cursor-pointer ${
-        scholarship.status === 'open' ? 'border-blue-900' : 'border-red-500 opacity-70'
-      }`}
+      className={`bg-white p-4 sm:p-6 rounded-lg shadow-sm hover:shadow-md transition-all border-l-4 cursor-pointer ${borderColor}`}
       onClick={() => setShowModal(true)}
+      role="button"
+      tabIndex={0}
+      onKeyPress={(e) => e.key === 'Enter' && setShowModal(true)}
+      aria-label={`Ver detalles de ${scholarship.title}`}
     >
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start mb-4 gap-3">
@@ -43,13 +58,9 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
         </div>
         
         <span 
-          className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap self-start sm:self-auto ${
-            scholarship.status === 'open' 
-              ? 'bg-green-500 text-white' 
-              : 'bg-red-500 text-white'
-          }`}
+          className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap self-start sm:self-auto ${statusBadge}`}
         >
-          {scholarship.status === 'open' ? 'Abierta' : 'Cerrada'}
+          {statusText}
         </span>
       </div>
       
@@ -67,16 +78,17 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
         <button
           onClick={(e) => {
             e.stopPropagation();
-            if (scholarship.status === 'open') {
+            if (isOpen) {
               onApply(scholarship);
             }
           }}
-          disabled={scholarship.status !== 'open'}
+          disabled={!isOpen}
           className={`w-full sm:w-auto px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg font-semibold transition-all text-sm sm:text-base ${
-            scholarship.status === 'open'
+            isOpen
               ? 'bg-blue-900 text-white hover:bg-blue-800 active:scale-95'
               : 'bg-gray-200 text-gray-500 cursor-not-allowed'
           }`}
+          aria-label={isOpen ? `Aplicar a ${scholarship.title}` : 'Beca cerrada'}
         >
           {scholarship.status === 'open' ? (
             <>
