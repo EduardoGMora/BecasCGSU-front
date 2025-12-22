@@ -4,15 +4,16 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/useAuth';
 import PropTypes from 'prop-types';
+import { ROUTES } from "../constants";
 
 library.add(fas);
 
 const links = [
-    { to: '/', label: 'Inicio', icon: 'fa-solid fa-home', adminOnly: false, requiresAuth: false },
-    { to: '/becas', label: 'Becas', icon: 'fa-solid fa-award', adminOnly: false, requiresAuth: false },
-    { to: '/contacto', label: 'Contacto', icon: 'fa-solid fa-envelope', adminOnly: false, requiresAuth: false },
-    { to: '/mis-solicitudes', label: 'Solicitudes', icon: 'fa-solid fa-file-alt', adminOnly: false, requiresAuth: true },
-    { to: '/admin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true, requiresAuth: true },
+    { to: ROUTES.HOME, label: 'Inicio', icon: 'fa-solid fa-home', adminOnly: false, requiresAuth: false },
+    { to: ROUTES.SCHOLARSHIPS, label: 'Becas', icon: 'fa-solid fa-award', adminOnly: false, requiresAuth: false },
+    { to: ROUTES.CONTACT, label: 'Contacto', icon: 'fa-solid fa-envelope', adminOnly: false, requiresAuth: false },
+    { to: ROUTES.MY_APPLICATIONS, label: 'Solicitudes', icon: 'fa-solid fa-file-alt', adminOnly: false, requiresAuth: true },
+    { to: ROUTES.ADMIN, label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true, requiresAuth: true },
     // { to: '/subadmin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true }
 ];
 
