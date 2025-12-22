@@ -62,8 +62,8 @@ export const NavBar = ({ isAdmin, onLinkClick, mobile }) => {
                                 : 'px-3 lg:px-4 py-2 rounded-lg font-semibold transition-all'
                         } ${
                             isActive 
-                                ? 'bg-blue-900 text-white' 
-                                : 'text-gray-600 hover:bg-gray-100 hover:text-blue-900'
+                                ? 'text-accent-pink' 
+                                : 'text-gray-600 hover:bg-gray-100 hover:text-accent-pink'
                         }`}
                         >
                         {mobile && (
@@ -89,7 +89,7 @@ export const NavBar = ({ isAdmin, onLinkClick, mobile }) => {
                 ) : (
                     <button
                         onClick={handleLogin}
-                        className="px-4 py-2 rounded-lg font-semibold transition-all bg-blue-900 text-white hover:bg-blue-800"
+                        className="px-4 py-2 rounded-lg font-semibold transition-all bg-accent-pink text-white hover:bg-accent-magenta"
                         aria-label="Iniciar sesión"
                         title="Iniciar sesión"
                     >
