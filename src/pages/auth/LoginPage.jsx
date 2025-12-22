@@ -3,15 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
+  const [codigo, setCodigo] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = login(email, password);
+
+    const result = await login(codigo, password);
+
 
     if (result.success) {
       if (result.role === "admin") navigate("/admin");
@@ -56,8 +58,8 @@ export default function LoginPage() {
             </label>
             <input
               type="tel"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={codigo}
+              onChange={(e) => setCodigo(e.target.value)}
               id="email"
               name="email"
               autoComplete="email"
