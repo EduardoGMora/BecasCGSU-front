@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useState } from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -19,7 +20,31 @@ const links = [
 
 
 export const NavBar = ({ isAdmin, onLinkClick, mobile, onSelectOption, optionSelected, id }) => {
-    
+    const [permissions, setPermissions] = useState([]);
+    useEffect(() => {
+    const fetchPermisions = async () => {
+        try {
+        const response = await fetch(
+            `http://localhost:8000/user-permissions/user/${id}`
+        );
+        const result = await response.json();
+
+        if (result.status === "success") {
+            const permissionNames = result.data
+            .filter(p => p.allowed)
+            .map(p => p.permissions.nombre);
+
+            // 👇 AQUÍ se guarda en el useState
+            setPermissions(permissionNames);
+
+            console.log("Permisos guardados:", permissionNames);
+        }
+        } catch (error) {
+        console.error("Error al cargar permisos:", error);
+        }
+    };
+    fetchPermisions();
+    }, [id]);
     function ButtonOverview() {
     return (
         <button
@@ -129,10 +154,10 @@ export const NavBar = ({ isAdmin, onLinkClick, mobile, onSelectOption, optionSel
             )}
             {isAdmin === "subadmin" && (
                 <>
-                    {user.permisos.dashboard && <ButtonOverview />}
-                    {user.permisos.becarios && <ButtonScholarships />}
-                    {user.permisos.solicitudes && <ButtonApplications />}                
-                    {user.permisos.usuarios && <ButtonUsers />}
+                    {permissions.includes("dashboard") && <ButtonOverview />}
+                    {permissions.includes("becarios") && <ButtonScholarships />}
+                    {permissions.includes("solicitudes") && <ButtonApplications />}                
+                    {permissions.includes("usuarios") && <ButtonUsers />}
                 </>
             )}
             

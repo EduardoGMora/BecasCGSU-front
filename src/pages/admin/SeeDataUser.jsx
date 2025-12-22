@@ -1,7 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {usuarios} from "./../../utils/users.json"
 export default function SeeDataUser({selectedUser, setShowViewModal}) {
-    const user = usuarios.find(u => u.id === selectedUser);
+  const [permissions, setPermissions] = useState([]);
+  useEffect(() => {
+    const fetchPermisions = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/user-permissions/user/${selectedUser.id}`
+        );
+        const result = await response.json();
+
+        if (result.status === "success") {
+          const permissionNames = result.data
+            .filter(p => p.allowed)
+            .map(p => p.permissions.nombre);
+
+          // 👇 AQUÍ se guarda en el useState
+          setPermissions(permissionNames);
+
+          console.log("Permisos guardados:", permissionNames);
+        }
+      } catch (error) {
+        console.error("Error al cargar permisos:", error);
+      }
+    };
+    fetchPermisions();
+  }, [selectedUser.id]);
+  
   return(
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
         <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -26,19 +51,19 @@ export default function SeeDataUser({selectedUser, setShowViewModal}) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <label className="text-sm font-semibold text-gray-600 block mb-1">Nombre Completo</label>
-                    <p className="text-gray-900 font-medium">{user.nombre}</p>
+                    <p className="text-gray-900 font-medium">{selectedUser.nombre}</p>
                   </div>
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <label className="text-sm font-semibold text-gray-600 block mb-1">Cargo</label>
-                    <p className="text-gray-900 font-medium">{user.role}</p>
+                    <p className="text-gray-900 font-medium">{selectedUser.role}</p>
                   </div>
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <label className="text-sm font-semibold text-gray-600 block mb-1">Email</label>
-                    <p className="text-gray-900 font-medium">{user.email}</p>
+                    <p className="text-gray-900 font-medium">{selectedUser.email}</p>
                   </div>
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <label className="text-sm font-semibold text-gray-600 block mb-1">Código</label>
-                    <p className="text-gray-900 font-medium">{user.codigo}</p>
+                    <p className="text-gray-900 font-medium">{selectedUser.codigo}</p>
                   </div>
                 </div>
               </div>
@@ -53,12 +78,12 @@ export default function SeeDataUser({selectedUser, setShowViewModal}) {
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <label className="text-sm font-semibold text-gray-600 block mb-1">Rol</label>
                     <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
-                      user.role === 'admin' ? 'bg-red-500 text-white' : 
-                      user.role === 'subadmin' ? 'bg-blue-500 text-white' : 
+                      selectedUser.role === 'admin' ? 'bg-red-500 text-white' : 
+                      selectedUser.role === 'subadmin' ? 'bg-blue-500 text-white' : 
                       'bg-purple-500 text-white'
                     }`}>
-                      {user.role === 'admin' ? 'Administrador' : 
-                       user.role === 'subadmin' ? 'Sub-Administrador' : 
+                      {selectedUser.role === 'admin' ? 'Administrador' : 
+                       selectedUser.role === 'subadmin' ? 'Sub-Administrador' : 
                        'Estudiante'}
                     </span>
                   </div>
@@ -72,48 +97,48 @@ export default function SeeDataUser({selectedUser, setShowViewModal}) {
               </div>
 
               {/* Permisos (solo para subadmin) */}
-              {user.role === 'subadmin' && (
+              {selectedUser.role === 'subadmin' && (
                 <div className="mb-6">
                   <h4 className="text-lg font-bold text-blue-900 mb-4 flex items-center border-b pb-2">
                     <i className="fas fa-key mr-2"></i>
                     Permisos de Acceso
                   </h4>
-                  {user.permisos ? (
+                  {permissions? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <div className={`p-3 rounded-lg flex items-center gap-3 ${user.permisos.dashboard ? 'bg-green-100 border border-green-200' : 'bg-red-100 border border-red-200'}`}>
-                        <i className={`fas ${user.permisos.dashboard ? 'fa-check-circle text-green-600' : 'fa-times-circle text-gray-400'} text-xl`}></i>
+                      <div className={`p-3 rounded-lg flex items-center gap-3 ${permissions.includes("dashboard") ? 'bg-green-100 border border-green-200' : 'bg-red-100 border border-red-200'}`}>
+                        <i className={`fas ${permissions.includes("dashboard")  ? 'fa-check-circle text-green-600' : 'fa-times-circle text-gray-400'} text-xl`}></i>
                         <div>
                           <div className="font-semibold text-sm">Dashboard</div>
                           <div className="text-xs text-gray-600">Panel Principal</div>
                         </div>
                       </div>
                       
-                      <div className={`p-3 rounded-lg flex items-center gap-3 ${user.permisos.usuarios ? 'bg-green-100 border border-green-200' : 'bg-red-100 border border-red-200'}`}>
-                        <i className={`fas ${user.permisos.usuarios ? 'fa-check-circle text-green-600' : 'fa-times-circle text-gray-400'} text-xl`}></i>
+                      <div className={`p-3 rounded-lg flex items-center gap-3 ${permissions.includes("usuarios") ? 'bg-green-100 border border-green-200' : 'bg-red-100 border border-red-200'}`}>
+                        <i className={`fas ${permissions.includes("usuarios")? 'fa-check-circle text-green-600' : 'fa-times-circle text-gray-400'} text-xl`}></i>
                         <div>
                           <div className="font-semibold text-sm">Usuarios</div>
                           <div className="text-xs text-gray-600">Gestión de Usuarios</div>
                         </div>
                       </div>
                       
-                      <div className={`p-3 rounded-lg flex items-center gap-3 ${user.permisos.becarios ? 'bg-green-100 border border-green-200' : 'bg-red-100 border border-red-200'}`}>
-                        <i className={`fas ${user.permisos.becarios ? 'fa-check-circle text-green-600' : 'fa-times-circle text-gray-400'} text-xl`}></i>
+                      <div className={`p-3 rounded-lg flex items-center gap-3 ${permissions.includes("becarios") ? 'bg-green-100 border border-green-200' : 'bg-red-100 border border-red-200'}`}>
+                        <i className={`fas ${permissions.includes("becarios") ? 'fa-check-circle text-green-600' : 'fa-times-circle text-gray-400'} text-xl`}></i>
                         <div>
-                          <div className="font-semibold text-sm">Becarios</div>
-                          <div className="text-xs text-gray-600">Gestión de Becarios</div>
+                          <div className="font-semibold text-sm">Becas</div>
+                          <div className="text-xs text-gray-600">Gestión de Becas</div>
                         </div>
                       </div>
                       
-                      <div className={`p-3 rounded-lg flex items-center gap-3 ${user.permisos.solicitudes ? 'bg-green-100 border border-green-200' :'bg-red-100 border border-red-200'}`}>
-                        <i className={`fas ${user.permisos.solicitudes ? 'fa-check-circle text-green-600' : 'fa-times-circle text-gray-400'} text-xl`}></i>
+                      <div className={`p-3 rounded-lg flex items-center gap-3 ${permissions.includes("solicitudes") ? 'bg-green-100 border border-green-200' :'bg-red-100 border border-red-200'}`}>
+                        <i className={`fas ${permissions.includes("solicitudes") ? 'fa-check-circle text-green-600' : 'fa-times-circle text-gray-400'} text-xl`}></i>
                         <div>
                           <div className="font-semibold text-sm">Solicitudes</div>
                           <div className="text-xs text-gray-600">Revisar Solicitudes</div>
                         </div>
                       </div>
                       
-                      <div className={`p-3 rounded-lg flex items-center gap-3 ${user.permisos.reportes ? 'bg-green-100 border border-green-200' : 'bg-red-100 border border-red-200'}`}>
-                        <i className={`fas ${user.permisos.reportes ? 'fa-check-circle text-green-600' : 'fa-times-circle text-gray-400'} text-xl`}></i>
+                      <div className={`p-3 rounded-lg flex items-center gap-3 ${permissions.includes("reportes") ? 'bg-green-100 border border-green-200' : 'bg-red-100 border border-red-200'}`}>
+                        <i className={`fas ${permissions.includes("reportes") ? 'fa-check-circle text-green-600' : 'fa-times-circle text-gray-400'} text-xl`}></i>
                         <div>
                           <div className="font-semibold text-sm">Reportes</div>
                           <div className="text-xs text-gray-600">Reportes y Estadísticas</div>

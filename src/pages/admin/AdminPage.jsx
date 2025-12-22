@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StatCard } from '../../components/StatCard';
 import { useOutletContext } from 'react-router-dom';
 import NewUserForm from './NewUserForm';
-import {usuarios} from "./../../utils/users.json"
 import SeeDataUser from './SeeDataUser';
 
 // Componente AdminPage
@@ -11,6 +10,8 @@ export default function AdminPage() {
   const [showUserModal, setShowUserModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [usuarios, setUsuarios] = useState([])
+  const [scholarships, setScholarships] = useState([]);
   const [newUser, setNewUser] = useState({
     nombre: '',
     email: '',
@@ -25,6 +26,35 @@ export default function AdminPage() {
       reportes: true
     }
   });
+  useEffect(() => {
+  const fetchScholarships = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/scholarships");
+      const result = await response.json();
+
+      if (result.status === "success") {
+        setScholarships(result.data); // 👈 SOLO el arreglo
+      }
+    } catch (error) {
+      console.error("Error al cargar becas:", error);
+    }
+  };
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/users");
+      const result = await response.json();
+
+      if (result.status === "success") {
+        setUsuarios(result.data); // 👈 SOLO el arreglo
+        console.log(result.data)
+      }
+    } catch (error) {
+      console.error("Error al cargar becas:", error);
+    }
+  };
+  fetchUsers()
+  fetchScholarships();
+}, []);
 
   const handleCreateUser = () => {
     console.log('Nuevo usuario:', newUser);
@@ -51,7 +81,10 @@ export default function AdminPage() {
     });
   };
   const handleViewUser = (user) => {
-    setSelectedUser(user);
+    const userSelect = usuarios.find(
+      p => p.id === user
+    );
+    setSelectedUser(userSelect);
     setShowViewModal(true);
   };
   return (
@@ -157,14 +190,15 @@ export default function AdminPage() {
                 </tr>
               </thead>
               <tbody>
+                {console.log(scholarships)}
                 {scholarships.map(s => (
                   <tr key={s.id} className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="px-6 py-4">{s.nombre}</td>
-                    <td className="px-6 py-4">{s.institucion}</td>
-                    <td className="px-6 py-4">{s.tipo}</td>
-                    <td className="px-6 py-4">${s.monto.toLocaleString()}</td>
+                    <td className="px-6 py-4">{s.title}</td>
+                    <td className="px-6 py-4">{s.university_centers.acronym}</td>
+                    <td className="px-6 py-4">{s.scholarship_types.name}</td>
+                    <td className="px-6 py-4">${s.monto}</td>
                     <td className="px-6 py-4">
-                      <span className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-semibold">{s.estado}</span>
+                      <span className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-semibold">{s.status}</span>
                     </td>
                     <td className="px-6 py-4">{s.solicitudes}</td>
                     <td className="px-6 py-4">
