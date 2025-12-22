@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import api from '../api/axios';
 import { ScholarshipCard } from './ScholarshipCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,6 +20,28 @@ export const ScholarshipsList = ({ viewType, filters, handleApply }) => {
     const [error, setError] = useState(null);
     const [totalCount, setTotalCount] = useState(0);
     const [currentOffset, setCurrentOffset] = useState(0);
+
+    const parseListResponse = useCallback((payload) => {
+        if (Array.isArray(payload)) {
+            return { items: payload, total: payload.length };
+        }
+
+        const items =
+            (Array.isArray(payload?.data) && payload.data) ||
+            (Array.isArray(payload?.items) && payload.items) ||
+            (Array.isArray(payload?.results) && payload.results) ||
+            (Array.isArray(payload?.scholarships) && payload.scholarships) ||
+            null;
+
+        const total =
+            payload?.total ??
+            payload?.count ??
+            payload?.total_count ??
+            payload?.totalCount ??
+            (Array.isArray(items) ? items.length : 0);
+
+        return { items, total };
+    }, []);
 
     // Helper function to build query parameters
     const buildQueryParams = useCallback((offset = 0) => {
@@ -45,8 +67,25 @@ export const ScholarshipsList = ({ viewType, filters, handleApply }) => {
         return params.toString();
     }, [filters]);
 
+    const filterKey = useMemo(() => {
+        const status = filters?.status ?? '';
+        const scholarshipTypeId = filters?.scholarship_type_id ?? '';
+        const universityCenterId = filters?.university_center_id ?? '';
+        const search = filters?.search ?? '';
+        const limit = filters?.limit ?? '';
+        return [status, scholarshipTypeId, universityCenterId, search, limit].join('|');
+    }, [
+        filters?.status,
+        filters?.scholarship_type_id,
+        filters?.university_center_id,
+        filters?.search,
+        filters?.limit,
+    ]);
+
     useEffect(() => {
-        const fetchScholarships = async() => {
+        const controller = new AbortController();
+
+        const fetchScholarships = async () => {
             try{
                 setLoading(true);
                 setCurrentOffset(0); // Reset offset when filters change
@@ -55,22 +94,25 @@ export const ScholarshipsList = ({ viewType, filters, handleApply }) => {
                 const url = queryString ? `/scholarships?${queryString}` : '/scholarships';
                 
                 console.log('Fetching URL:', url);
-                const response = await api.get(url);
+                const response = await api.get(url, { signal: controller.signal });
                 console.log('Response:', response.data);
                 
-                // Ensure we have an array
-                const scholarshipsData = response.data?.data;
-                if (!Array.isArray(scholarshipsData)) {
-                    console.error('Expected array but got:', typeof scholarshipsData, scholarshipsData);
+                const { items, total } = parseListResponse(response.data);
+                if (!Array.isArray(items)) {
+                    console.error('Unexpected scholarships payload:', response.data);
                     setScholarships([]);
+                    setTotalCount(0);
                     setError('Formato de datos incorrecto');
                     return;
                 }
                 
-                setScholarships(scholarshipsData);
-                setTotalCount(response.data.total || response.data.count || scholarshipsData.length);
+                setScholarships(items);
+                setTotalCount(total);
                 setError(null);
             } catch (err) {
+                if (err?.name === 'CanceledError' || err?.code === 'ERR_CANCELED') {
+                    return;
+                }
                 console.error("Error conectando al backend -> ", err);
                 const errorMessage = err.response?.data?.message || ERROR_MESSAGES.NETWORK_ERROR;
                 setError(errorMessage);
@@ -80,7 +122,9 @@ export const ScholarshipsList = ({ viewType, filters, handleApply }) => {
             }
         }
         fetchScholarships();
-    }, [filters, buildQueryParams]);
+
+        return () => controller.abort();
+    }, [filterKey, buildQueryParams, parseListResponse]);
 
     const loadMore = async () => {
         try {
@@ -91,9 +135,14 @@ export const ScholarshipsList = ({ viewType, filters, handleApply }) => {
             const url = `/scholarships?${queryString}`;
             
             const response = await api.get(url);
-            setScholarships(prev => [...prev, ...response.data.data]); // Append new scholarships
+            const { items, total } = parseListResponse(response.data);
+            if (!Array.isArray(items)) {
+                console.error('Unexpected scholarships payload (loadMore):', response.data);
+                return;
+            }
+            setScholarships(prev => [...prev, ...items]); // Append new scholarships
             setCurrentOffset(newOffset);
-            setTotalCount(response.data.total || response.data.count);
+            setTotalCount(total);
         } catch (err) {
             console.error("Error loading more scholarships -> ", err);
         } finally {

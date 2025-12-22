@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Modal } from './Modal';
 import { DetailCard } from './DetailCard';
 import { SCHOLARSHIP_STATUS } from '../constants';
+import UdeGLogo from '../assets/Escudo_UdeG.svg';
 
 /**
  * Scholarship Card Component
@@ -16,8 +17,12 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
   const [showModal, setShowModal] = useState(false);
   
   const isOpen = scholarship.status === SCHOLARSHIP_STATUS.OPEN;
-  const borderColor = isOpen ? 'border-blue-900' : 'border-red-500 opacity-70';
-  const statusBadge = isOpen ? 'bg-green-500 text-white' : 'bg-red-500 text-white';
+  const isExternal = scholarship.institution !== 'Universidad de Guadalajara';
+
+  const scholarshipColor = isExternal ? 'accent-magenta' : 'accent-mint';
+
+  const borderColor = isOpen ? `border-${scholarshipColor}` : 'border-red-500 opacity-70';
+  const statusBadge = isOpen ? 'bg-green-500' : 'bg-red-500';
   const statusText = isOpen ? 'Abierta' : 'Cerrada';
 
   return (
@@ -36,6 +41,21 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
           <h3 className="text-lg sm:text-xl font-bold text-blue-900 mb-3 line-clamp-2">
             {scholarship.title}
           </h3>
+          
+          {/* UdeG or External Badge */}
+          <div className="mb-3">
+            {isExternal ? (
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-accent-magenta/10 border border-accent-magenta rounded-full text-xs font-semibold text-accent-magenta">
+                <FontAwesomeIcon icon="fa-solid fa-globe" className="w-3.5 h-3.5" />
+                Beca Externa
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-accent-mint/10 border border-accent-mint rounded-full text-xs font-semibold text-accent-mint">
+                <img src={UdeGLogo} alt="UdeG" className="w-4 h-4 object-contain" />
+                Universidad de Guadalajara
+              </span>
+            )}
+          </div>
           
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
@@ -59,7 +79,7 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
         </div>
         
         <span 
-          className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap self-start sm:self-auto ${statusBadge}`}
+          className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap self-start sm:self-auto ${statusBadge} text-white`}
         >
           {statusText}
         </span>
@@ -106,11 +126,24 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
     <Modal isOpen={showModal} onClose={() => setShowModal(false)} title="Detalles de la Beca">
       <div className="mb-4">
         <h2 className="text-2xl font-bold text-blue-900 mb-2">{scholarship.title}</h2>
-        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-          scholarship.status === 'open' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-        }`}>
-          {scholarship.status === 'open' ? 'Abierta' : 'Cerrada'}
-        </span>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+            scholarship.status === 'open' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+          }`}>
+            {scholarship.status === 'open' ? 'Abierta' : 'Cerrada'}
+          </span>
+          {isExternal ? (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-accent-magenta/10 border border-accent-magenta rounded-full text-xs font-semibold text-accent-magenta">
+              <FontAwesomeIcon icon="fa-solid fa-globe" className="w-3 h-3" />
+              Externa
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-accent-mint/10 border border-accent-mint rounded-full text-xs font-semibold text-accent-mint">
+              <img src={UdeGLogo} alt="UdeG" className="w-3.5 h-3.5 object-contain" />
+              UdeG
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -132,7 +165,12 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
         {scholarship.requirements && (
           <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500">
             <h4 className="font-bold text-gray-700 mb-2">Requisitos</h4>
-            <p className="text-gray-700">{scholarship.requirements || 'Consultar con la institución'}</p>
+            {/* scholarships.requirements is an array */}
+            <div className="text-gray-700 space-y-1">
+              {scholarship.requirements.map((req, index) => (
+                <p key={index}>• {req}</p>
+              ))}
+            </div>
           </div>
         )}
       </div>
@@ -172,7 +210,7 @@ ScholarshipCard.propTypes = {
     description: PropTypes.string,
     amount: PropTypes.string,
     status: PropTypes.string.isRequired,
-    requirements: PropTypes.string,
+    requirements: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   onApply: PropTypes.func.isRequired,
 };

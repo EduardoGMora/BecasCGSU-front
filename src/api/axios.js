@@ -1,9 +1,15 @@
 import axios from 'axios';
 import { ENV } from '../constants/env';
 
+const baseURL =
+    ENV.IS_DEVELOPMENT &&
+    /^https?:\/\/(localhost|127\.0\.0\.1):8000\/?$/i.test(ENV.API_URL)
+        ? '/api'
+        : ENV.API_URL;
+
 // Creamos una instancia base
 const api = axios.create({
-    baseURL: ENV.API_URL,
+    baseURL,
     timeout: ENV.API_TIMEOUT,
     headers: {
         'Content-Type': 'application/json',
