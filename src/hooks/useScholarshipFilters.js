@@ -13,6 +13,14 @@ export const useScholarshipFilters = () => {
   const [universityCenters, setUniversityCenters] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const extractList = (payload) => {
+    if (Array.isArray(payload)) return payload;
+    if (Array.isArray(payload?.data)) return payload.data;
+    if (Array.isArray(payload?.items)) return payload.items;
+    if (Array.isArray(payload?.results)) return payload.results;
+    return [];
+  };
+
   useEffect(() => {
     const fetchFilterOptions = async () => {
       setLoading(true);
@@ -30,8 +38,8 @@ export const useScholarshipFilters = () => {
           })
         ]);
 
-        setScholarshipTypes(typesResponse.data?.data || []);
-        setUniversityCenters(centersResponse.data?.data || []);
+        setScholarshipTypes(extractList(typesResponse.data));
+        setUniversityCenters(extractList(centersResponse.data));
       } catch (error) {
         console.error('Unexpected error fetching filter options:', error);
         setScholarshipTypes([]);
