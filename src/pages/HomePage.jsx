@@ -36,7 +36,7 @@ export function HomePage(){
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 my-8 lg:my-16">
         <StatCard icon="fas fa-award" color="brand-slate" number="127" label="Becas Activas" />
         <StatCard icon="fas fa-users" color="brand-cyan2" number="3,542" label="Estudiantes Beneficiados" />
-        <StatCard icon="fas fa-dollar-sign" color="accent-magenta" number="$45M" label="Monto Total Otorgado" />
+        <StatCard icon="fas fa-dollar-sign" color="accent-magenta" number="45" isMoney={true} label="Monto Total Otorgado" />
         <StatCard icon="fas fa-handshake" color="brand-slate2" number="23" label="Instituciones Aliadas" />
       </section>
 
