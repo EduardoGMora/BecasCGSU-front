@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { StatCard } from '../../components/StatCard';
-import { useOutletContext } from 'react-router-dom';
+import { data, useOutletContext } from 'react-router-dom';
 import NewUserForm from './NewUserForm';
 import SeeDataUser from './SeeDataUser';
+import applications from "./../../utils/applicationsAdmin.json"
 
 // Componente AdminPage
 export default function AdminPage() {
@@ -18,7 +19,7 @@ export default function AdminPage() {
     codigo: '',
     password: '',
     rol: 'admin',
-    permisos: {
+      permisos: {
       dashboard: true,
       usuarios: true,
       becarios: true,
@@ -26,19 +27,6 @@ export default function AdminPage() {
       reportes: true
     }
   });
-  useEffect(() => {
-  const fetchScholarships = async () => {
-    try {
-      const response = await fetch("http://localhost:8000/scholarships");
-      const result = await response.json();
-
-      if (result.status === "success") {
-        setScholarships(result.data); // 👈 SOLO el arreglo
-      }
-    } catch (error) {
-      console.error("Error al cargar becas:", error);
-    }
-  };
   const fetchUsers = async () => {
     try {
       const response = await fetch("http://localhost:8000/users");
@@ -52,34 +40,86 @@ export default function AdminPage() {
       console.error("Error al cargar becas:", error);
     }
   };
+  useEffect(() => {
+  const fetchScholarships = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/scholarships");
+      const result = await response.json();
+
+      if (result.status === "success") {
+        setScholarships(result.data); // 👈 SOLO el arreglo
+      }
+    } catch (error) {
+      console.error("Error al cargar becas:", error);
+    }
+  };
+
   fetchUsers()
   fetchScholarships();
 }, []);
-
-  const handleCreateUser = () => {
-    console.log('Nuevo usuario:', newUser);
-    fetch("http://localhost:3001/usuarios", {
+  function getStatusColor(status){
+    if (status == "Aprobada"){
+      return "bg-green-500"
+    }
+    if (status == "En Proceso"){
+      return "bg-orange-500"
+    }
+    if (status == "Rechazada"){
+      return "bg-red-500"
+    }
+  }
+const handleCreateUser = async () => {
+  try {
+    const resUser = await fetch("http://localhost:8000/users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newUser)
+      body: JSON.stringify({
+        nombre: newUser.nombre,
+        email: newUser.email,
+        codigo: newUser.codigo,
+        password: newUser.password, 
+        role: newUser.rol            
+      })
     });
-    setShowUserModal(false);
-    // Resetear formulario
-    setNewUser({
-      nombre: '',
-      email: '',
-      codigo: '',
-      password: '',
-      rol: 'admin',
-      permisos: {
-        dashboard: true,
-        usuarios: true,
-        becarios: true,
-        solicitudes: true,
-        reportes: true
+
+    const userResult = await resUser.json();
+    console.log(userResult);
+    
+    const userId = userResult.data?.id || userResult.id;
+    
+    // Mapeo de nombres a IDs de permisos
+    const permissionMap = {
+      dashboard: 1,
+      usuarios: 2,
+      becarios: 3,
+      solicitudes: 4,
+      reportes: 5
+    };
+    
+    for (const [permissionName, allowed] of Object.entries(newUser.permisos)) {
+      if (allowed) {
+        const permissionId = permissionMap[permissionName];
+        
+        console.log(`Asignando permiso: ${permissionName} (ID: ${permissionId})`);
+        
+        await fetch("http://localhost:8000/user-permissions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            user_id: String(userId),
+            permission_id: String(permissionId)
+          })
+        });
       }
-    });
-  };
+    }
+    setShowUserModal(false);
+  } catch (error) {
+    console.error("Error creando usuario", error);
+  }
+};
+
   const handleViewUser = (user) => {
     const userSelect = usuarios.find(
       p => p.id === user
@@ -249,7 +289,7 @@ export default function AdminPage() {
                     <td className="px-6 py-4">{app.beca}</td>
                     <td className="px-6 py-4">{new Date(app.fecha).toLocaleDateString('es-MX')}</td>
                     <td className="px-6 py-4">
-                      <span className={`px-3 py-1 ${getStatusColor(app.estado)} text-white rounded-full text-xs font-semibold`}>{app.estado}</span>
+                      <span className={`px-3 py-1 ${getStatusColor(app.estado)} whitespace-nowrap text-white rounded-full text-xs font-semibold`}>{app.estado}</span>
                     </td>
                     <td className="px-6 py-4">{app.puntaje}/100</td>
                     <td className="px-6 py-4">
