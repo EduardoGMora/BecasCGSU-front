@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 export const ViewToggle = ({ viewType, onViewChange }) => {
   return (
     <div className="flex justify-between items-center mb-6">
-      <h2 className="text-2xl font-bold text-blue-900">
+      <h2 className="text-2xl font-bold text-[#BF51D8]  ">
         Becas Encontradas
       </h2>
       <div className="flex gap-2">

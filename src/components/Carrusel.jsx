@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 
-import pubLogo from '../assets/PUB.svg';
+import pubLogo from '../assets/banner1.png';
 
 const Carrusel = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    
+
     const images = [
         pubLogo,
     ];
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setCurrentIndex((prevIndex) => 
+            setCurrentIndex((prevIndex) =>
                 prevIndex === images.length - 1 ? 0 : prevIndex + 1
             );
         }, 5000);
@@ -24,13 +24,13 @@ const Carrusel = () => {
     };
 
     const goToPrevious = () => {
-        setCurrentIndex((prevIndex) => 
+        setCurrentIndex((prevIndex) =>
             prevIndex === 0 ? images.length - 1 : prevIndex - 1
         );
     };
 
     const goToNext = () => {
-        setCurrentIndex((prevIndex) => 
+        setCurrentIndex((prevIndex) =>
             prevIndex === images.length - 1 ? 0 : prevIndex + 1
         );
     };
@@ -43,15 +43,21 @@ const Carrusel = () => {
                     style={{ transform: `translateX(-${currentIndex * 100}%)` }}
                 >
                     {images.map((image, index) => (
-                        <div key={index} className="w-full shrink-0">
-                            <div className="relative h-[260px] sm:h-[360px] md:h-[440px]">
+                        <div key={index} className="w-full shrink-0 overflow-hidden">
+                            {/* Ajuste de alturas responsivas según tu aspecto 2485x564 */}
+                            <div className="relative h-[180px] sm:h-[280px] md:h-[350px] lg:h-[450px] xl:h-[564px]">
                                 <img
                                     src={image}
                                     alt={`Slide ${index + 1}`}
-                                    className="h-full w-full object-cover"
+                                    /* object-cover asegura que llene el espacio. 
+                                       object-center mantiene el contenido centrado al recortar los lados en móvil.
+                                    */
+                                    className="h-full w-full object-cover object-center"
                                     draggable={false}
                                 />
-                                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-navy/35 via-transparent to-transparent" />
+
+                                {/* Overlay optimizado */}
+                                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                             </div>
                         </div>
                     ))}

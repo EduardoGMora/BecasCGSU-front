@@ -34,13 +34,13 @@ export const ApplicationModal = ({ isOpen, onClose, scholarship }) => {
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="sticky top-0 bg-white flex justify-between items-center p-4 sm:p-6 border-b border-gray-200 z-10">
-          <h3 className="text-lg sm:text-2xl font-bold text-blue-900 pr-4">
+        <div className="sticky top-0 bg-blue-800 flex justify-between items-center p-4 sm:p-6 border-b border-gray-200 z-10">
+          <h3 className="text-lg sm:text-2xl font-bold text-[#ffffff] pr-4">
             Aplicar a {scholarship.title}
           </h3>
           <button 
             onClick={onClose}
-            className="text-2xl text-gray-600 hover:text-gray-900 transition-colors flex-shrink-0"
+            className="text-2xl text-gray-400 hover:text-gray-900 transition-colors flex-shrink-0"
           >
             <FontAwesomeIcon icon="fa-solid fa-times" />
           </button>
@@ -49,11 +49,11 @@ export const ApplicationModal = ({ isOpen, onClose, scholarship }) => {
         {/* Form Content */}
         <div className="p-4 sm:p-6 space-y-4 sm:space-y-5">
           {/* Información de la beca */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <div className="bg-[#ebb7f7] border border-blue-200 rounded-lg p-4 text-[#BF51D8]">
             <div className="flex items-start gap-3">
-              <FontAwesomeIcon icon="fa-solid fa-info-circle" className="text-blue-900 text-xl mt-0.5" />
+              <FontAwesomeIcon icon="fa-solid fa-info-circle" className="text-[#BF51D8] text-xl mt-0.5" />
               <div className="flex-1">
-                <h4 className="font-bold text-blue-900 mb-1">Información de la Beca</h4>
+                <h4 className="font-bold text-[#863099] mb-1">Información de la Beca</h4>
                 <p className="text-sm text-gray-700">{scholarship.description}</p>
                 <div className="mt-2 flex flex-wrap gap-2 text-xs sm:text-sm">
                   <span className="bg-white px-2 py-1 rounded">
@@ -67,11 +67,11 @@ export const ApplicationModal = ({ isOpen, onClose, scholarship }) => {
             </div>
           </div>
 
-          {/* Personal Info */}
+          {/* Personal Info */} 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="sm:col-span-2">
-              <label className="block font-semibold mb-2 text-sm sm:text-base">
-                <FontAwesomeIcon icon="fa-solid fa-user" className="mr-2 text-blue-900" />
+              <label className="block font-semibold mb-2 text-sm sm:text-base text-[#BF51D8]">
+                <FontAwesomeIcon icon="fa-solid fa-user #BF51D8" className="mr-2 text-[#BF51D8]"  />
                 Nombre Completo
               </label>
               <input 
@@ -82,8 +82,8 @@ export const ApplicationModal = ({ isOpen, onClose, scholarship }) => {
             </div>
             
             <div>
-              <label className="block font-semibold mb-2 text-sm sm:text-base">
-                <FontAwesomeIcon icon="fa-solid fa-id-card" className="mr-2 text-blue-900" />
+              <label className="block font-semibold mb-2 text-sm sm:text-base text-[#BF51D8]">
+                <FontAwesomeIcon icon="fa-solid fa-id-card" className="mr-2 text-[#BF51D8]" />
                 Código de Estudiante
               </label>
               <input 
@@ -94,8 +94,8 @@ export const ApplicationModal = ({ isOpen, onClose, scholarship }) => {
             </div>
 
             <div>
-              <label className="block font-semibold mb-2 text-sm sm:text-base">
-                <FontAwesomeIcon icon="fa-solid fa-graduation-cap" className="mr-2 text-blue-900" />
+              <label className="block font-semibold mb-2 text-sm sm:text-base text-[#BF51D8]">
+                <FontAwesomeIcon icon="fa-solid fa-graduation-cap" className="mr-2 text-[#BF51D8]" />
                 Carrera
               </label>
               <select className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-sm sm:text-base">
@@ -113,8 +113,8 @@ export const ApplicationModal = ({ isOpen, onClose, scholarship }) => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block font-semibold mb-2 text-sm sm:text-base">
-                <FontAwesomeIcon icon="fa-solid fa-star" className="mr-2 text-blue-900" />
+              <label className="block font-semibold mb-2 text-sm sm:text-base text-[#BF51D8]">
+                <FontAwesomeIcon icon="fa-solid fa-star" className="mr-2 text-[#BF51D8]" />
                 Promedio Actual
               </label>
               <input 
@@ -128,8 +128,8 @@ export const ApplicationModal = ({ isOpen, onClose, scholarship }) => {
             </div>
 
             <div>
-              <label className="block font-semibold mb-2 text-sm sm:text-base">
-                <FontAwesomeIcon icon="fa-solid fa-envelope" className="mr-2 text-blue-900" />
+              <label className="block font-semibold mb-2 text-sm sm:text-base text-[#BF51D8]">
+                <FontAwesomeIcon icon="fa-solid fa-envelope" className="mr-2 text-[#BF51D8]" />
                 Correo Electrónico
               </label>
               <input 
@@ -141,8 +141,8 @@ export const ApplicationModal = ({ isOpen, onClose, scholarship }) => {
           </div>
 
           <div>
-            <label className="block font-semibold mb-2 text-sm sm:text-base">
-              <FontAwesomeIcon icon="fa-solid fa-pen" className="mr-2 text-blue-900" />
+            <label className="block font-semibold mb-2 text-sm sm:text-base text-[#BF51D8]">
+              <FontAwesomeIcon icon="fa-solid fa-pen" className="mr-2 text-[#BF51D8]" />
               Carta de Motivación
             </label>
             <textarea 
@@ -153,8 +153,8 @@ export const ApplicationModal = ({ isOpen, onClose, scholarship }) => {
           </div>
 
           <div>
-            <label className="block font-semibold mb-3 sm:mb-4 text-sm sm:text-base">
-              <FontAwesomeIcon icon="fa-solid fa-folder-open" className="mr-2 text-blue-900" />
+            <label className="block font-semibold mb-3 sm:mb-4 text-sm sm:text-base text-[#BF51D8]">
+              <FontAwesomeIcon icon="fa-solid fa-folder-open" className="mr-2 text-[#BF51D8]" />
               Documentos Requeridos
             </label>
             <div className="space-y-2 sm:space-y-3 bg-gray-50 p-3 sm:p-4 rounded-lg">
@@ -179,8 +179,8 @@ export const ApplicationModal = ({ isOpen, onClose, scholarship }) => {
 
           {/* File Upload */}
           <div>
-            <label className="block font-semibold mb-2 text-sm sm:text-base">
-              <FontAwesomeIcon icon="fa-solid fa-upload" className="mr-2 text-blue-900" />
+            <label className="block font-semibold mb-2 text-sm sm:text-base text-[#BF51D8]">
+              <FontAwesomeIcon icon="fa-solid fa-upload" className="mr-2 text-[#BF51D8]" />
               Subir Documentos
             </label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 text-center hover:border-blue-500 transition-colors">
@@ -191,7 +191,7 @@ export const ApplicationModal = ({ isOpen, onClose, scholarship }) => {
               <input type="file" multiple className="hidden" id="file-upload" />
               <label 
                 htmlFor="file-upload" 
-                className="inline-block px-4 py-2 bg-blue-900 text-white rounded-lg cursor-pointer hover:bg-blue-800 transition-all text-sm"
+                className="inline-block px-4 py-2 bg-[#BF51D8] text-white rounded-lg cursor-pointer hover:bg-blue-800 transition-all text-sm"
               >
                 Seleccionar Archivos
               </label>

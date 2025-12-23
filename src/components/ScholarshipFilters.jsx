@@ -24,13 +24,13 @@ export const ScholarshipFilters = ({
 }) => {
   return (
     <section className="bg-white p-6 rounded-lg shadow-sm mb-8">
-      <h3 className="text-xl font-bold text-blue-900 mb-4">
-        <FontAwesomeIcon icon="fa-solid fa-filter" className="mr-2" />
+      <h3 className="text-xl font-bold text-[#BF51D8] mb-4">
+        <FontAwesomeIcon icon="fa-solid fa-filter" className="mr-2" iconColor="text-[#BF51D8]" />
         Filtros de Búsqueda
       </h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 items-end">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 items-end ">
         <div>
-          <label className="block font-semibold mb-2">Estado</label>
+          <label className="block font-semibold mb-2 text-[#BF51D8]">Estado</label>
           <select 
             name="status" 
             value={filterState.status || "Todas"} 
@@ -45,7 +45,7 @@ export const ScholarshipFilters = ({
         </div>
         
         <div>
-          <label className="block font-semibold mb-2">Tipo de Beca</label>
+          <label className="block font-semibold mb-2 text-[#BF51D8]">Tipo de Beca</label>
           <select 
             name="scholarship_type_id" 
             value={filterState.scholarship_type_id || "Todas"} 
@@ -63,7 +63,7 @@ export const ScholarshipFilters = ({
         </div>
         
         <div>
-          <label className="block font-semibold mb-2">Centro Universitario</label>
+          <label className="block font-semibold mb-2 text-[#BF51D8]">Centro Universitario</label>
           <select 
             name="university_center_id" 
             value={filterState.university_center_id || "Todas"} 
