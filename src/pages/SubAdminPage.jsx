@@ -12,7 +12,7 @@ export function SubAdminPanel() {
 
   return (
     <>
-      <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg p-12 mb-8 text-center">
+      <section className="bg-primary-purple text-white rounded-lg p-12 mb-8 text-center">
         <h1 className="text-4xl font-bold mb-2">
           <i className="fas fa-cog mr-3"></i>Panel de Administración
         </h1>
@@ -208,7 +208,7 @@ export function SubAdminPanel() {
                 <tr className="border-b border-gray-200 hover:bg-gray-50">
                   <td className="px-6 py-4">
                     <div className="font-semibold">Juan Pérez García</div>
-                    <div className="text-sm text-gray-600">juan.perez@alumnos.udg.mx</div>
+                      <div className="text-sm text-gray-800">juan.perez@alumnos.udg.mx</div>
                   </td>
                   <td className="px-6 py-4">Excelencia Académica</td>
                   <td className="px-6 py-4">15 Nov 2025</td>

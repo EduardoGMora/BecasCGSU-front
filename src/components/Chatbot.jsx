@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
+import chatIcon from '../assets/chat_pj.png';
 
 export const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,10 +42,10 @@ export const ChatBot = () => {
   // Simulación de respuesta del bot - aquí se integrará con tu API
   const getBotResponse = async (userMessage) => {
     setIsTyping(true);
-    
+
     // Simulación de delay de respuesta
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     let botResponse = '';
     const lowerMessage = userMessage.toLowerCase();
 
@@ -78,7 +79,7 @@ export const ChatBot = () => {
     setInputMessage('');
 
     const botResponseText = await getBotResponse(messageText);
-    
+
     const botMessage = {
       id: messages.length + 2,
       text: botResponseText,
@@ -101,46 +102,54 @@ export const ChatBot = () => {
   };
 
   const formatTime = (date) => {
-    return date.toLocaleTimeString('es-MX', { 
-      hour: '2-digit', 
-      minute: '2-digit' 
+    return date.toLocaleTimeString('es-MX', {
+      hour: '2-digit',
+      minute: '2-digit'
     });
   };
 
   return (
     <>
       {/* Botón flotante del chatbot */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 z-50 w-14 h-14 md:w-16 md:h-16 bg-blue-900 text-white rounded-full shadow-lg hover:bg-blue-800 transition-all duration-300 flex items-center justify-center ${
-          isOpen ? 'rotate-180' : ''
-        }`}
-        aria-label="Abrir chat"
-      >
-        <FontAwesomeIcon 
-          icon={isOpen ? 'fa-solid fa-times' : 'fa-solid fa-comments'} 
-          className="text-xl md:text-2xl"
-        />
-      </button>
+<button
+  onClick={() => setIsOpen(!isOpen)}
+  className={`fixed bottom-6 right-6 z-50 w-20 h-20 md:w-24 md:h-24 bg-blue-900 text-white rounded-full shadow-lg hover:bg-blue-800 transition-all duration-300 flex items-center justify-center ${
+    isOpen ? 'rotate-180' : ''
+  }`}
+  aria-label={isOpen ? "Cerrar chat" : "Abrir chat"}
+>
+  {isOpen ? (
+    <FontAwesomeIcon
+      icon="fa-solid fa-times"
+      /* Aumentamos también el tamaño de la X para que no se vea pequeña en un botón de 24 */
+      className="text-3xl md:text-4xl" 
+    />
+  ) : (
+    <img
+      src={chatIcon}
+      alt="Chat icon"
+      /* Subimos de w-10 a w-16 o w-20 para que llene el círculo */
+      className="w-16 h-16 md:w-16 md:h-16 object-contain"
+    />
+  )}
+</button>
 
       {/* Ventana del chat */}
       <div
-        className={`fixed z-40 transition-all duration-300 ease-in-out ${
-          isOpen
+        className={`fixed z-40 transition-all duration-300 ease-in-out ${isOpen
             ? 'bottom-24 md:bottom-28 right-4 md:right-6 opacity-100 scale-100'
             : 'bottom-0 right-0 opacity-0 scale-95 pointer-events-none'
-        } w-[calc(100vw-2rem)] md:w-96 max-w-md`}
+          } w-[calc(100vw-2rem)] md:w-96 max-w-md`}
       >
         <div className="bg-white rounded-lg shadow-2xl flex flex-col h-[calc(100vh-8rem)] md:h-[600px] max-h-[calc(100vh-8rem)]">
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white p-4 rounded-t-lg flex items-center gap-3">
-            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-              <FontAwesomeIcon icon="fa-solid fa-robot" className="text-blue-900 text-xl" />
-            </div>
+          <div className="bg-blue-900 text-white p-4 rounded-t-lg flex items-center gap-3">
+            <div className="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center">
+          <img src={chatIcon} alt="Chat icon" className="w-15 h-15 md:w-15 md:h-15 object-contain" />            </div>
             <div className="flex-1">
-              <h3 className="font-bold text-base md:text-lg">Asistente Virtual</h3>
+              <h3 className="font-bold text-base md:text-lg text-primary-mint">Asistente Virtual</h3>
               <div className="flex items-center gap-2 text-xs md:text-sm opacity-90">
-                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                <span className="w-2 h-2 bg-primary-mint rounded-full animate-pulse"></span>
                 <span>En línea</span>
               </div>
             </div>
@@ -154,16 +163,14 @@ export const ChatBot = () => {
                 className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[85%] md:max-w-[75%] rounded-lg p-3 ${
-                    message.sender === 'user'
-                      ? 'bg-blue-900 text-white rounded-br-none'
+                  className={`max-w-[85%] md:max-w-[75%] rounded-lg p-3 ${message.sender === 'user'
+                      ? 'bg-primary-purple text-white rounded-br-none'
                       : 'bg-white text-gray-800 rounded-bl-none shadow-sm'
-                  }`}
+                    }`}
                 >
                   <p className="text-sm md:text-base whitespace-pre-line break-words">{message.text}</p>
-                  <span className={`text-xs mt-1 block ${
-                    message.sender === 'user' ? 'text-blue-200' : 'text-gray-500'
-                  }`}>
+                  <span className={`text-xs mt-1 block ${message.sender === 'user' ? 'text-blue-200' : 'text-gray-500'
+                    }`}>
                     {formatTime(message.timestamp)}
                   </span>
                 </div>
@@ -188,13 +195,13 @@ export const ChatBot = () => {
           {/* Quick actions */}
           {messages.length <= 2 && (
             <div className="px-4 py-2 border-t border-gray-200 bg-white">
-              <p className="text-xs text-gray-600 mb-2 font-semibold">Acciones rápidas:</p>
+              <p className="text-xs text-gray-800 mb-2 font-semibold">Acciones rápidas:</p>
               <div className="grid grid-cols-2 gap-2">
                 {quickActions.map((action) => (
                   <button
                     key={action.id}
                     onClick={() => handleQuickAction(action.action)}
-                    className="text-xs md:text-sm p-2 bg-blue-50 hover:bg-blue-100 text-blue-900 rounded-lg transition-all text-left border border-blue-200"
+                    className="text-xs md:text-sm p-2 bg-purple-50 hover:bg-purple-100 text-primary-purple rounded-lg transition-all text-left border border-primary-purple"
                   >
                     {action.text}
                   </button>
@@ -213,12 +220,12 @@ export const ChatBot = () => {
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                 placeholder="Escribe tu mensaje..."
-                className="flex-1 px-3 md:px-4 py-2 md:py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-sm md:text-base"
+                className="flex-1 px-3 md:px-4 py-2 md:py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-purple text-sm md:text-base"
               />
               <button
                 onClick={() => handleSendMessage()}
                 disabled={!inputMessage.trim()}
-                className="px-3 md:px-4 py-2 md:py-3 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-3 md:px-4 py-2 md:py-3 bg-primary-purple text-white rounded-lg hover:bg-primary-pink transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <FontAwesomeIcon icon="fa-solid fa-paper-plane" />
               </button>

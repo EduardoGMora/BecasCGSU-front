@@ -63,8 +63,8 @@ export const NavBar = ({ isAdmin, onLinkClick, mobile }) => {
                                 : 'px-3 lg:px-4 py-2 rounded-lg font-semibold transition-all'
                         } ${
                             isActive 
-                                ? 'text-accent-pink' 
-                                : 'text-gray-600 hover:bg-gray-100 hover:text-accent-pink'
+                                ? 'text-primary-pink font-bold' 
+                                : 'text-primary-slate hover:bg-gray-100 hover:text-primary-purple'
                         }`}
                         >
                         {mobile && (
@@ -82,7 +82,7 @@ export const NavBar = ({ isAdmin, onLinkClick, mobile }) => {
                 mobile ? (
                     <button
                         onClick={handleLogin}
-                        className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all bg-blue-900 text-white hover:bg-blue-800"
+                        className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all bg-primary-purple text-white hover:bg-primary-pink"
                     >
                         <FontAwesomeIcon icon="fa-solid fa-sign-in-alt" className="w-5" />
                         <span className="font-semibold">Iniciar sesión</span>
@@ -90,7 +90,7 @@ export const NavBar = ({ isAdmin, onLinkClick, mobile }) => {
                 ) : (
                     <button
                         onClick={handleLogin}
-                        className="px-4 py-2 rounded-lg font-semibold transition-all bg-accent-pink text-white hover:bg-accent-magenta"
+                        className="px-4 py-2 rounded-lg font-semibold transition-all bg-primary-pink text-white hover:bg-primary-purple"
                         aria-label="Iniciar sesión"
                         title="Iniciar sesión"
                     >
@@ -104,7 +104,7 @@ export const NavBar = ({ isAdmin, onLinkClick, mobile }) => {
                 mobile ? (
                     <button
                         onClick={handleLogout}
-                        className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-gray-600 hover:bg-red-50 hover:text-red-600"
+                        className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-gray-800 hover:bg-red-50 hover:text-red-600"
                     >
                         <FontAwesomeIcon icon="fa-solid fa-sign-out-alt" className="w-5" />
                         <span className="font-semibold">Cerrar sesión</span>
@@ -112,7 +112,7 @@ export const NavBar = ({ isAdmin, onLinkClick, mobile }) => {
                 ) : (
                     <button
                         onClick={handleLogout}
-                        className="p-2 text-gray-600 hover:text-red-600 hover:bg-gray-100 rounded-lg transition-all"
+                        className="p-2 text-gray-800 hover:text-red-600 hover:bg-gray-100 rounded-lg transition-all"
                         aria-label="Cerrar sesión"
                         title="Cerrar sesión"
                     >

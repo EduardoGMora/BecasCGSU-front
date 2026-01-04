@@ -63,8 +63,8 @@ export default function AdminPage() {
 
   return (
     <>
-      <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg px-8 py-16 md:px-16 mb-8 text-center">
-        <h1 className="text-4xl font-bold mb-2">
+      <section className="bg-primary-purple text-white rounded-lg px-8 py-16 md:px-16 mb-8 text-center">
+        <h1 className="text-4xl font-bold mb-2 text-white">
           <i className="fas fa-cog mr-3"></i>Panel de Administración
         </h1>
         <p className="text-lg opacity-90">Gestión integral del sistema de becas</p>
@@ -75,7 +75,7 @@ export default function AdminPage() {
           onClick={() => setActiveSection('overview')}
           className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
             activeSection === 'overview'
-              ? 'bg-blue-900 text-white'
+              ? 'bg-primary-purple text-white'
               : 'bg-white border border-gray-300 hover:bg-gray-50'
           }`}
         >
@@ -85,7 +85,7 @@ export default function AdminPage() {
           onClick={() => setActiveSection('scholarships')}
           className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
             activeSection === 'scholarships'
-              ? 'bg-blue-900 text-white'
+              ? 'bg-primary-purple text-white'
               : 'bg-white border border-gray-300 hover:bg-gray-50'
           }`}
         >
@@ -95,7 +95,7 @@ export default function AdminPage() {
           onClick={() => setActiveSection('users')}
           className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
             activeSection === 'users'
-              ? 'bg-blue-900 text-white'
+              ? 'bg-primary-purple text-white'
               : 'bg-white border border-gray-300 hover:bg-gray-50'
           }`}
         >
@@ -114,7 +114,7 @@ export default function AdminPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bold text-blue-900 mb-4">Solicitudes por Estado</h3>
+              <h3 className="text-xl font-bold text-primary-purple mb-4">Solicitudes por Estado</h3>
               <div className="space-y-4">
                 <ProgressBar 
                   label="En Proceso" 
@@ -138,7 +138,7 @@ export default function AdminPage() {
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bold text-blue-900 mb-4">Actividad Reciente</h3>
+              <h3 className="text-xl font-bold text-primary-purple mb-4">Actividad Reciente</h3>
               <div className="space-y-4">
                 <ActivityCard
                   icon="fa-check-circle"
@@ -172,9 +172,9 @@ export default function AdminPage() {
 
       {activeSection === 'scholarships' && (
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
-            <h3 className="text-xl font-bold">Gestión de Becas</h3>
-            <button onClick={() => openModal('create')} className="px-4 py-2 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition-all">
+          <div className="bg-primary-purple text-white px-6 py-4 flex justify-between items-center">
+            <h3 className="text-xl font-bold text-white">Gestión de Becas</h3>
+            <button onClick={() => openModal('create')} className="px-4 py-2 bg-primary-mint rounded-lg font-semibold hover:bg-primary-cyan transition-all">
               <i className="fas fa-plus mr-2"></i>Nueva Beca
             </button>
           </div>
@@ -199,14 +199,14 @@ export default function AdminPage() {
                     <td className="px-6 py-4">{s.tipo}</td>
                     <td className="px-6 py-4">${s.monto.toLocaleString()}</td>
                     <td className="px-6 py-4">
-                      <span className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-semibold">{s.estado}</span>
+                      <span className="px-3 py-1 bg-primary-mint text-white rounded-full text-xs font-semibold">{s.estado}</span>
                     </td>
                     <td className="px-6 py-4">{s.solicitudes}</td>
                     <td className="px-6 py-4">
                       <div className="flex gap-2">
-                        <button onClick={() => openModal('view', s)} className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
-                        <button onClick={() => openModal('edit', s)} className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Editar</button>
-                        <button onClick={() => setScholarships(scholarships.filter(sc => sc.id !== s.id))} className="px-3 py-1 bg-red-500 text-white rounded text-sm font-semibold">Eliminar</button>
+                        <button onClick={() => openModal('view', s)} className="px-3 py-1 bg-primary-cyan text-white rounded text-sm font-semibold">Ver</button>
+                        <button onClick={() => openModal('edit', s)} className="px-3 py-1 bg-primary-purple text-white rounded text-sm font-semibold">Editar</button>
+                        <button onClick={() => setScholarships(scholarships.filter(sc => sc.id !== s.id))} className="px-3 py-1 bg-primary-pink text-white rounded text-sm font-semibold">Eliminar</button>
                       </div>
                     </td>
                   </tr>
@@ -220,19 +220,19 @@ export default function AdminPage() {
       <Modal isOpen={modalType === 'view'} onClose={closeModal} title="Detalles de la Beca">
         {selectedScholarship && (
           <div className="space-y-4">
-            <div className="bg-blue-900 text-white p-4 rounded-lg">
+            <div className="bg-primary-purple text-white p-4 rounded-lg">
               <h2 className="text-2xl font-bold mb-1">{selectedScholarship.nombre}</h2>
-              <p className="text-blue-100">{selectedScholarship.institucion}</p>
+              <p className="text-purple-100">{selectedScholarship.institucion}</p>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
-                <div className="text-xs text-gray-600 mb-1">Monto</div>
-                <div className="text-2xl font-bold text-green-600">${selectedScholarship.monto.toLocaleString()}</div>
+              <div className="bg-green-50 p-4 rounded-lg border-l-4 border-primary-mint">
+                <div className="text-xs text-gray-700 mb-1">Monto</div>
+                <div className="text-2xl font-bold text-primary-mint">${selectedScholarship.monto.toLocaleString()}</div>
               </div>
-              <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
-                <div className="text-xs text-gray-600 mb-1">Estado</div>
-                <span className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-semibold">{selectedScholarship.estado}</span>
+              <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-primary-cyan">
+                <div className="text-xs text-gray-700 mb-1">Estado</div>
+                <span className="px-3 py-1 bg-primary-mint text-white rounded-full text-xs font-semibold">{selectedScholarship.estado}</span>
               </div>
             </div>
 
@@ -247,16 +247,16 @@ export default function AdminPage() {
               </div>
               <div className="bg-gray-50 p-3 rounded-lg">
                 <div className="text-xs text-gray-500 mb-1">Solicitudes</div>
-                <div className="font-semibold text-blue-900">{selectedScholarship.solicitudes}</div>
+                <div className="font-semibold text-primary-purple">{selectedScholarship.solicitudes}</div>
               </div>
             </div>
 
-            <div className="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
+            <div className="bg-purple-50 p-4 rounded-lg border-l-4 border-primary-purple">
               <div className="text-sm font-semibold text-gray-700 mb-2">Descripción</div>
               <p className="text-gray-700">{selectedScholarship.descripcion}</p>
             </div>
 
-            <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500">
+            <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-primary-cyan">
               <div className="text-sm font-semibold text-gray-700 mb-2">Requisitos</div>
               <p className="text-gray-700">{selectedScholarship.requisitos}</p>
             </div>
@@ -287,7 +287,7 @@ export default function AdminPage() {
           <FormField label="Fecha Inicio" name="fechaInicio" type="date" value={formData.fechaInicio || ''} onChange={handleChange} />
           <FormField label="Fecha Fin" name="fechaFin" type="date" value={formData.fechaFin || ''} onChange={handleChange} />
           <div className="flex gap-3 mt-6">
-            <button type="submit" className="flex-1 px-4 py-2 bg-blue-900 text-white rounded-lg font-semibold hover:bg-blue-800">
+            <button type="submit" className="flex-1 px-4 py-2 bg-primary-purple text-white rounded-lg font-semibold hover:bg-primary-pink">
               {modalType === 'create' ? 'Crear' : 'Guardar'}
             </button>
             <button type="button" onClick={closeModal} className="flex-1 px-4 py-2 bg-gray-300 text-gray-900 rounded-lg font-semibold hover:bg-gray-400">
@@ -299,9 +299,9 @@ export default function AdminPage() {
 
       {activeSection === 'users' && (
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
-            <h3 className="text-xl font-bold">Gestión de Usuarios</h3>
-            <button onClick={() => openUserModal('createUser')} className="px-4 py-2 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition-all">
+          <div className="bg-primary-purple text-white px-6 py-4 flex justify-between items-center">
+            <h3 className="text-xl font-bold text-white">Gestión de Usuarios</h3>
+            <button onClick={() => openUserModal('createUser')} className="px-4 py-2 bg-primary-mint rounded-lg font-semibold hover:bg-primary-cyan transition-all">
               <i className="fas fa-plus mr-2"></i>Nuevo Usuario
             </button>
           </div>
@@ -321,7 +321,7 @@ export default function AdminPage() {
                   <tr key={user.id} className="border-b border-gray-200 hover:bg-gray-50">
                     <td className="px-6 py-4">
                       <div className="font-semibold">{user.nombre}</div>
-                      <div className="text-sm text-gray-600">{user.cargo}</div>
+                      <div className="text-sm text-gray-700">{user.cargo}</div>
                     </td>
                     <td className="px-6 py-4">{user.email}</td>
                     <td className="px-6 py-4">
@@ -332,8 +332,8 @@ export default function AdminPage() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex gap-2">
-                        <button onClick={() => openUserModal('viewUser', user)} className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
-                        <button onClick={() => openUserModal('editUser', user)} className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Editar</button>
+                        <button onClick={() => openUserModal('viewUser', user)} className="px-3 py-1 bg-primary-cyan text-white rounded text-sm font-semibold">Ver</button>
+                        <button onClick={() => openUserModal('editUser', user)} className="px-3 py-1 bg-primary-purple text-white rounded text-sm font-semibold">Editar</button>
                       </div>
                     </td>
                   </tr>
@@ -347,9 +347,9 @@ export default function AdminPage() {
       <Modal isOpen={modalType === 'viewUser'} onClose={closeModal} title="Detalles del Usuario">
         {selectedUser && (
           <div className="space-y-4">
-            <div className="bg-blue-900 text-white p-4 rounded-lg">
+            <div className="bg-primary-purple text-white p-4 rounded-lg">
               <h2 className="text-2xl font-bold mb-1">{selectedUser.nombre}</h2>
-              <p className="text-blue-100">{selectedUser.cargo}</p>
+              <p className="text-purple-100">{selectedUser.cargo}</p>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -364,11 +364,11 @@ export default function AdminPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
-                <div className="text-xs text-gray-600 mb-1">Rol</div>
+              <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-primary-cyan">
+                <div className="text-xs text-gray-700 mb-1">Rol</div>
                 <span className={`px-3 py-1 ${getRoleColor(selectedUser.rol)} text-white rounded-full text-xs font-semibold`}>{selectedUser.rol}</span>
               </div>
-              <div className="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+              <div className="bg-green-50 p-4 rounded-lg border-l-4 border-primary-mint">
                 <div className="text-xs text-gray-600 mb-1">Estado</div>
                 <span className={`px-3 py-1 ${getStatusColor(selectedUser.estado)} text-white rounded-full text-xs font-semibold`}>{selectedUser.estado}</span>
               </div>
@@ -385,7 +385,7 @@ export default function AdminPage() {
               </div>
             </div>
 
-            <div className="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
+            <div className="bg-purple-50 p-4 rounded-lg border-l-4 border-primary-purple">
               <div className="text-sm font-semibold text-gray-700 mb-2">Permisos</div>
               <p className="text-gray-700">{selectedUser.permisos}</p>
             </div>
@@ -418,7 +418,7 @@ export default function AdminPage() {
           <FormField label="Fecha de Ingreso" name="fechaIngreso" type="date" value={formData.fechaIngreso || ''} onChange={handleChange} />
           <FormField label="Permisos" name="permisos" type="textarea" value={formData.permisos || ''} onChange={handleChange} />
           <div className="flex gap-3 mt-6">
-            <button type="submit" className="flex-1 px-4 py-2 bg-blue-900 text-white rounded-lg font-semibold hover:bg-blue-800">
+            <button type="submit" className="flex-1 px-4 py-2 bg-primary-purple text-white rounded-lg font-semibold hover:bg-primary-pink">
               {modalType === 'createUser' ? 'Crear' : 'Guardar'}
             </button>
             <button type="button" onClick={closeModal} className="flex-1 px-4 py-2 bg-gray-300 text-gray-900 rounded-lg font-semibold hover:bg-gray-400">Cancelar</button>

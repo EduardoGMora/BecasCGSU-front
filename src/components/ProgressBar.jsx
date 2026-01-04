@@ -1,5 +1,19 @@
 import PropTypes from 'prop-types';
 
+// Mapa de colores para ProgressBar
+const COLOR_CLASSES = {
+  'blue-900': 'bg-blue-900',
+  'green-500': 'bg-green-500',
+  'red-500': 'bg-red-500',
+  'yellow-500': 'bg-yellow-500',
+  'purple-500': 'bg-purple-500',
+  'primary-purple': 'bg-primary-purple',
+  'primary-pink': 'bg-primary-pink',
+  'primary-cyan': 'bg-primary-cyan',
+  'primary-mint': 'bg-primary-mint',
+  'primary-slate': 'bg-primary-slate'
+};
+
 /**
  * Progress Bar Component
  * Displays a labeled progress bar with percentage
@@ -11,6 +25,7 @@ import PropTypes from 'prop-types';
  */
 export const ProgressBar = ({ label, value, total, color = 'blue-900' }) => {
   const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+  const bgColorClass = COLOR_CLASSES[color] || COLOR_CLASSES['blue-900'];
 
   return (
     <div>
@@ -22,7 +37,7 @@ export const ProgressBar = ({ label, value, total, color = 'blue-900' }) => {
       </div>
       <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
         <div 
-          className={`h-full bg-${color} transition-all duration-300`}
+          className={`h-full ${bgColorClass} transition-all duration-300`}
           style={{ width: `${percentage}%` }}
           role="progressbar"
           aria-valuenow={percentage}

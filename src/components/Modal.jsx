@@ -14,7 +14,7 @@ export const Modal = ({ isOpen, onClose, title, children }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={onClose}>
       <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl" onClick={e => e.stopPropagation()}>
-        <div className="bg-blue-900  px-6 py-4 flex justify-between items-center sticky top-0 rounded-t-xl">
+        <div className="bg-primary-purple px-6 py-4 flex justify-between items-center sticky top-0 rounded-t-xl">
           <h3 className="text-xl font-bold text-white">{title}</h3>
           <button onClick={onClose} className="text-3xl text-white hover:text-gray-200 transition-all">&times;</button>
         </div>

@@ -45,7 +45,7 @@ export function HomePage(){
           <h2 className="font-display text-3xl font-bold">Becas Destacadas</h2>
           <Link 
             to={ROUTES.SCHOLARSHIPS} 
-            className="text-blue-600 hover:text-blue-800 hover:underline font-semibold transition-colors"
+            className="text-primary-purple hover:text-primary-pink hover:underline font-semibold transition-colors"
           >
             Ver Todas →
           </Link>
