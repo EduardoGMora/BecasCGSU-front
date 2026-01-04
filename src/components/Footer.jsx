@@ -53,7 +53,7 @@ export function Footer() {
                                 <li key={link.to}>
                                     <Link 
                                         to={link.to}
-                                        className="text-base text-white hover:text-accent-pink transition-colors flex items-center gap-2"
+                                        className="text-base text-white hover:text-primary-mint transition-colors flex items-center gap-2"
                                         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                                     >
                                         <FontAwesomeIcon icon="fa-solid fa-chevron-right" className="text-sm" />
@@ -78,7 +78,7 @@ export function Footer() {
                                 <FontAwesomeIcon icon="fa-solid fa-envelope" className="text-white mt-1" />
                                 <a 
                                     href="mailto:pub@udg.mx" 
-                                    className="text-sm text-white hover:text-accent-pink transition-colors break-all"
+                                    className="text-sm text-white hover:text-primary-mint transition-colors break-all"
                                 >
                                     pub@udg.mx
                                 </a>
@@ -105,7 +105,7 @@ export function Footer() {
                                     href={social.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="w-10 h-10 bg-transparent border border-white text-white rounded-full flex items-center justify-center hover:bg-accent-pink hover:border-accent-pink transition-colors"
+                                    className="w-10 h-10 bg-transparent border border-white text-white rounded-full flex items-center justify-center hover:bg-primary-pink hover:border-primary-pink transition-colors"
                                     aria-label={social.label}
                                 >
                                     <FontAwesomeIcon icon={social.icon} />
@@ -122,15 +122,15 @@ export function Footer() {
                             &copy; {year} Universidad de Guadalajara. Todos los derechos reservados.
                         </p>
                         <div className="flex flex-wrap justify-center gap-4 text-sm">
-                            <a href="#" className="text-white hover:text-accent-pink transition-colors">
+                            <a href="#" className="text-white hover:text-primary-mint transition-colors">
                                 Aviso de Privacidad
                             </a>
                             <span className="text-gray-400">|</span>
-                            <a href="#" className="text-white hover:text-accent-pink transition-colors">
+                            <a href="#" className="text-white hover:text-primary-mint transition-colors">
                                 Términos y Condiciones
                             </a>
                             <span className="text-gray-400 hidden sm:inline">|</span>
-                            <a href="#" className="text-white hover:text-accent-pink transition-colors">
+                            <a href="#" className="text-white hover:text-primary-mint transition-colors">
                                 Política de Cookies
                             </a>
                         </div>

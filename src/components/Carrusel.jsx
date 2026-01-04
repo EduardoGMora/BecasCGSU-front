@@ -37,7 +37,7 @@ const Carrusel = () => {
 
     return (
         <section className="relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2 mb-8">
-            <div className="relative w-full overflow-hidden rounded-2xl bg-gradient-to-br from-brand-navy to-brand-slate shadow-lg">
+            <div className="relative w-full overflow-hidden rounded-2xl bg-primary-purple shadow-lg">
                 <div
                     className="flex transition-transform duration-500 ease-out"
                     style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -57,7 +57,7 @@ const Carrusel = () => {
                                 />
 
                                 {/* Overlay optimizado */}
-                                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                                <div className="pointer-events-none absolute inset-0 bg-black/20" />
                             </div>
                         </div>
                     ))}
@@ -67,7 +67,7 @@ const Carrusel = () => {
                     type="button"
                     onClick={goToPrevious}
                     aria-label="Slide anterior"
-                    className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-ui-textInverse/75 p-2 text-brand-navy shadow-md backdrop-blur-sm transition hover:bg-ui-textInverse focus:outline-none focus:ring-2 focus:ring-brand-cyan"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-ui-textInverse/75 p-2 text-primary-purple shadow-md backdrop-blur-sm transition hover:bg-ui-textInverse focus:outline-none focus:ring-2 focus:ring-primary-cyan"
                 >
                     <span className="text-2xl leading-none">‹</span>
                 </button>
@@ -76,7 +76,7 @@ const Carrusel = () => {
                     type="button"
                     onClick={goToNext}
                     aria-label="Siguiente slide"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-ui-textInverse/75 p-2 text-brand-navy shadow-md backdrop-blur-sm transition hover:bg-ui-textInverse focus:outline-none focus:ring-2 focus:ring-brand-cyan"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-ui-textInverse/75 p-2 text-primary-purple shadow-md backdrop-blur-sm transition hover:bg-ui-textInverse focus:outline-none focus:ring-2 focus:ring-primary-cyan"
                 >
                     <span className="text-2xl leading-none">›</span>
                 </button>
@@ -91,8 +91,8 @@ const Carrusel = () => {
                                 aria-label={`Ir al slide ${index + 1}`}
                                 onClick={() => goToSlide(index)}
                                 className={
-                                    "h-2.5 w-2.5 rounded-full transition focus:outline-none focus:ring-2 focus:ring-brand-cyan " +
-                                    (isActive ? "bg-brand-cyan" : "bg-brand-slate/40 hover:bg-brand-slate/60")
+                                    "h-2.5 w-2.5 rounded-full transition focus:outline-none focus:ring-2 focus:ring-primary-cyan " +
+                                    (isActive ? "bg-primary-cyan" : "bg-primary-slate/40 hover:bg-primary-slate/60")
                                 }
                             />
                         );

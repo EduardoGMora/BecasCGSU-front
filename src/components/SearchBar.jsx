@@ -22,7 +22,7 @@ export const SearchBar = ({ searchTerm, onSearchChange, onSearch }) => {
       />
       <button 
         onClick={onSearch}
-        className="px-6 py-3 bg-[#00ceee] text-blue-900 rounded-lg font-semibold transition-all hover:bg-[#00b8d4] flex items-center"
+        className="px-6 py-3 bg-primary-mint text-white rounded-lg font-semibold transition-all hover:bg-primary-cyan flex items-center"
       >
         <FontAwesomeIcon icon="fa-solid fa-search" className="mr-2" />
         Buscar

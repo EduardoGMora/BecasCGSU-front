@@ -87,7 +87,7 @@ export default function LoginPage() {
               name="email"
               autoComplete="username"
               required
-              className="appearance-none block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-900 focus:border-blue-900 sm:text-sm transition duration-150"
+              className="appearance-none block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-purple focus:border-primary-purple sm:text-sm transition duration-150"
               placeholder="Ej. 217471988"
             />
           </div>
@@ -98,7 +98,7 @@ export default function LoginPage() {
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Contraseña
               </label>
-              <a href="#" className="text-xs font-medium text-blue-900 hover:text-indigo-500 transition duration-150">
+              <a href="#" className="text-xs font-medium text-primary-purple hover:text-primary-pink transition duration-150">
                 ¿Olvidaste tu contraseña?
               </a>
             </div>
@@ -110,7 +110,7 @@ export default function LoginPage() {
               name="password"
               autoComplete="current-password"
               required
-              className="appearance-none block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-900 focus:border-blue-900 sm:text-sm transition duration-150"
+              className="appearance-none block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-purple focus:border-primary-purple sm:text-sm transition duration-150"
               placeholder="••••••••"
             />
           </div>
@@ -126,7 +126,7 @@ export default function LoginPage() {
           <div>
             <button
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-lg text-sm font-semibold text-white transition duration-300 ease-in-out bg-blue-900 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-900 transform active:scale-95"
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-lg text-sm font-semibold text-white transition duration-300 ease-in-out bg-primary-purple hover:bg-primary-pink focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-purple transform active:scale-95"
             >
               Iniciar sesión
             </button>

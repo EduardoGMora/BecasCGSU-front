@@ -43,6 +43,31 @@ const COLOR_CLASS_MAP = {
     bg: 'bg-accent-magenta',
     text: 'text-accent-magenta',
   },
+  'primary-mint': {
+    border: 'border-primary-mint',
+    bg: 'bg-primary-mint',
+    text: 'text-primary-mint',
+  },
+  'primary-cyan': {
+    border: 'border-primary-cyan',
+    bg: 'bg-primary-cyan',
+    text: 'text-primary-cyan',
+  },
+  'primary-purple': {
+    border: 'border-primary-purple',
+    bg: 'bg-primary-purple',
+    text: 'text-primary-purple',
+  },
+  'primary-pink': {
+    border: 'border-primary-pink',
+    bg: 'bg-primary-pink',
+    text: 'text-primary-pink',
+  },
+  'primary-slate': {
+    border: 'border-primary-slate',
+    bg: 'bg-primary-slate',
+    text: 'text-primary-slate',
+  },
 };
 
 /**
@@ -106,7 +131,7 @@ export const StatCard = ({ icon, color, number, label, isMoney=false, mount="M" 
       </div>
       <div className="p-4">
         <div className={`${classes.text} font-bold text-4xl mb-2`}>{isMoney ? `$${displayValue} ${mount}` : displayValue}</div>
-        <div className="text-gray-600 font-semibold">{label}</div>
+        <div className="text-gray-800 font-semibold">{label}</div>
       </div>
     </div>
   );

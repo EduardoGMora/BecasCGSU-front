@@ -157,7 +157,7 @@ export const ScholarshipsList = ({ viewType, filters, handleApply }) => {
             <div className="flex items-center justify-center py-12">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-900 mx-auto mb-4"></div>
-                    <p className="text-gray-600">Cargando becas...</p>
+                    <p className="text-gray-800">Cargando becas...</p>
                 </div>
             </div>
         );
@@ -175,7 +175,7 @@ export const ScholarshipsList = ({ viewType, filters, handleApply }) => {
 
     return (
         <>
-            <div className="mb-4 text-sm text-gray-600">
+            <div className="mb-4 text-sm text-gray-800">
                 Mostrando {scholarships.length} de {totalCount} becas
             </div>
             <div className={` ${viewType === "grid" ? "grid grid-cols-1 md:grid-cols-3 gap-4" : "space-y-4"}`}>

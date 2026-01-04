@@ -14,7 +14,7 @@ export const InfoCard = ({icon, title, children}) => {
         <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <FontAwesomeIcon icon={icon} className="text-pink-500 text-xl" />            
+                    <FontAwesomeIcon icon={icon} className="text-primary-pink text-xl" />            
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-black">{title}</h3>
             </div>

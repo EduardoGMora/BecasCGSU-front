@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
  */
 export const HeroCard = ({ title, subtitle, children }) => {
   return (
-    <section className="bg-[#00dbfc] text-blue-900 rounded-lg py-16 px-8 md:px-16 mb-8 text-center font-medium shadow-md">
+    <section className="bg-primary-cyan text-primary-slate rounded-lg py-16 px-8 md:px-16 mb-8 text-center font-medium shadow-md">
       <h1 className="font-display text-5xl text-white font-bold mb-4">{title}</h1>
       <p className="text-xl mb-6 opacity-90">
         {subtitle}

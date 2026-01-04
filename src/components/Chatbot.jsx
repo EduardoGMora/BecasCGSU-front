@@ -143,13 +143,13 @@ export const ChatBot = () => {
       >
         <div className="bg-white rounded-lg shadow-2xl flex flex-col h-[calc(100vh-8rem)] md:h-[600px] max-h-[calc(100vh-8rem)]">
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white p-4 rounded-t-lg flex items-center gap-3">
+          <div className="bg-blue-900 text-white p-4 rounded-t-lg flex items-center gap-3">
             <div className="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center">
           <img src={chatIcon} alt="Chat icon" className="w-15 h-15 md:w-15 md:h-15 object-contain" />            </div>
             <div className="flex-1">
-              <h3 className="font-bold text-base md:text-lg text-[#00f5a9]">Asistente Virtual</h3>
+              <h3 className="font-bold text-base md:text-lg text-primary-mint">Asistente Virtual</h3>
               <div className="flex items-center gap-2 text-xs md:text-sm opacity-90">
-                <span className="w-2 h-2 bg-[#00f5a9] rounded-full animate-pulse"></span>
+                <span className="w-2 h-2 bg-primary-mint rounded-full animate-pulse"></span>
                 <span>En línea</span>
               </div>
             </div>
@@ -164,7 +164,7 @@ export const ChatBot = () => {
               >
                 <div
                   className={`max-w-[85%] md:max-w-[75%] rounded-lg p-3 ${message.sender === 'user'
-                      ? 'bg-blue-900 text-white rounded-br-none'
+                      ? 'bg-primary-purple text-white rounded-br-none'
                       : 'bg-white text-gray-800 rounded-bl-none shadow-sm'
                     }`}
                 >
@@ -195,13 +195,13 @@ export const ChatBot = () => {
           {/* Quick actions */}
           {messages.length <= 2 && (
             <div className="px-4 py-2 border-t border-gray-200 bg-white">
-              <p className="text-xs text-gray-600 mb-2 font-semibold">Acciones rápidas:</p>
+              <p className="text-xs text-gray-800 mb-2 font-semibold">Acciones rápidas:</p>
               <div className="grid grid-cols-2 gap-2">
                 {quickActions.map((action) => (
                   <button
                     key={action.id}
                     onClick={() => handleQuickAction(action.action)}
-                    className="text-xs md:text-sm p-2 bg-blue-50 hover:bg-blue-100 text-blue-900 rounded-lg transition-all text-left border border-blue-200"
+                    className="text-xs md:text-sm p-2 bg-purple-50 hover:bg-purple-100 text-primary-purple rounded-lg transition-all text-left border border-primary-purple"
                   >
                     {action.text}
                   </button>
@@ -220,12 +220,12 @@ export const ChatBot = () => {
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                 placeholder="Escribe tu mensaje..."
-                className="flex-1 px-3 md:px-4 py-2 md:py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-sm md:text-base"
+                className="flex-1 px-3 md:px-4 py-2 md:py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-purple text-sm md:text-base"
               />
               <button
                 onClick={() => handleSendMessage()}
                 disabled={!inputMessage.trim()}
-                className="px-3 md:px-4 py-2 md:py-3 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-3 md:px-4 py-2 md:py-3 bg-primary-purple text-white rounded-lg hover:bg-primary-pink transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <FontAwesomeIcon icon="fa-solid fa-paper-plane" />
               </button>
