@@ -1,21 +1,89 @@
 import { useState } from 'react';
 import { StatCard } from '../../components/StatCard';
 import { Modal } from '../../components/Modal';
+import { data, useOutletContext } from 'react-router-dom';
 import { FormField } from '../../components/FormField';
 import { ProgressBar } from '../../components/ProgressBar';
 import { ActivityCard } from '../../components/ActivityCard';
 import scholarshipsData from '../../mocks/scholarshipsAdmin.json';
 import usersData from '../../mocks/usersAdmin.json';
-
+import NewUserForm from "../admin/NewUserForm"
+import applications from "./../../utils/applicationsAdmin.json"
 // Componente AdminPage
 export default function AdminPage() {
-  const [activeSection, setActiveSection] = useState('overview');
+  const {selectedOption} = useOutletContext()
   const [scholarships, setScholarships] = useState(scholarshipsData);
+  const [showUserModal, setShowUserModal] = useState(false);
   const [users, setUsers] = useState(usersData);
   const [modalType, setModalType] = useState(null);
   const [selectedScholarship, setSelectedScholarship] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
   const [formData, setFormData] = useState({});
+  const [newUser, setNewUser] = useState({
+    nombre: '',
+    email: '',
+    codigo: '',
+    password: '',
+    rol: 'admin',
+      permisos: {
+      dashboard: true,
+      usuarios: true,
+      becarios: true,
+      solicitudes: true,
+      reportes: true
+    }
+  });
+  const handleCreateUser = async () => {
+  try {
+    const resUser = await fetch("http://localhost:8000/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nombre: newUser.nombre,
+        email: newUser.email,
+        codigo: newUser.codigo,
+        password: newUser.password, 
+        role: newUser.rol            
+      })
+    });
+
+    const userResult = await resUser.json();
+    console.log(userResult);
+    
+    const userId = userResult.data?.id || userResult.id;
+    
+    // Mapeo de nombres a IDs de permisos
+    const permissionMap = {
+      dashboard: 1,
+      usuarios: 2,
+      becarios: 3,
+      solicitudes: 4,
+      reportes: 5
+    };
+    
+    for (const [permissionName, allowed] of Object.entries(newUser.permisos)) {
+      if (allowed) {
+        const permissionId = permissionMap[permissionName];
+        
+        console.log(`Asignando permiso: ${permissionName} (ID: ${permissionId})`);
+        
+        await fetch("http://localhost:8000/user-permissions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            user_id: String(userId),
+            permission_id: String(permissionId)
+          })
+        });
+      }
+    }
+    setShowUserModal(false);
+  } catch (error) {
+    console.error("Error creando usuario", error);
+  }
+};
 
   const openModal = (type, scholarship = null) => {
     setModalType(type);
@@ -60,50 +128,17 @@ export default function AdminPage() {
     const colors = { 'Administrador': 'bg-red-500', 'Subadministrador': 'bg-blue-500', 'Revisor': 'bg-purple-500' };
     return colors[rol] || 'bg-gray-500';
   };
+  
 
   return (
     <>
       <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg px-8 py-16 md:px-16 mb-8 text-center">
-        <h1 className="text-4xl font-bold mb-2">
+        <h1 className="text-4xl font-bold mb-2 text-white">
           <i className="fas fa-cog mr-3"></i>Panel de Administración
         </h1>
         <p className="text-lg opacity-90">Gestión integral del sistema de becas</p>
       </section>
-
-      <nav className="flex gap-4 mb-8 overflow-x-auto pb-2">
-        <button
-          onClick={() => setActiveSection('overview')}
-          className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
-            activeSection === 'overview'
-              ? 'bg-blue-900 text-white'
-              : 'bg-white border border-gray-300 hover:bg-gray-50'
-          }`}
-        >
-          <i className="fas fa-chart-line mr-2"></i>Resumen
-        </button>
-        <button
-          onClick={() => setActiveSection('scholarships')}
-          className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
-            activeSection === 'scholarships'
-              ? 'bg-blue-900 text-white'
-              : 'bg-white border border-gray-300 hover:bg-gray-50'
-          }`}
-        >
-          <i className="fas fa-award mr-2"></i>Gestión de Becas
-        </button>
-        <button
-          onClick={() => setActiveSection('users')}
-          className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
-            activeSection === 'users'
-              ? 'bg-blue-900 text-white'
-              : 'bg-white border border-gray-300 hover:bg-gray-50'
-          }`}
-        >
-          <i className="fas fa-users mr-2"></i>Usuarios
-        </button>
-      </nav>
-
-      {activeSection === 'overview' && (
+      {selectedOption === 'overview' && (
         <div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <StatCard icon="fas fa-award" number="127" label="Total de Becas" />
@@ -169,8 +204,8 @@ export default function AdminPage() {
           </div>
         </div>
       )}
-
-      {activeSection === 'scholarships' && (
+      {console.log(selectedOption)}
+      {selectedOption === 'scholarships' && (
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
             <h3 className="text-xl font-bold">Gestión de Becas</h3>
@@ -296,12 +331,62 @@ export default function AdminPage() {
           </div>
         </form>
       </Modal>
-
-      {activeSection === 'users' && (
+      {selectedOption === 'applications' && (
+        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+          <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
+            <h3 className="text-xl font-bold">Solicitudes de Beca</h3>
+            <select className="px-4 py-2 rounded-lg text-gray-900">
+              <option>Todas las solicitudes</option>
+              <option>En proceso</option>
+              <option>Aprobadas</option>
+              <option>Rechazadas</option>
+            </select>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-200">
+                <tr>
+                  <th className="px-6 py-4 text-left font-semibold">Solicitante</th>
+                  <th className="px-6 py-4 text-left font-semibold">Beca</th>
+                  <th className="px-6 py-4 text-left font-semibold">Fecha</th>
+                  <th className="px-6 py-4 text-left font-semibold">Estado</th>
+                  <th className="px-6 py-4 text-left font-semibold">Puntaje</th>
+                  <th className="px-6 py-4 text-left font-semibold">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {applications.map(app => (
+                  <tr key={app.id} className="border-b border-gray-200 hover:bg-gray-50">
+                    <td className="px-6 py-4">
+                      <div className="font-semibold">{app.solicitante}</div>
+                      <div className="text-sm text-gray-600">{app.email}</div>
+                    </td>
+                    <td className="px-6 py-4">{app.beca}</td>
+                    <td className="px-6 py-4">{new Date(app.fecha).toLocaleDateString('es-MX')}</td>
+                    <td className="px-6 py-4">
+                      <span className={`px-3 py-1 ${getStatusColor(app.estado)} whitespace-nowrap text-white rounded-full text-xs font-semibold`}>{app.estado}</span>
+                    </td>
+                    <td className="px-6 py-4">{app.puntaje}/100</td>
+                    <td className="px-6 py-4">
+                      <div className="flex gap-2">
+                        <button onClick={() => openApplicationModal('viewApp', app)} className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
+                        <button onClick={() => openApplicationModal('evaluate', app)} className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Evaluar</button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+      {selectedOption === 'users' && (
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
             <h3 className="text-xl font-bold">Gestión de Usuarios</h3>
-            <button onClick={() => openUserModal('createUser')} className="px-4 py-2 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition-all">
+            <button 
+              onClick={() => setShowUserModal(true)}
+              className="px-4 py-2 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition-all">
               <i className="fas fa-plus mr-2"></i>Nuevo Usuario
             </button>
           </div>
@@ -392,7 +477,6 @@ export default function AdminPage() {
           </div>
         )}
       </Modal>
-
       <Modal isOpen={modalType === 'createUser' || modalType === 'editUser'} onClose={closeModal} title={modalType === 'createUser' ? 'Nuevo Usuario' : 'Editar Usuario'}>
         <form onSubmit={handleSubmit}>
           <FormField label="Nombre Completo" name="nombre" value={formData.nombre || ''} onChange={handleChange} />
@@ -425,6 +509,9 @@ export default function AdminPage() {
           </div>
         </form>
       </Modal>
+      {showUserModal && (
+        <NewUserForm newUser={newUser} setNewUser={setNewUser} handleCreateUser = {handleCreateUser} setShowUserModal={setShowUserModal}></NewUserForm>
+      )}
     </>
   );
 };

@@ -14,7 +14,7 @@ export function UserLayout() {
   const { user } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedScholarship, setSelectedScholarship] = useState(null);
-
+  const [selectedOption, setSelectedOptions] = useState(null)
   const handleApply = (scholarship) => {
     setSelectedScholarship(scholarship);
     setModalOpen(true);
@@ -22,10 +22,9 @@ export function UserLayout() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header role={user?.role} />
-
+      {user ? <Header id={user.id} role={user.role} onSelectOption ={setSelectedOptions} optionSelected ={selectedOption} />:<Header role={user?.role} />}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 pb-12 pt-32">
-        <Outlet context={{ handleApply }} />
+        <Outlet context={{ handleApply, selectedOption}} />
       </main>
 
       <ApplicationModal

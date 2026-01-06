@@ -15,7 +15,7 @@ library.add(fas);
  * @param {string} props.role - User role to determine navigation options
  * @returns {JSX.Element} Header component
  */
-export function Header({ role }) {
+export function Header({ role, onSelectOption, optionSelected, id }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const isAdmin = role === 'admin' || role === 'subadmin';
@@ -45,7 +45,7 @@ export function Header({ role }) {
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <NavBar isAdmin={isAdmin} onLinkClick={() => { closeMenu(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} mobile={false}/>
+                    <NavBar id={id}  isAdmin={role} onLinkClick={() => { closeMenu(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} mobile={false} onSelectOption={onSelectOption} optionSelected={optionSelected}/>
 
                     {/* Mobile Menu Button */}
                     <button
@@ -66,7 +66,7 @@ export function Header({ role }) {
                         isMenuOpen ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
                     }`}
                 >
-                    <NavBar isAdmin={isAdmin} onLinkClick={() => { closeMenu(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} mobile />
+                    <NavBar id={id} isAdmin={role} onLinkClick={() => { closeMenu(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} mobile onSelectOption={onSelectOption} optionSelected={optionSelected} />
                 </div>
             </div>
         </header>
