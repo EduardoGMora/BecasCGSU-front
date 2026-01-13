@@ -7,6 +7,7 @@ export const ROUTES = {
   HOME: '/',
   SCHOLARSHIPS: '/becas',
   APPLICATIONS: '/mis-solicitudes',
+  PROFILE: '/perfil',
   CONTACT: '/contacto',
   ADMIN: '/admin',
   SUB_ADMIN: '/subadmin',

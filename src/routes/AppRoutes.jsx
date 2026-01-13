@@ -9,6 +9,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import LoginPage from "../pages/auth/LoginPage";
 import { AuthProvider } from "../context/AuthContext";
 import { UserLayout } from "../layout/UserLayout";
+import { StudentProfile } from "../pages/student/StudentPage";
 
 /**
  * AppRoutes component to define application routes
@@ -37,6 +38,14 @@ export default function AppRoutes() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/perfil"
+            element={
+              <ProtectedRoute allowedRoles={["student"]}>
+                <StudentProfile />
+              </ProtectedRoute>
+            }
+          />
 
           {/* Admin Routes */}
           <Route
@@ -58,17 +67,22 @@ export default function AppRoutes() {
         </Route>
 
         {/* Fallback Routes */}
-        <Route path="/unauthorized" element={
-          <div className="min-h-screen flex items-center justify-center">
-            <div className="text-center">
-              <h1 className="text-4xl font-bold text-red-600 mb-4">403</h1>
-              <p className="text-gray-700 mb-6">No tienes permiso para acceder a esta página.</p>
-              <a href="/" className="text-blue-600 underline">
-                Volver al inicio de sesión
-              </a>
+        <Route
+          path="/unauthorized"
+          element={
+            <div className="min-h-screen flex items-center justify-center">
+              <div className="text-center">
+                <h1 className="text-4xl font-bold text-red-600 mb-4">403</h1>
+                <p className="text-gray-700 mb-6">
+                  No tienes permiso para acceder a esta página.
+                </p>
+                <a href="/" className="text-blue-600 underline">
+                  Volver al inicio de sesión
+                </a>
+              </div>
             </div>
-          </div>
-        } />
+          }
+        />
 
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>

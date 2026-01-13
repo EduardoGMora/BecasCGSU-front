@@ -14,6 +14,13 @@ const links = [
     { to: ROUTES.CONTACT, label: 'Contacto', icon: 'fa-solid fa-envelope', adminOnly: false, requiresAuth: false },
     { to: ROUTES.MY_APPLICATIONS, label: 'Solicitudes', icon: 'fa-solid fa-file-alt', adminOnly: false, requiresAuth: true },
     { to: ROUTES.ADMIN, label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true, requiresAuth: true },
+    { 
+        to: ROUTES.PROFILE, 
+        label: 'Mi Perfil', 
+        icon: 'fa-solid fa-user', 
+        adminOnly: false, 
+        requiresAuth: true 
+    },
     // { to: '/subadmin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true }
 ];
 
