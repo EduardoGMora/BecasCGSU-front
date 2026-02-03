@@ -50,7 +50,7 @@ export function Header({ role }) {
                     {/* Mobile Menu Button */}
                     <button
                         onClick={toggleMenu}
-                        className="md:hidden p-2 text-gray-600 hover:text-blue-900 hover:bg-gray-100 rounded-lg transition-all"
+                        className="md:hidden p-2 text-primary-slate hover:text-primary-purple hover:bg-gray-100 rounded-lg transition-all"
                         aria-label="Toggle menu"
                     >
                         <FontAwesomeIcon 

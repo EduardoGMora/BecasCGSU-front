@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faInstagram, faLinkedin, faXTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faInstagram, faLinkedin, faWhatsapp, faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
-import pub_logo from '../assets/PUB.svg';
+import pub_logo from '../assets/logo_bn.svg';
 
 /**
  * Footer component for the application
@@ -22,9 +22,8 @@ export function Footer() {
 
     const socialLinks = [
         { icon: faFacebook, url: '#', label: 'Facebook' },
-        { icon: faXTwitter, url: '#', label: 'Twitter' },
         { icon: faInstagram, url: '#', label: 'Instagram' },
-        { icon: faLinkedin, url: '#', label: 'LinkedIn' }
+        { icon: faWhatsapp, url: '#', label: 'WhatsApp' }
     ];
 
     return (
@@ -54,7 +53,7 @@ export function Footer() {
                                 <li key={link.to}>
                                     <Link 
                                         to={link.to}
-                                        className="text-base text-white hover:text-accent-pink transition-colors flex items-center gap-2"
+                                        className="text-base text-white hover:text-primary-mint transition-colors flex items-center gap-2"
                                         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                                     >
                                         <FontAwesomeIcon icon="fa-solid fa-chevron-right" className="text-sm" />
@@ -78,34 +77,25 @@ export function Footer() {
                             <li className="flex items-start gap-3">
                                 <FontAwesomeIcon icon="fa-solid fa-envelope" className="text-white mt-1" />
                                 <a 
-                                    href="mailto:becas@udg.mx" 
-                                    className="text-sm text-white hover:text-accent-pink transition-colors break-all"
+                                    href="mailto:pub@udg.mx" 
+                                    className="text-sm text-white hover:text-primary-mint transition-colors break-all"
                                 >
-                                    becas@udg.mx
+                                    pub@udg.mx
                                 </a>
                             </li>
                             <li className="flex items-start gap-3">
                                 <FontAwesomeIcon icon="fa-solid fa-map-marker-alt" className="text-white mt-1" />
                                 <a 
-                                    href="https://maps.app.goo.gl/wyDmfV1hhJK2rYe36"
+                                    href="https://maps.app.goo.gl/vad5L1BFYsSXFkZG9"
                                     className="text-sm text-white">
-                                    Av Juárez 976, Col Americana, Americana, 44100 Guadalajara, Jal.
-                                </a>
+                                    Av. Lopez Cotilla esq. Escorza 145, Col Americana, Centro, 44100 Guadalajara, Jal.                                </a>
                             </li>
                         </ul>
                     </div>
 
                     {/* Horarios y Redes */}
                     <div className="text-center sm:text-left">
-                        <h3 className="font-bold text-white mb-4">Horarios</h3>
-                        <div className="space-y-2 mb-6">
-                            <p className="text-sm text-white gap-2">
-                                <strong>Lunes - Viernes:</strong> 8:00 AM - 6:00 PM
-                            </p>
-                            <p className="text-sm text-white gap-2">
-                                <strong>Sábado:</strong> 9:00 AM - 2:00 PM
-                            </p>
-                        </div>
+
                         
                         <h3 className="font-bold text-white mb-4">Síguenos</h3>
                         <div className="flex gap-3 justify-evenly sm:justify-start">
@@ -115,7 +105,7 @@ export function Footer() {
                                     href={social.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="w-10 h-10 bg-transparent border border-white text-white rounded-full flex items-center justify-center hover:bg-accent-pink hover:border-accent-pink transition-colors"
+                                    className="w-10 h-10 bg-transparent border border-white text-white rounded-full flex items-center justify-center hover:bg-primary-pink hover:border-primary-pink transition-colors"
                                     aria-label={social.label}
                                 >
                                     <FontAwesomeIcon icon={social.icon} />
@@ -132,15 +122,15 @@ export function Footer() {
                             &copy; {year} Universidad de Guadalajara. Todos los derechos reservados.
                         </p>
                         <div className="flex flex-wrap justify-center gap-4 text-sm">
-                            <a href="#" className="text-white hover:text-accent-pink transition-colors">
+                            <a href="#" className="text-white hover:text-primary-mint transition-colors">
                                 Aviso de Privacidad
                             </a>
                             <span className="text-gray-400">|</span>
-                            <a href="#" className="text-white hover:text-accent-pink transition-colors">
+                            <a href="#" className="text-white hover:text-primary-mint transition-colors">
                                 Términos y Condiciones
                             </a>
                             <span className="text-gray-400 hidden sm:inline">|</span>
-                            <a href="#" className="text-white hover:text-accent-pink transition-colors">
+                            <a href="#" className="text-white hover:text-primary-mint transition-colors">
                                 Política de Cookies
                             </a>
                         </div>

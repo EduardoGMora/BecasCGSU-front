@@ -38,7 +38,7 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start mb-4 gap-3">
         <div className="flex-1 w-full">
-          <h3 className="text-lg sm:text-xl font-bold text-blue-900 mb-3 line-clamp-2">
+          <h3 className="text-lg sm:text-xl font-bold text-primary-slate mb-3 line-clamp-2">
             {scholarship.title}
           </h3>
           
@@ -58,21 +58,21 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
           </div>
           
           <div className="space-y-2">
-            <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+            <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-800">
               <FontAwesomeIcon 
                 icon={scholarship.institution === 'Universidad de Guadalajara' ? 'fa-solid fa-university' : 'fa-solid fa-building'} 
-                className="w-4 text-blue-900 flex-shrink-0"
+                className={`w-4 text-${scholarshipColor} flex-shrink-0`}
               />
               <span className="truncate">{scholarship.institution}</span>
             </div>
             
             <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
-              <FontAwesomeIcon icon="fa-solid fa-calendar" className="w-4 text-blue-900 flex-shrink-0" />
+              <FontAwesomeIcon icon="fa-solid fa-calendar" className={`w-4 text-${scholarshipColor} flex-shrink-0`} />
               <span className="truncate">Límite: {scholarship.deadline}</span>
             </div>
             
             <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
-              <FontAwesomeIcon icon="fa-solid fa-users" className="w-4 text-blue-900 flex-shrink-0" />
+              <FontAwesomeIcon icon="fa-solid fa-users" className={`w-4 text-${scholarshipColor} flex-shrink-0`} />
               <span>{scholarship.beneficiaries} beneficiarios</span>
             </div>
           </div>
@@ -92,7 +92,7 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
       
       {/* Footer */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mt-auto pt-4 border-t border-gray-100">
-        <span className="text-xl sm:text-2xl font-bold text-green-600">
+        <span className="text-xl sm:text-2xl font-bold text-primary-slate">
           {scholarship.amount}
         </span>
         
@@ -106,7 +106,7 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
           disabled={!isOpen}
           className={`w-full sm:w-auto px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg font-semibold transition-all text-sm sm:text-base ${
             isOpen
-              ? 'bg-blue-900 text-white hover:bg-blue-800 active:scale-95'
+              ? 'bg-primary-purple text-white hover:bg-primary-pink active:scale-95'
               : 'bg-gray-200 text-gray-500 cursor-not-allowed'
           }`}
           aria-label={isOpen ? `Aplicar a ${scholarship.title}` : 'Beca cerrada'}
@@ -125,7 +125,7 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
 
     <Modal isOpen={showModal} onClose={() => setShowModal(false)} title="Detalles de la Beca">
       <div className="mb-4">
-        <h2 className="text-2xl font-bold text-blue-900 mb-2">{scholarship.title}</h2>
+        <h2 className="text-2xl font-bold text-primary-slate mb-2">{scholarship.title}</h2>
         <div className="flex flex-wrap items-center gap-2">
           <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
             scholarship.status === 'open' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
@@ -148,22 +148,22 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <DetailCard label="Institución" value={scholarship.institution} />
-        <div className="bg-green-50 p-3 rounded-lg border-l-4 border-green-500">
+        <div className="bg-green-50 p-3 rounded-lg border-l-4 border-primary-mint">
           <div className="text-xs text-gray-500 mb-1">Monto</div>
-          <div className="font-semibold text-green-600">{scholarship.amount}</div>
+          <div className="font-semibold text-primary-mint">{scholarship.amount}</div>
         </div>
         <DetailCard label="Fecha Límite" value={scholarship.deadline} />
         <DetailCard label="Beneficiarios" value={scholarship.beneficiaries} />
       </div>
 
       <div className="space-y-4 mb-6">
-        <div className="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
+        <div className="bg-purple-50 p-4 rounded-lg border-l-4 border-primary-purple">
           <h4 className="font-bold text-gray-700 mb-2">Descripción</h4>
           <p className="text-gray-700">{scholarship.description}</p>
         </div>
 
         {scholarship.requirements && (
-          <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500">
+          <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-primary-cyan">
             <h4 className="font-bold text-gray-700 mb-2">Requisitos</h4>
             {/* scholarships.requirements is an array */}
             <div className="text-gray-700 space-y-1">
@@ -188,7 +188,7 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
               setShowModal(false);
               onApply(scholarship);
             }}
-            className="flex-1 px-4 py-3 bg-blue-900 text-white rounded-lg font-semibold hover:bg-blue-800 transition-all"
+            className="flex-1 px-4 py-3 bg-primary-purple text-white rounded-lg font-semibold hover:bg-primary-pink transition-all"
           >
             <FontAwesomeIcon icon="fa-solid fa-paper-plane" className="mr-2" />
             Aplicar Ahora

@@ -37,7 +37,7 @@ export function ContactPage() {
       ...prev,
       [name]: value
     }));
-    
+
     // Limpiar error del campo cuando el usuario escribe
     if (errors[name]) {
       setErrors(prev => ({
@@ -157,21 +157,21 @@ export function ContactPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8">
         <InfoCard icon="fa-solid fa-phone" title="Teléfono">
           <p className="font-semibold mb-2 text-sm sm:text-base">Centro de Atención:</p>
-          <p className="text-gray-600 mb-3 text-sm sm:text-base">33 3134-2222 ext. 12345</p>
+          <p className="text-gray-800 mb-3 text-sm sm:text-base">33 3134-2222 ext. 12345</p>
           <p className="font-semibold mb-2 text-sm sm:text-base">Horario:</p>
-          <p className="text-gray-600 text-sm sm:text-base">Lunes a Viernes 8:00 - 18:00</p>
+          <p className="text-gray-800 text-sm sm:text-base">Lunes a Viernes 8:00 - 18:00</p>
         </InfoCard>
-        
+
         <InfoCard icon="fa-solid fa-envelope" title="Email">
           <p className="font-semibold mb-2 text-sm sm:text-base">Becas UDG:</p>
-          <a href="mailto:becas@udg.mx" className="text-blue-600 hover:underline mb-3 text-sm sm:text-base break-all">becas@udg.mx</a>
+          <a href="mailto:becas@udg.mx" className="text-primary-purple hover:underline mb-3 text-sm sm:text-base break-all">becas@udg.mx</a>
           <p className="font-semibold mb-2 text-sm sm:text-base">Soporte Técnico:</p>
-          <a href="mailto:soporte.becas@udg.mx" className="text-blue-600 hover:underline text-sm sm:text-base break-all">soporte.becas@udg.mx</a>
+          <a href="mailto:soporte.becas@udg.mx" className="text-primary-purple hover:underline text-sm sm:text-base break-all">soporte.becas@udg.mx</a>
         </InfoCard>
-        
+
         <InfoCard icon="fa-solid fa-map-marker-alt" title="Ubicación">
           <p className="font-semibold mb-2 text-sm sm:text-base">Oficina de Becas:</p>
-          <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+          <p className="text-gray-800 text-sm sm:text-base leading-relaxed">
             Av. Juárez No. 976<br />
             Col. Centro, Guadalajara, Jal.<br />
             C.P. 44100
@@ -182,8 +182,8 @@ export function ContactPage() {
       {/* Contact Form */}
       <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-lg shadow-sm">
         <div className="flex items-center gap-3 mb-6">
-          <FontAwesomeIcon icon="fa-solid fa-paper-plane" className="text-2xl text-blue-900" />
-          <h3 className="text-xl sm:text-2xl font-bold text-blue-900">Enviar Mensaje</h3>
+          <FontAwesomeIcon icon="fa-solid fa-paper-plane" className="text-2xl text-primary-pink" />
+          <h3 className="text-xl sm:text-2xl font-bold text-primary-pink">Enviar Mensaje</h3>
         </div>
 
         {/* Status Messages */}
@@ -218,10 +218,10 @@ export function ContactPage() {
               onChange={handleChange}
               placeholder="Tu nombre completo"
               icon="fa-solid fa-user"
+              iconColor="text-primary-purple" // Aquí pasas el color morado de Tailwind
               error={errors.name}
               required
             />
-
             <FormField
               label="Correo Electrónico"
               name="email"
@@ -229,7 +229,7 @@ export function ContactPage() {
               value={formData.email}
               onChange={handleChange}
               placeholder="tu.correo@ejemplo.com"
-              icon="fa-solid fa-envelope"
+              icon="fa-solid fa-envelope" iconColor="text-primary-purple"
               error={errors.email}
               required
             />
@@ -244,7 +244,7 @@ export function ContactPage() {
               value={formData.phone}
               onChange={handleChange}
               placeholder="33 1234 5678"
-              icon="fa-solid fa-phone"
+              icon="fa-solid fa-phone" iconColor="text-primary-purple"
               required={false}
             />
 
@@ -255,7 +255,7 @@ export function ContactPage() {
               value={formData.studentCode}
               onChange={handleChange}
               placeholder="2012345678"
-              icon="fa-solid fa-id-card"
+              icon="fa-solid fa-id-card" iconColor="text-primary-purple"
               required={false}
             />
           </div>
@@ -267,7 +267,7 @@ export function ContactPage() {
             type="select"
             value={formData.subject}
             onChange={handleChange}
-            icon="fa-solid fa-tag"
+            icon="fa-solid fa-tag" iconColor="text-primary-purple"
             error={errors.subject}
             options={[
               "Información sobre becas",
@@ -287,7 +287,7 @@ export function ContactPage() {
             value={formData.message}
             onChange={handleChange}
             placeholder="Describe tu consulta o problema..."
-            icon="fa-solid fa-comment"
+            icon="fa-solid fa-comment" iconColor="text-primary-purple"
             error={errors.message}
             helperText={`Mínimo 20 caracteres (${formData.message.length}/20)`}
             required
@@ -297,11 +297,10 @@ export function ContactPage() {
           <button
             type="submit"
             disabled={status.loading}
-            className={`w-full sm:w-auto px-6 py-3 rounded-lg font-semibold transition-all text-sm sm:text-base ${
-              status.loading
+            className={`w-full sm:w-auto px-6 py-3 rounded-lg font-semibold transition-all text-sm sm:text-base ${status.loading
                 ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-blue-900 hover:bg-blue-800 active:scale-95'
-            } text-white`}
+                : 'bg-primary-purple hover:bg-primary-pink active:scale-95'
+              } text-white`}
           >
             {status.loading ? (
               <>

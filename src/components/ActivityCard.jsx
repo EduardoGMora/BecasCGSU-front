@@ -1,6 +1,46 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
+// Mapa de colores predefinidos para evitar problemas con Tailwind
+const COLOR_CLASSES = {
+  'blue-500': {
+    icon: 'text-blue-500',
+    border: 'border-blue-500'
+  },
+  'green-500': {
+    icon: 'text-green-500',
+    border: 'border-green-500'
+  },
+  'red-500': {
+    icon: 'text-red-500',
+    border: 'border-red-500'
+  },
+  'yellow-500': {
+    icon: 'text-yellow-500',
+    border: 'border-yellow-500'
+  },
+  'purple-500': {
+    icon: 'text-purple-500',
+    border: 'border-purple-500'
+  },
+  'primary-purple': {
+    icon: 'text-primary-purple',
+    border: 'border-primary-purple'
+  },
+  'primary-pink': {
+    icon: 'text-primary-pink',
+    border: 'border-primary-pink'
+  },
+  'primary-cyan': {
+    icon: 'text-primary-cyan',
+    border: 'border-primary-cyan'
+  },
+  'primary-mint': {
+    icon: 'text-primary-mint',
+    border: 'border-primary-mint'
+  }
+};
+
 /**
  * Activity/Status Card Component  
  * Displays an activity item with icon and description
@@ -19,15 +59,17 @@ export const ActivityCard = ({
   title, 
   description 
 }) => {
+  const colors = COLOR_CLASSES[borderColor] || COLOR_CLASSES['blue-500'];
+  
   return (
-    <div className={`flex items-center gap-3 p-3 border-l-4 border-${borderColor} bg-gray-50 rounded-r-lg hover:bg-gray-100 transition-colors`}>
+    <div className={`flex items-center gap-3 p-3 border-l-4 ${colors.border} bg-gray-50 rounded-r-lg hover:bg-gray-100 transition-colors`}>
       <FontAwesomeIcon 
         icon={icon} 
-        className={`text-${iconColor} text-xl flex-shrink-0`}
+        className={`${colors.icon} text-xl flex-shrink-0`}
       />
       <div className="flex-1 min-w-0">
         <div className="font-semibold text-gray-900 truncate">{title}</div>
-        <div className="text-sm text-gray-600 truncate">{description}</div>
+        <div className="text-sm text-gray-800 truncate">{description}</div>
       </div>
     </div>
   );
