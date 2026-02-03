@@ -9,6 +9,12 @@ import PropTypes from 'prop-types';
  * @returns {JSX.Element} ViewToggle component
  */
 export const ViewToggle = ({ viewType, onViewChange }) => {
+  const activeStyle = "bg-brand-slate text-white border-brand-slate";
+  const inactiveStyle = "border-gray-300 hover:bg-gray-100";
+
+  const gridButtonStyle = viewType === "grid" ? activeStyle : inactiveStyle;
+  const listButtonStyle = viewType === "list" ? activeStyle : inactiveStyle;
+
   return (
     <div className="flex justify-between items-center mb-6">
       <h2 className="text-2xl font-bold text-[#BF51D8]  ">
@@ -17,21 +23,15 @@ export const ViewToggle = ({ viewType, onViewChange }) => {
       <div className="flex gap-2">
         <button
           onClick={() => onViewChange("grid")}
-          className={`p-2 border rounded-lg transition-all ${
-            viewType === "grid"
-              ? "bg-blue-900 text-white border-blue-900"
-              : "border-gray-300 hover:bg-gray-100"
-          }`}
+          className={`p-2 border rounded-lg transition-all ${gridButtonStyle}`}
+          aria-label="Vista de cuadrícula"
         >
           <FontAwesomeIcon icon="fa-solid fa-th-large" />
         </button>
         <button
           onClick={() => onViewChange("list")}
-          className={`p-2 border rounded-lg transition-all ${
-            viewType === "list"
-              ? "bg-blue-900 text-white border-blue-900"
-              : "border-gray-300 hover:bg-gray-100"
-          }`}
+          className={`p-2 border rounded-lg transition-all ${listButtonStyle}`}
+          aria-label="Vista de lista"
         >
           <FontAwesomeIcon icon="fa-solid fa-list" />
         </button>

@@ -61,18 +61,18 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
             <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-800">
               <FontAwesomeIcon 
                 icon={scholarship.institution === 'Universidad de Guadalajara' ? 'fa-solid fa-university' : 'fa-solid fa-building'} 
-                className="w-4 text-primary-purple flex-shrink-0"
+                className={`w-4 text-${scholarshipColor} flex-shrink-0`}
               />
               <span className="truncate">{scholarship.institution}</span>
             </div>
             
             <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
-              <FontAwesomeIcon icon="fa-solid fa-calendar" className="w-4 text-primary-purple flex-shrink-0" />
+              <FontAwesomeIcon icon="fa-solid fa-calendar" className={`w-4 text-${scholarshipColor} flex-shrink-0`} />
               <span className="truncate">Límite: {scholarship.deadline}</span>
             </div>
             
             <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
-              <FontAwesomeIcon icon="fa-solid fa-users" className="w-4 text-primary-purple flex-shrink-0" />
+              <FontAwesomeIcon icon="fa-solid fa-users" className={`w-4 text-${scholarshipColor} flex-shrink-0`} />
               <span>{scholarship.beneficiaries} beneficiarios</span>
             </div>
           </div>
@@ -92,7 +92,7 @@ export const ScholarshipCard = ({ scholarship, onApply }) => {
       
       {/* Footer */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mt-auto pt-4 border-t border-gray-100">
-        <span className="text-xl sm:text-2xl font-bold text-primary-mint">
+        <span className="text-xl sm:text-2xl font-bold text-primary-slate">
           {scholarship.amount}
         </span>
         

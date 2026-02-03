@@ -195,7 +195,7 @@ export const ScholarshipsList = ({ viewType, filters, handleApply }) => {
                     <button
                         onClick={loadMore}
                         disabled={loadingMore}
-                        className="px-6 py-3 bg-blue-900 text-white rounded-lg font-semibold hover:bg-blue-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-6 py-3 bg-primary-slate text-white rounded-lg font-semibold hover:bg-primary-slate2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {loadingMore ? (
                             <>
