@@ -13,7 +13,7 @@ const links = [
     { to: ROUTES.HOME, label: 'Inicio', icon: 'fa-solid fa-home', adminOnly: false, requiresAuth: false },
     { to: ROUTES.SCHOLARSHIPS, label: 'Becas', icon: 'fa-solid fa-award', adminOnly: false, requiresAuth: false },
     { to: ROUTES.CONTACT, label: 'Contacto', icon: 'fa-solid fa-envelope', adminOnly: false, requiresAuth: false },
-    { to: ROUTES.MY_APPLICATIONS, label: 'Solicitudes', icon: 'fa-solid fa-file-alt', adminOnly: false, requiresAuth: true },
+    { to: ROUTES.ADMIN, label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true, requiresAuth: true },
     // { to: '/subadmin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true }
 ];
 
