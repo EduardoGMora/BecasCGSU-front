@@ -29,14 +29,14 @@ export default function SeeDataUser({selectedUser, setShowViewModal}) {
   return(
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
         <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center rounded-t-lg">
-              <h3 className="text-xl font-bold">
-                <i className="fas fa-user-circle mr-2"></i>Información del Usuario
+            <div className="bg-primary-purple text-white px-6 py-4 flex justify-between items-center rounded-t-lg">
+              <h3 className="text-xl font-bold text-white">
+                Informacion del Usuario
               </h3>
               <button 
                 onClick={() => setShowViewModal(false)}
                 className="text-2xl hover:text-gray-300 transition-colors">
-                <i className="fas fa-times"></i>
+                <i className="fas fa-times text-white"></i>
               </button>
             </div>
             
@@ -159,11 +159,11 @@ export default function SeeDataUser({selectedUser, setShowViewModal}) {
               <div className="flex gap-3 pt-4 border-t border-gray-200">
                 <button 
                   onClick={() => setShowViewModal(false)}
-                  className="flex-1 px-6 py-3 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-all shadow-md hover:shadow-lg">
+                  className="flex-1 px-6 py-3 bg-purple-500 text-white rounded-lg font-semibold hover:bg-purple-600 transition-all shadow-md hover:shadow-lg">
                   <i className="fas fa-times mr-2"></i>Cerrar
                 </button>
                 <button 
-                  className="flex-1 px-6 py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition-all shadow-md hover:shadow-lg">
+                  className="flex-1 px-6 py-3 bg-cyan-500 text-white rounded-lg font-semibold hover:bg-cyan-600 transition-all shadow-md hover:shadow-lg">
                   <i className="fas fa-edit mr-2"></i>Editar Usuario
                 </button>
               </div>

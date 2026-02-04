@@ -4,7 +4,7 @@ export default function NewUserForm({newUser, setNewUser, handleCreateUser, setS
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center rounded-t-lg">
+            <div className="bg-primary-purple text-white px-6 py-4 flex justify-between items-center rounded-t-lg">
               <h3 className="text-xl font-bold text-white">
                 <i className="fas fa-user-plus mr-2 text-white"></i>Nuevo Usuario
               </h3>
@@ -91,7 +91,7 @@ export default function NewUserForm({newUser, setNewUser, handleCreateUser, setS
               </div>
 
               {newUser.rol === 'subadmin' && (
-                <div className="border-2 border-blue-200 rounded-lg p-4 bg-blue-50">
+                <div className="border-2 border-purple-200 rounded-lg p-4 bg-purple-50">
                   <h4 className="font-semibold text-gray-800 mb-3 flex items-center">
                     <i className="fas fa-key mr-2 text-blue-900"></i>
                     Permisos de Acceso
@@ -108,7 +108,7 @@ export default function NewUserForm({newUser, setNewUser, handleCreateUser, setS
                           ...newUser, 
                           permisos: {...newUser.permisos, dashboard: e.target.checked}
                         })}
-                        className="w-5 h-5 rounded focus:ring-2 focus:ring-blue-500 accent-blue-600"
+                        className="w-5 h-5 rounded focus:ring-2 focus:ring-purple-500 accent-purple-600"
                       />
                       <div>
                         <div className="font-semibold text-sm">
@@ -127,7 +127,7 @@ export default function NewUserForm({newUser, setNewUser, handleCreateUser, setS
                           ...newUser, 
                           permisos: {...newUser.permisos, usuarios: e.target.checked}
                         })}
-                        className="w-5 h-5 rounded focus:ring-2 focus:ring-blue-500 accent-blue-600"
+                        className="w-5 h-5 rounded focus:ring-2 focus:ring-purple-500 accent-purple-600"
                       />
                       <div>
                         <div className="font-semibold text-sm">
@@ -146,7 +146,7 @@ export default function NewUserForm({newUser, setNewUser, handleCreateUser, setS
                           ...newUser, 
                           permisos: {...newUser.permisos, becarios: e.target.checked}
                         })}
-                        className="w-5 h-5 rounded focus:ring-2 focus:ring-blue-500 accent-blue-600"
+                        className="w-5 h-5 rounded focus:ring-2 focus:ring-purple-500 accent-purple-600"
                       />
                       <div>
                         <div className="font-semibold text-sm">
@@ -165,7 +165,7 @@ export default function NewUserForm({newUser, setNewUser, handleCreateUser, setS
                           ...newUser, 
                           permisos: {...newUser.permisos, solicitudes: e.target.checked}
                         })}
-                        className="w-5 h-5 rounded focus:ring-2 focus:ring-blue-500 accent-blue-600"
+                        className="w-5 h-5 rounded focus:ring-2 focus:ring-purple-500 accent-purple-600"
                       />
                       <div>
                         <div className="font-semibold text-sm">
@@ -184,7 +184,7 @@ export default function NewUserForm({newUser, setNewUser, handleCreateUser, setS
                           ...newUser, 
                           permisos: {...newUser.permisos, reportes: e.target.checked}
                         })}
-                        className="w-5 h-5 rounded focus:ring-2 focus:ring-blue-500 accent-blue-600"
+                        className="w-5 h-5 rounded focus:ring-2 focus:ring-purple-500 accent-purple-600"
                       />
                       <div>
                         <div className="font-semibold text-sm">
@@ -202,12 +202,12 @@ export default function NewUserForm({newUser, setNewUser, handleCreateUser, setS
               <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200">
                 <button 
                   onClick={handleCreateUser}
-                  className="flex-1 px-6 py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition-all shadow-md hover:shadow-lg">
+                  className="flex-1 px-6 py-3 bg-purple-500 text-white rounded-lg font-semibold hover:bg-purple-600 transition-all shadow-md hover:shadow-lg">
                   <i className="fas fa-check mr-2"></i>Crear Usuario
                 </button>
                 <button 
                   onClick={() => setShowUserModal(false)}
-                  className="flex-1 px-6 py-3 bg-gray-500 text-white rounded-lg font-semibold hover:bg-gray-600 transition-all shadow-md hover:shadow-lg">
+                  className="flex-1 px-6 py-3 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition-all shadow-md hover:shadow-lg">
                   <i className="fas fa-times mr-2"></i>Cancelar
                 </button>
               </div>

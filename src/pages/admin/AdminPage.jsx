@@ -42,15 +42,16 @@ const fetchUsers = async () => {
       const result = await response.json();
 
       if (result.status === "success") {
-        setUsuarios(result.data); // 👈 SOLO el arreglo
+        setUsuarios(result.data); 
         console.log(result.data)
       }
     } catch (error) {
       console.error("Error al cargar becas:", error);
     }
   };
-  /*
+
   useEffect(() => {
+  /*
   const fetchScholarships = async () => {
     try {
       const response = await fetch("http://localhost:8000/scholarships");
@@ -63,11 +64,10 @@ const fetchUsers = async () => {
       console.error("Error al cargar becas:", error);
     }
   };
-
+  */
   fetchUsers()
-  fetchScholarships();
+  //fetchScholarships();
 }, []);
-*/
 const handleCreateUser = async () => {
   try {
     const resUser = await fetch("http://localhost:8000/users", {
@@ -370,8 +370,8 @@ const handleCreateUser = async () => {
       </Modal>
       {selectedOption === 'applications' && (
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
-            <h3 className="text-xl font-bold">Solicitudes de Beca</h3>
+          <div className="bg-primary-purple text-white px-6 py-4 flex justify-between items-center">
+            <h3 className="text-xl font-bold text-white">Solicitudes de Beca</h3>
             <select className="px-4 py-2 rounded-lg text-gray-900">
               <option>Todas las solicitudes</option>
               <option>En proceso</option>
@@ -406,8 +406,8 @@ const handleCreateUser = async () => {
                     <td className="px-6 py-4">{app.puntaje}/100</td>
                     <td className="px-6 py-4">
                       <div className="flex gap-2">
-                        <button onClick={() => openApplicationModal('viewApp', app)} className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
-                        <button onClick={() => openApplicationModal('evaluate', app)} className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Evaluar</button>
+                        <button onClick={() => openApplicationModal('viewApp', app)} className="px-3 py-1 bg-primary-cyan text-white rounded text-sm font-semibold">Ver</button>
+                        <button onClick={() => openApplicationModal('evaluate', app)} className="px-3 py-1 bg-primary-purple text-white rounded text-sm font-semibold">Evaluar</button>
                       </div>
                     </td>
                   </tr>
@@ -419,11 +419,11 @@ const handleCreateUser = async () => {
       )}
       {selectedOption === 'users' && (
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
-            <h3 className="text-xl font-bold">Gestión de Usuarios</h3>
+          <div className="bg-primary-purple text-white px-6 py-4 flex justify-between items-center">
+            <h3 className="text-xl font-bold text-white">Gestión de Usuarios</h3>
             <button 
               onClick={() => setShowUserModal(true)}
-              className="px-4 py-2 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition-all">
+              className="px-4 py-2 bg-primary-mint rounded-lg font-semibold hover:bg-primary-cyan transition-all">
               <i className="fas fa-plus mr-2"></i>Nuevo Usuario
             </button>
           </div>
@@ -452,12 +452,13 @@ const handleCreateUser = async () => {
                       {u.role == "student"&&<span className="px-3 py-1 bg-purple-500 text-white rounded-full text-xs font-semibold">Estudiante</span>}
                     </td>
                     <td className="px-6 py-4">
-                      <span className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-semibold">Activo</span>
+                      <span className="px-3 py-1 bg-primary-mint text-white rounded-full text-xs font-semibold">Activo</span>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex gap-2">
-                        <button  onClick={() => handleViewUser(u.id)} className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
-                        <button className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Editar</button>
+                        <button  onClick={() => handleViewUser(u.id)} className="px-3 py-1  bg-primary-cyan text-white rounded text-sm font-semibold">Ver</button>
+                        <button className="px-3 py-1 bg-primary-purple text-white rounded text-sm font-semibold">Editar</button>
+                        <button className="px-3 py-1 bg-primary-pink text-white rounded text-sm font-semibold">Eliminar</button>
                       </div>
                     </td>
                   </tr>
