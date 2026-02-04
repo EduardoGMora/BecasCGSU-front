@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StatCard } from '../../components/StatCard';
 import { Modal } from '../../components/Modal';
 import { data, useOutletContext } from 'react-router-dom';
@@ -9,12 +9,15 @@ import scholarshipsData from '../../mocks/scholarshipsAdmin.json';
 import usersData from '../../mocks/usersAdmin.json';
 import NewUserForm from "../admin/NewUserForm"
 import applications from "./../../utils/applicationsAdmin.json"
+import SeeDataUser from "../admin/SeeDataUser"
 // Componente AdminPage
 export default function AdminPage() {
   const {selectedOption} = useOutletContext()
   const [scholarships, setScholarships] = useState(scholarshipsData);
   const [showUserModal, setShowUserModal] = useState(false);
-  const [users, setUsers] = useState(usersData);
+  const [showViewModal, setShowViewModal] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [usuarios, setUsuarios] = useState([]);
   const [modalType, setModalType] = useState(null);
   const [selectedScholarship, setSelectedScholarship] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -33,7 +36,39 @@ export default function AdminPage() {
       reportes: true
     }
   });
-  const handleCreateUser = async () => {
+const fetchUsers = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/users");
+      const result = await response.json();
+
+      if (result.status === "success") {
+        setUsuarios(result.data); // 👈 SOLO el arreglo
+        console.log(result.data)
+      }
+    } catch (error) {
+      console.error("Error al cargar becas:", error);
+    }
+  };
+  /*
+  useEffect(() => {
+  const fetchScholarships = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/scholarships");
+      const result = await response.json();
+
+      if (result.status === "success") {
+        setScholarships(result.data); // 👈 SOLO el arreglo
+      }
+    } catch (error) {
+      console.error("Error al cargar becas:", error);
+    }
+  };
+
+  fetchUsers()
+  fetchScholarships();
+}, []);
+*/
+const handleCreateUser = async () => {
   try {
     const resUser = await fetch("http://localhost:8000/users", {
       method: "POST",
@@ -91,10 +126,12 @@ export default function AdminPage() {
     setFormData(scholarship || { nombre: '', institucion: '', tipo: '', monto: '', estado: 'Activa', solicitudes: 0, descripcion: '', requisitos: '', duracion: '', fechaInicio: '', fechaFin: '' });
   };
 
-  const openUserModal = (type, user = null) => {
-    setModalType(type);
-    setSelectedUser(user);
-    setFormData(user || { nombre: '', cargo: '', email: '', telefono: '', rol: 'Revisor', estado: 'Activo', departamento: '', fechaIngreso: '', permisos: '' });
+  const handleViewUser = (user) => {
+    const userSelect = usuarios.find(
+      p => p.id === user
+    );
+    setSelectedUser(userSelect);
+    setShowViewModal(true);
   };
 
   const closeModal = () => { 
@@ -129,7 +166,7 @@ export default function AdminPage() {
     return colors[rol] || 'bg-gray-500';
   };
   
-
+  
   return (
     <>
       <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg px-8 py-16 md:px-16 mb-8 text-center">
@@ -402,23 +439,25 @@ export default function AdminPage() {
                 </tr>
               </thead>
               <tbody>
-                {users.map(user => (
-                  <tr key={user.id} className="border-b border-gray-200 hover:bg-gray-50">
+                {usuarios.map((u, index) =>(
+                  <tr className="border-b border-gray-200 hover:bg-gray-50" key={index}>
                     <td className="px-6 py-4">
-                      <div className="font-semibold">{user.nombre}</div>
-                      <div className="text-sm text-gray-700">{user.cargo}</div>
+                      <div className="font-semibold">{u.nombre}</div>
+                      <div className="text-sm text-gray-600">Coordinador de Becas</div>
                     </td>
-                    <td className="px-6 py-4">{user.email}</td>
+                    <td className="px-6 py-4">{u.email}</td>
                     <td className="px-6 py-4">
-                      <span className={`px-3 py-1 ${getRoleColor(user.rol)} text-white rounded-full text-xs font-semibold`}>{user.rol}</span>
+                      {u.role == "admin"&&<span className="px-3 py-1 bg-red-500 text-white rounded-full text-xs font-semibold">Administrador</span>}
+                      {u.role == "subadmin"&&<span className="px-3 py-1 bg-blue-500 text-white rounded-full text-xs font-semibold">Sub-Admin</span>}
+                      {u.role == "student"&&<span className="px-3 py-1 bg-purple-500 text-white rounded-full text-xs font-semibold">Estudiante</span>}
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`px-3 py-1 ${getStatusColor(user.estado)} text-white rounded-full text-xs font-semibold`}>{user.estado}</span>
+                      <span className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-semibold">Activo</span>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex gap-2">
-                        <button onClick={() => openUserModal('viewUser', user)} className="px-3 py-1 bg-primary-cyan text-white rounded text-sm font-semibold">Ver</button>
-                        <button onClick={() => openUserModal('editUser', user)} className="px-3 py-1 bg-primary-purple text-white rounded text-sm font-semibold">Editar</button>
+                        <button  onClick={() => handleViewUser(u.id)} className="px-3 py-1 bg-yellow-500 text-gray-900 rounded text-sm font-semibold">Ver</button>
+                        <button className="px-3 py-1 bg-blue-500 text-white rounded text-sm font-semibold">Editar</button>
                       </div>
                     </td>
                   </tr>
@@ -511,6 +550,9 @@ export default function AdminPage() {
       </Modal>
       {showUserModal && (
         <NewUserForm newUser={newUser} setNewUser={setNewUser} handleCreateUser = {handleCreateUser} setShowUserModal={setShowUserModal}></NewUserForm>
+      )}
+      {showViewModal && (
+        <SeeDataUser selectedUser={selectedUser} setShowViewModal={setShowViewModal}></SeeDataUser>
       )}
     </>
   );

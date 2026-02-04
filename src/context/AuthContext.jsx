@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
 
       console.log(result.success)
       if (result.success) {
-        console.log(result.r)
+        console.log(result.user.role)
         setUser(result.user);
         SetIsAuthenticated(true)
         return { success: true, role: result.user.role };

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import {usuarios} from "./../../utils/users.json"
 export default function SeeDataUser({selectedUser, setShowViewModal}) {
   const [permissions, setPermissions] = useState([]);
   useEffect(() => {
@@ -105,7 +104,7 @@ export default function SeeDataUser({selectedUser, setShowViewModal}) {
                   </h4>
                   {permissions? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <div className={`p-3 rounded-lg flex items-center gap-3 ${permissions.includes("dashboard") ? 'bg-green-100 border border-green-200' : 'bg-red-100 border border-red-200'}`}>
+                      <div className={`p-3 rounded-lg flex items-center gap-3 ${permissions.includes("overview") ? 'bg-green-100 border border-green-200' : 'bg-red-100 border border-red-200'}`}>
                         <i className={`fas ${permissions.includes("dashboard")  ? 'fa-check-circle text-green-600' : 'fa-times-circle text-gray-400'} text-xl`}></i>
                         <div>
                           <div className="font-semibold text-sm">Dashboard</div>
@@ -113,7 +112,7 @@ export default function SeeDataUser({selectedUser, setShowViewModal}) {
                         </div>
                       </div>
                       
-                      <div className={`p-3 rounded-lg flex items-center gap-3 ${permissions.includes("usuarios") ? 'bg-green-100 border border-green-200' : 'bg-red-100 border border-red-200'}`}>
+                      <div className={`p-3 rounded-lg flex items-center gap-3 ${permissions.includes("users") ? 'bg-green-100 border border-green-200' : 'bg-red-100 border border-red-200'}`}>
                         <i className={`fas ${permissions.includes("usuarios")? 'fa-check-circle text-green-600' : 'fa-times-circle text-gray-400'} text-xl`}></i>
                         <div>
                           <div className="font-semibold text-sm">Usuarios</div>
@@ -121,7 +120,7 @@ export default function SeeDataUser({selectedUser, setShowViewModal}) {
                         </div>
                       </div>
                       
-                      <div className={`p-3 rounded-lg flex items-center gap-3 ${permissions.includes("becarios") ? 'bg-green-100 border border-green-200' : 'bg-red-100 border border-red-200'}`}>
+                      <div className={`p-3 rounded-lg flex items-center gap-3 ${permissions.includes("scholarships") ? 'bg-green-100 border border-green-200' : 'bg-red-100 border border-red-200'}`}>
                         <i className={`fas ${permissions.includes("becarios") ? 'fa-check-circle text-green-600' : 'fa-times-circle text-gray-400'} text-xl`}></i>
                         <div>
                           <div className="font-semibold text-sm">Becas</div>
@@ -129,7 +128,7 @@ export default function SeeDataUser({selectedUser, setShowViewModal}) {
                         </div>
                       </div>
                       
-                      <div className={`p-3 rounded-lg flex items-center gap-3 ${permissions.includes("solicitudes") ? 'bg-green-100 border border-green-200' :'bg-red-100 border border-red-200'}`}>
+                      <div className={`p-3 rounded-lg flex items-center gap-3 ${permissions.includes("applications") ? 'bg-green-100 border border-green-200' :'bg-red-100 border border-red-200'}`}>
                         <i className={`fas ${permissions.includes("solicitudes") ? 'fa-check-circle text-green-600' : 'fa-times-circle text-gray-400'} text-xl`}></i>
                         <div>
                           <div className="font-semibold text-sm">Solicitudes</div>
