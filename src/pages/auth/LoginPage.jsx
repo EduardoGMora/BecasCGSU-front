@@ -11,6 +11,7 @@ import logoPub from "../../assets/PUB.svg";
  * @returns {JSX.Element} LoginPage component
  */
 export default function LoginPage() {
+  const [codigo, setCodigo] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -20,10 +21,9 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
+    const result = await login(codigo, password);
+    console.log(result.success)
     try {
-      const result = login(email, password);
-
       if (result.success) {
         // Redirect based on user role
         switch (result.role) {
@@ -81,11 +81,11 @@ export default function LoginPage() {
             </label>
             <input
               type="tel"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              id="email"
-              name="email"
-              autoComplete="username"
+              value={codigo}
+              onChange={(e) => setCodigo(e.target.value)}
+              id="codigo"
+              name="codigo"
+              autoComplete="codigo"
               required
               className="appearance-none block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-purple focus:border-primary-purple sm:text-sm transition duration-150"
               placeholder="Ej. 217471988"
