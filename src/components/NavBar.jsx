@@ -11,6 +11,7 @@ library.add(fas);
 const links = [
     { to: ROUTES.HOME, label: 'Inicio', icon: 'fa-solid fa-home', adminOnly: false, requiresAuth: false },
     { to: ROUTES.SCHOLARSHIPS, label: 'Becas', icon: 'fa-solid fa-award', adminOnly: false, requiresAuth: false },
+    { to: ROUTES.APPLICATIONS, label: 'Mis Solicitudes', icon: 'fa-solid fa-file-alt', adminOnly: false, requiresAuth: true },
     { to: ROUTES.CONTACT, label: 'Contacto', icon: 'fa-solid fa-envelope', adminOnly: false, requiresAuth: false },
     { to: ROUTES.ADMIN, label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true, requiresAuth: true },
     // { to: '/subadmin', label: 'Admin', icon: 'fa-solid fa-cog', adminOnly: true }
@@ -48,6 +49,7 @@ export const NavBar = ({ isAdmin, onLinkClick, mobile }) => {
                 if (!link.adminOnly && isAdmin) return null;
                 // Filtrar por autenticación
                 if (link.requiresAuth && !isAuthenticated) return null;
+                if (link.requiresAuth && !link.adminOnly && isAdmin) return null;
                 const isActive = location.pathname === link.to;
                 // console.log(`Link ${link.to} is active:`, isActive);
 
