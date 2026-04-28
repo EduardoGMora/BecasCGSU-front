@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import api from '../api/axios';
-import { ScholarshipCard } from './ScholarshipCard';
+import { ScholarshipCard } from './ScholarShipCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const ScholarshipsList = ({ viewType, filters, handleApply }) => {
