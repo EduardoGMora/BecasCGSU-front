@@ -1,47 +1,46 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { HeroCard } from '../components/HeroCard';
 import { StatCard } from '../components/StatCard';
 import { Modal } from '../components/Modal';
 import { DetailCard, DetailSection, DetailHeader } from '../components/DetailCard'; 
 import { FormField } from '../components/FormField';
-import scholarshipsData from '../utils/scholarships.json';
+import api from '../api/axios';
 
 export function StudentPage() {
-  
-  const initialData = [
-    {
-      id: 101,
-      scholarshipId: 1, 
-      status: 'review', 
-      date: '2025-11-10',
-      promedio: '9.8',
-      motivacion: 'Deseo continuar mis estudios de posgrado en el área de inteligencia artificial.',
-      documentos: 'Kardex actualizado, Carta de Motivos firmada',
-      comentarios: 'Tus documentos están siendo revisados.'
-    },
-    {
-      id: 102,
-      scholarshipId: 3, 
-      status: 'approved',
-      date: '2025-10-05',
-      promedio: '9.5',
-      motivacion: 'Propuesta de desarrollo de software.',
-      documentos: 'Proyecto en PDF, CV, Carta de Recomendación',
-      comentarios: 'Tu beca ha sido asignada. Revisa tu correo.'
-    }
-  ];
-
-  const [applications, setApplications] = useState(() => {
-    return initialData.map(app => {
-        const scholarshipInfo = scholarshipsData.find(s => s.id === app.scholarshipId);
-        return { ...app, scholarship: scholarshipInfo };
-    });
-  });
-
+  const [applications, setApplications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [modalType, setModalType] = useState(null); 
   const [selectedApp, setSelectedApp] = useState(null);
   const [formData, setFormData] = useState({});
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchApplications = async () => {
+      try {
+        setLoading(true);
+        const response = await api.get('/applications', { signal: controller.signal });
+        const data = response.data;
+        const items = Array.isArray(data) ? data
+          : Array.isArray(data?.data) ? data.data
+          : Array.isArray(data?.items) ? data.items
+          : [];
+        setApplications(items);
+        setError(null);
+      } catch (err) {
+        if (err?.name === 'CanceledError' || err?.code === 'ERR_CANCELED') return;
+        console.error('Error fetching applications:', err);
+        setError('No se pudieron cargar las solicitudes. Intenta de nuevo más tarde.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchApplications();
+    return () => controller.abort();
+  }, []);
 
 
   const openModal = (type, app) => {
@@ -65,11 +64,16 @@ export function StudentPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setApplications(prevApps => prevApps.map(app => 
+    try {
+      await api.patch(`/applications/${selectedApp.id}`, formData);
+      setApplications(prevApps => prevApps.map(app =>
         app.id === selectedApp.id ? { ...app, ...formData } : app
-    ));
+      ));
+    } catch (err) {
+      console.error('Error updating application:', err);
+    }
     closeModal();
   };
 
@@ -98,15 +102,13 @@ export function StudentPage() {
             subtitle="Administra y da seguimiento a tus aplicaciones de beca"
         />
 
-        {}
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 px-4 md:px-0 max-w-7xl mx-auto">
             <StatCard icon="fas fa-paper-plane" number={applications.length} label="Enviadas" />
-            <StatCard icon="fas fa-clock" number={applications.filter(a => a.status === 'review').length} label="En Proceso" />
+            <StatCard icon="fas fa-clock" number={applications.filter(a => a.status === 'review' || a.status === 'pending').length} label="En Proceso" />
             <StatCard icon="fas fa-check-circle" number={applications.filter(a => a.status === 'approved').length} label="Aprobadas" />
             <StatCard icon="fas fa-times-circle" number={applications.filter(a => a.status === 'rejected').length} label="Rechazadas" />
         </section>
 
-        {}
         <section className="max-w-7xl mx-auto px-4 md:px-0 mb-8">
             <div className="bg-white rounded-lg shadow-sm overflow-hidden">
                 <div className="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
@@ -115,7 +117,24 @@ export function StudentPage() {
                         <i className="fas fa-plus"></i> <span className="hidden sm:inline">Nueva Solicitud</span>
                     </Link>
                 </div>
-                
+
+                {loading && (
+                    <div className="flex items-center justify-center py-12">
+                        <div className="text-center">
+                            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-900 mx-auto mb-4"></div>
+                            <p className="text-gray-600">Cargando solicitudes...</p>
+                        </div>
+                    </div>
+                )}
+
+                {error && (
+                    <div className="px-6 py-10 text-center text-red-600">
+                        <i className="fas fa-exclamation-triangle text-3xl mb-3 block"></i>
+                        <p>{error}</p>
+                    </div>
+                )}
+
+                {!loading && !error && (
                 <div className="overflow-x-auto">
                     <table className="w-full">
                         <thead className="bg-gray-200">
@@ -133,10 +152,10 @@ export function StudentPage() {
                                 applications.map(app => (
                                     <tr key={app.id} className="border-b border-gray-200 hover:bg-gray-50">
                                         <td className="px-6 py-4 font-medium text-blue-900">
-                                            {app.scholarship?.title}
+                                            {app.scholarship}
                                         </td>
                                         <td className="px-6 py-4 text-gray-600">
-                                            {app.scholarship?.institution}
+                                            {app.institution}
                                         </td>
                                         <td className="px-6 py-4 text-sm">
                                             {new Date(app.date).toLocaleDateString('es-MX')}
@@ -147,7 +166,7 @@ export function StudentPage() {
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 font-semibold text-gray-700">
-                                            {app.scholarship?.amount}
+                                            {app.amount}
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex gap-2">
@@ -157,7 +176,7 @@ export function StudentPage() {
                                                 >
                                                     Ver
                                                 </button>
-                                                {app.status === 'review' && (
+                                                {(app.status === 'review' || app.status === 'pending') && (
                                                     <button 
                                                         onClick={() => openModal('edit', app)} 
                                                         className="px-3 py-1 bg-blue-600 text-white rounded text-sm font-semibold hover:bg-blue-700 transition-all shadow-sm"
@@ -179,14 +198,14 @@ export function StudentPage() {
                         </tbody>
                     </table>
                 </div>
+                )}
             </div>
         </section>
 
-        {}
         <Modal isOpen={modalType === 'view'} onClose={closeModal} title="Detalle de Solicitud">
             {selectedApp && (
                 <div className="space-y-4">
-                    <DetailHeader title={selectedApp.scholarship?.title} subtitle={selectedApp.scholarship?.institution} />
+                    <DetailHeader title={selectedApp.scholarship} subtitle={selectedApp.institution} />
                     
                     <div className="grid grid-cols-2 gap-4">
                          <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
@@ -195,7 +214,7 @@ export function StudentPage() {
                                 {getStatusText(selectedApp.status)}
                             </span>
                         </div>
-                        <DetailCard label="Monto" value={selectedApp.scholarship?.amount} />
+                        <DetailCard label="Monto" value={selectedApp.amount} />
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
@@ -216,11 +235,10 @@ export function StudentPage() {
             )}
         </Modal>
 
-        {}
         <Modal isOpen={modalType === 'edit'} onClose={closeModal} title="Editar Solicitud">
             {selectedApp && (
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <DetailHeader title={selectedApp.scholarship?.title} subtitle={selectedApp.scholarship?.institution} />
+                    <DetailHeader title={selectedApp.scholarship} subtitle={selectedApp.institution} />
                     
                     <div className="bg-white border p-4 rounded-lg">
                         <FormField label="Promedio" name="promedio" type="number" step="0.1" value={formData.promedio} onChange={handleInputChange} />

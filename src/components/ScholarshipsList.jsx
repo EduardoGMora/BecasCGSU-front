@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import api from '../api/axios';
-import { ScholarshipCard } from './ScholarShipCard';
+import { ScholarshipCard } from './ScholarshipCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ERROR_MESSAGES } from '../constants';
 import PropTypes from 'prop-types';
