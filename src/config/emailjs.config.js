@@ -1,5 +1,6 @@
 // src/config/emailjs.config.js
 // Configuración de EmailJS para el envío de correos
+import { ENV, isEmailJSConfigured } from '../constants/env';
 
 /**
  * Configuración de EmailJS
@@ -11,21 +12,12 @@
  */
 
 // Exportación de constantes para uso directo
-export const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY';
-export const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID';
-export const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_CONTACT || 'template_contact';
+export const EMAILJS_PUBLIC_KEY = ENV.EMAILJS.PUBLIC_KEY;
+export const EMAILJS_SERVICE_ID = ENV.EMAILJS.SERVICE_ID;
+export const EMAILJS_TEMPLATE_ID = ENV.EMAILJS.TEMPLATE_CONTACT;
 
-/**
- * Valida si la configuración de EmailJS está completa
- */
-export const isEmailJSConfigured = () => {
-  return (
-    EMAILJS_CONFIG.PUBLIC_KEY !== 'YOUR_PUBLIC_KEY' &&
-    EMAILJS_CONFIG.SERVICE_ID !== 'YOUR_SERVICE_ID' &&
-    EMAILJS_CONFIG.PUBLIC_KEY &&
-    EMAILJS_CONFIG.SERVICE_ID
-  );
-};
+// Re-export validation function
+export { isEmailJSConfigured };
 
 /**
  * Mensajes de error personalizados

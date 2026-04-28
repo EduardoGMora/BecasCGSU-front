@@ -1,10 +1,10 @@
-
-import LoginPage from "./pages/auth/LoginPage";
-import  AppRoutes  from "./routes/AppRoutes";
-
+import { ErrorBoundary } from './components/common/ErrorBoundary';
+import AppRoutes from './routes/AppRoutes';
 
 export function App() {
   return (
-    <AppRoutes/>
+    <ErrorBoundary>
+      <AppRoutes />
+    </ErrorBoundary>
   );
 }

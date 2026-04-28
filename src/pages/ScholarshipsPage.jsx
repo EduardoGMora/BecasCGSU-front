@@ -7,7 +7,10 @@ import { ScholarshipFilters } from '../components/ScholarshipFilters';
 import { ViewToggle } from '../components/ViewToggle';
 import { useScholarshipFilters } from '../hooks/useScholarshipFilters';
 
-// ScholarshipsPage
+/**
+ * ScholarshipsPage component to display and filter scholarships
+ * @returns {JSX.Element} ScholarshipsPage component
+ */
 export function ScholarshipsPage() {
   const { handleApply } = useOutletContext();
   const [viewType, setViewType] = useState('list');

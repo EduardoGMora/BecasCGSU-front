@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { HomePage } from "../pages/HomePage";
 import AdminPage from "../pages/admin/AdminPage";
-import { ApplicationsPage } from "../pages/RequestsPage";
+import { ApplicationsPage } from "../pages/ApplicationsPage";
 import { ContactPage } from "../pages/ContactPage";
 import { ScholarshipsPage } from "../pages/ScholarshipsPage";
 import { SubAdminPanel } from "../pages/SubAdminPage";
@@ -11,6 +11,10 @@ import { AuthProvider } from "../context/AuthContext";
 import { UserLayout } from "../layout/UserLayout";
 import { StudentPage } from "../pages/StudentPage";
 
+/**
+ * AppRoutes component to define application routes
+ * @returns {JSX.Element} AppRoutes component
+ */
 export default function AppRoutes() {
   return (
     <AuthProvider>
@@ -18,38 +22,19 @@ export default function AppRoutes() {
         {/* Public Routes */}
         <Route path="/login" element={<LoginPage />} />
 
-        {/* Protected Routes with Layout */}
+        {/* Routes with Layout */}
         <Route element={<UserLayout />}>
-          {/* Student Routes */}
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute allowedRoles={["student"]}>
-                <HomePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/becas"
-            element={
-              <ProtectedRoute allowedRoles={["student"]}>
-                <ScholarshipsPage />
-              </ProtectedRoute>
-            }
-          />
+          {/* Public Routes */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/becas" element={<ScholarshipsPage />} />
+          <Route path="/contacto" element={<ContactPage />} />
+
+          {/* Protected Student Routes */}
           <Route
             path="/mis-solicitudes"
             element={
               <ProtectedRoute allowedRoles={["student"]}>
                 <StudentPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/contacto"
-            element={
-              <ProtectedRoute allowedRoles={["student"]}>
-                <ContactPage />
               </ProtectedRoute>
             }
           />
