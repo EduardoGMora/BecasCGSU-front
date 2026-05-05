@@ -1,21 +1,124 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StatCard } from '../../components/StatCard';
 import { Modal } from '../../components/Modal';
+import { data, useOutletContext } from 'react-router-dom';
 import { FormField } from '../../components/FormField';
 import { ProgressBar } from '../../components/ProgressBar';
 import { ActivityCard } from '../../components/ActivityCard';
 import scholarshipsData from '../../mocks/scholarshipsAdmin.json';
 import usersData from '../../mocks/usersAdmin.json';
-
+import NewUserForm from "../admin/NewUserForm"
+import applications from "./../../utils/applicationsAdmin.json"
+import SeeDataUser from "../admin/SeeDataUser"
 // Componente AdminPage
 export default function AdminPage() {
-  const [activeSection, setActiveSection] = useState('overview');
+  const {selectedOption} = useOutletContext()
   const [scholarships, setScholarships] = useState(scholarshipsData);
-  const [users, setUsers] = useState(usersData);
+  const [showUserModal, setShowUserModal] = useState(false);
+  const [showViewModal, setShowViewModal] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [usuarios, setUsuarios] = useState([]);
   const [modalType, setModalType] = useState(null);
   const [selectedScholarship, setSelectedScholarship] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
   const [formData, setFormData] = useState({});
+  const [newUser, setNewUser] = useState({
+    nombre: '',
+    email: '',
+    codigo: '',
+    password: '',
+    rol: 'admin',
+      permisos: {
+      dashboard: true,
+      usuarios: true,
+      becarios: true,
+      solicitudes: true,
+      reportes: true
+    }
+  });
+const fetchUsers = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/users");
+      const result = await response.json();
+
+      if (result.status === "success") {
+        setUsuarios(result.data); 
+        console.log(result.data)
+      }
+    } catch (error) {
+      console.error("Error al cargar becas:", error);
+    }
+  };
+
+  useEffect(() => {
+  /*
+  const fetchScholarships = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/scholarships");
+      const result = await response.json();
+
+      if (result.status === "success") {
+        setScholarships(result.data); // 👈 SOLO el arreglo
+      }
+    } catch (error) {
+      console.error("Error al cargar becas:", error);
+    }
+  };
+  */
+  fetchUsers()
+  //fetchScholarships();
+}, []);
+const handleCreateUser = async () => {
+  try {
+    const resUser = await fetch("http://localhost:8000/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nombre: newUser.nombre,
+        email: newUser.email,
+        codigo: newUser.codigo,
+        password: newUser.password, 
+        role: newUser.rol            
+      })
+    });
+
+    const userResult = await resUser.json();
+    console.log(userResult);
+    
+    const userId = userResult.data?.id || userResult.id;
+    
+    // Mapeo de nombres a IDs de permisos
+    const permissionMap = {
+      dashboard: 1,
+      usuarios: 2,
+      becarios: 3,
+      solicitudes: 4,
+      reportes: 5
+    };
+    
+    for (const [permissionName, allowed] of Object.entries(newUser.permisos)) {
+      if (allowed) {
+        const permissionId = permissionMap[permissionName];
+        
+        console.log(`Asignando permiso: ${permissionName} (ID: ${permissionId})`);
+        
+        await fetch("http://localhost:8000/user-permissions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            user_id: String(userId),
+            permission_id: String(permissionId)
+          })
+        });
+      }
+    }
+    setShowUserModal(false);
+  } catch (error) {
+    console.error("Error creando usuario", error);
+  }
+};
 
   const openModal = (type, scholarship = null) => {
     setModalType(type);
@@ -23,10 +126,12 @@ export default function AdminPage() {
     setFormData(scholarship || { nombre: '', institucion: '', tipo: '', monto: '', estado: 'Activa', solicitudes: 0, descripcion: '', requisitos: '', duracion: '', fechaInicio: '', fechaFin: '' });
   };
 
-  const openUserModal = (type, user = null) => {
-    setModalType(type);
-    setSelectedUser(user);
-    setFormData(user || { nombre: '', cargo: '', email: '', telefono: '', rol: 'Revisor', estado: 'Activo', departamento: '', fechaIngreso: '', permisos: '' });
+  const handleViewUser = (user) => {
+    const userSelect = usuarios.find(
+      p => p.id === user
+    );
+    setSelectedUser(userSelect);
+    setShowViewModal(true);
   };
 
   const closeModal = () => { 
@@ -60,50 +165,17 @@ export default function AdminPage() {
     const colors = { 'Administrador': 'bg-red-500', 'Subadministrador': 'bg-blue-500', 'Revisor': 'bg-purple-500' };
     return colors[rol] || 'bg-gray-500';
   };
-
+  
+  
   return (
     <>
-      <section className="bg-primary-purple text-white rounded-lg px-8 py-16 md:px-16 mb-8 text-center">
+      <section className="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg px-8 py-16 md:px-16 mb-8 text-center">
         <h1 className="text-4xl font-bold mb-2 text-white">
           <i className="fas fa-cog mr-3"></i>Panel de Administración
         </h1>
         <p className="text-lg opacity-90">Gestión integral del sistema de becas</p>
       </section>
-
-      <nav className="flex gap-4 mb-8 overflow-x-auto pb-2">
-        <button
-          onClick={() => setActiveSection('overview')}
-          className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
-            activeSection === 'overview'
-              ? 'bg-primary-purple text-white'
-              : 'bg-white border border-gray-300 hover:bg-gray-50'
-          }`}
-        >
-          <i className="fas fa-chart-line mr-2"></i>Resumen
-        </button>
-        <button
-          onClick={() => setActiveSection('scholarships')}
-          className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
-            activeSection === 'scholarships'
-              ? 'bg-primary-purple text-white'
-              : 'bg-white border border-gray-300 hover:bg-gray-50'
-          }`}
-        >
-          <i className="fas fa-award mr-2"></i>Gestión de Becas
-        </button>
-        <button
-          onClick={() => setActiveSection('users')}
-          className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
-            activeSection === 'users'
-              ? 'bg-primary-purple text-white'
-              : 'bg-white border border-gray-300 hover:bg-gray-50'
-          }`}
-        >
-          <i className="fas fa-users mr-2"></i>Usuarios
-        </button>
-      </nav>
-
-      {activeSection === 'overview' && (
+      {selectedOption === 'overview' && (
         <div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <StatCard icon="fas fa-award" number="127" label="Total de Becas" />
@@ -169,8 +241,8 @@ export default function AdminPage() {
           </div>
         </div>
       )}
-
-      {activeSection === 'scholarships' && (
+      {console.log(selectedOption)}
+      {selectedOption === 'scholarships' && (
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           <div className="bg-primary-purple text-white px-6 py-4 flex justify-between items-center">
             <h3 className="text-xl font-bold text-white">Gestión de Becas</h3>
@@ -296,12 +368,62 @@ export default function AdminPage() {
           </div>
         </form>
       </Modal>
-
-      {activeSection === 'users' && (
+      {selectedOption === 'applications' && (
+        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+          <div className="bg-primary-purple text-white px-6 py-4 flex justify-between items-center">
+            <h3 className="text-xl font-bold text-white">Solicitudes de Beca</h3>
+            <select className="px-4 py-2 rounded-lg text-gray-900">
+              <option>Todas las solicitudes</option>
+              <option>En proceso</option>
+              <option>Aprobadas</option>
+              <option>Rechazadas</option>
+            </select>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-200">
+                <tr>
+                  <th className="px-6 py-4 text-left font-semibold">Solicitante</th>
+                  <th className="px-6 py-4 text-left font-semibold">Beca</th>
+                  <th className="px-6 py-4 text-left font-semibold">Fecha</th>
+                  <th className="px-6 py-4 text-left font-semibold">Estado</th>
+                  <th className="px-6 py-4 text-left font-semibold">Puntaje</th>
+                  <th className="px-6 py-4 text-left font-semibold">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {applications.map(app => (
+                  <tr key={app.id} className="border-b border-gray-200 hover:bg-gray-50">
+                    <td className="px-6 py-4">
+                      <div className="font-semibold">{app.solicitante}</div>
+                      <div className="text-sm text-gray-600">{app.email}</div>
+                    </td>
+                    <td className="px-6 py-4">{app.beca}</td>
+                    <td className="px-6 py-4">{new Date(app.fecha).toLocaleDateString('es-MX')}</td>
+                    <td className="px-6 py-4">
+                      <span className={`px-3 py-1 ${getStatusColor(app.estado)} whitespace-nowrap text-white rounded-full text-xs font-semibold`}>{app.estado}</span>
+                    </td>
+                    <td className="px-6 py-4">{app.puntaje}/100</td>
+                    <td className="px-6 py-4">
+                      <div className="flex gap-2">
+                        <button onClick={() => openApplicationModal('viewApp', app)} className="px-3 py-1 bg-primary-cyan text-white rounded text-sm font-semibold">Ver</button>
+                        <button onClick={() => openApplicationModal('evaluate', app)} className="px-3 py-1 bg-primary-purple text-white rounded text-sm font-semibold">Evaluar</button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+      {selectedOption === 'users' && (
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           <div className="bg-primary-purple text-white px-6 py-4 flex justify-between items-center">
             <h3 className="text-xl font-bold text-white">Gestión de Usuarios</h3>
-            <button onClick={() => openUserModal('createUser')} className="px-4 py-2 bg-primary-mint rounded-lg font-semibold hover:bg-primary-cyan transition-all">
+            <button 
+              onClick={() => setShowUserModal(true)}
+              className="px-4 py-2 bg-primary-mint rounded-lg font-semibold hover:bg-primary-cyan transition-all">
               <i className="fas fa-plus mr-2"></i>Nuevo Usuario
             </button>
           </div>
@@ -317,23 +439,26 @@ export default function AdminPage() {
                 </tr>
               </thead>
               <tbody>
-                {users.map(user => (
-                  <tr key={user.id} className="border-b border-gray-200 hover:bg-gray-50">
+                {usuarios.map((u, index) =>(
+                  <tr className="border-b border-gray-200 hover:bg-gray-50" key={index}>
                     <td className="px-6 py-4">
-                      <div className="font-semibold">{user.nombre}</div>
-                      <div className="text-sm text-gray-700">{user.cargo}</div>
+                      <div className="font-semibold">{u.nombre}</div>
+                      <div className="text-sm text-gray-600">Coordinador de Becas</div>
                     </td>
-                    <td className="px-6 py-4">{user.email}</td>
+                    <td className="px-6 py-4">{u.email}</td>
                     <td className="px-6 py-4">
-                      <span className={`px-3 py-1 ${getRoleColor(user.rol)} text-white rounded-full text-xs font-semibold`}>{user.rol}</span>
+                      {u.role == "admin"&&<span className="px-3 py-1 bg-red-500 text-white rounded-full text-xs font-semibold">Administrador</span>}
+                      {u.role == "subadmin"&&<span className="px-3 py-1 bg-blue-500 text-white rounded-full text-xs font-semibold">Sub-Admin</span>}
+                      {u.role == "student"&&<span className="px-3 py-1 bg-purple-500 text-white rounded-full text-xs font-semibold">Estudiante</span>}
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`px-3 py-1 ${getStatusColor(user.estado)} text-white rounded-full text-xs font-semibold`}>{user.estado}</span>
+                      <span className="px-3 py-1 bg-primary-mint text-white rounded-full text-xs font-semibold">Activo</span>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex gap-2">
-                        <button onClick={() => openUserModal('viewUser', user)} className="px-3 py-1 bg-primary-cyan text-white rounded text-sm font-semibold">Ver</button>
-                        <button onClick={() => openUserModal('editUser', user)} className="px-3 py-1 bg-primary-purple text-white rounded text-sm font-semibold">Editar</button>
+                        <button  onClick={() => handleViewUser(u.id)} className="px-3 py-1  bg-primary-cyan text-white rounded text-sm font-semibold">Ver</button>
+                        <button className="px-3 py-1 bg-primary-purple text-white rounded text-sm font-semibold">Editar</button>
+                        <button className="px-3 py-1 bg-primary-pink text-white rounded text-sm font-semibold">Eliminar</button>
                       </div>
                     </td>
                   </tr>
@@ -392,7 +517,6 @@ export default function AdminPage() {
           </div>
         )}
       </Modal>
-
       <Modal isOpen={modalType === 'createUser' || modalType === 'editUser'} onClose={closeModal} title={modalType === 'createUser' ? 'Nuevo Usuario' : 'Editar Usuario'}>
         <form onSubmit={handleSubmit}>
           <FormField label="Nombre Completo" name="nombre" value={formData.nombre || ''} onChange={handleChange} />
@@ -425,6 +549,12 @@ export default function AdminPage() {
           </div>
         </form>
       </Modal>
+      {showUserModal && (
+        <NewUserForm newUser={newUser} setNewUser={setNewUser} handleCreateUser = {handleCreateUser} setShowUserModal={setShowUserModal}></NewUserForm>
+      )}
+      {showViewModal && (
+        <SeeDataUser selectedUser={selectedUser} setShowViewModal={setShowViewModal}></SeeDataUser>
+      )}
     </>
   );
 };

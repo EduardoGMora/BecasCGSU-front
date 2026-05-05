@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "solicitante": "Juan Pérez García",
+    "email": "juan.perez@alumnos.udg.mx",
+    "beca": "Excelencia Académica",
+    "fecha": "2025-11-15",
+    "estado": "Aprobada",
+    "puntaje": 95,
+    "telefono": "33-1234-5678",
+    "promedio": 9.8,
+    "documentos": "Completos",
+    "comentarios": "Excelente expediente académico, cumple todos los requisitos",
+    "carrera": "Ingeniería en Computación",
+    "semestre": 6,
+    "motivacion": "Deseo continuar mis estudios y desarrollar proyectos de innovación tecnológica"
+  },
+  {
+    "id": 2,
+    "solicitante": "María González López",
+    "email": "maria.gonzalez@alumnos.udg.mx",
+    "beca": "Apoyo Socioeconómico",
+    "fecha": "2025-11-18",
+    "estado": "En Proceso",
+    "puntaje": 78,
+    "telefono": "33-9876-5432",
+    "promedio": 8.5,
+    "documentos": "Pendiente comprobante ingresos",
+    "comentarios": "Falta documentación, seguimiento en curso",
+    "carrera": "Medicina",
+    "semestre": 4,
+    "motivacion": "Necesito apoyo económico para continuar con mis estudios de medicina"
+  },
+  {
+    "id": 3,
+    "solicitante": "Carlos Ruiz Mendoza",
+    "email": "carlos.ruiz@alumnos.udg.mx",
+    "beca": "Innovación Tecnológica",
+    "fecha": "2025-11-20",
+    "estado": "Rechazada",
+    "puntaje": 45,
+    "telefono": "33-5555-1234",
+    "promedio": 7.2,
+    "documentos": "Incompletos",
+    "comentarios": "No cumple con el promedio mínimo requerido",
+    "carrera": "Sistemas Computacionales",
+    "semestre": 3,
+    "motivacion": "Quiero desarrollar aplicaciones móviles innovadoras"
+  }
+]
